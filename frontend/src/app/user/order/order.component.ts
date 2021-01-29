@@ -31,6 +31,8 @@ import {
 // componente a mostrar cuando se utilice Material Dialog para eliminar un producto
 import { MatConfirmDialogComponent } from '../../mat-confirm-dialog/mat-confirm-dialog.component';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import * as ts from 'typescript';
+import { maxLength } from '@rxweb/reactive-form-validators';
 
 @Component({
   selector: 'app-order',
@@ -62,6 +64,7 @@ export class OrderComponent implements OnInit, AfterViewInit {
   orderSuccess = false;
   dialogRef: MatDialogRef<MatConfirmDialogComponent>;
   maxQuantity: number[] = [];
+  //btnDisabled: boolean = true; // para btn pagar
 
   constructor(
     private formBuilder: FormBuilder,
@@ -140,10 +143,10 @@ export class OrderComponent implements OnInit, AfterViewInit {
 
   private buildForm() {
     this.form = this.formBuilder.group({
-      provincia: ['', [Validators.required]],
-      localidad: ['', [Validators.required]],
-      adress: ['', [Validators.required]],
-      phoneNumber: ['', [Validators.required]],
+      provincia: ['', [Validators.required, Validators.pattern(/^[a-zA-Z ]+$/), Validators.maxLength(30), Validators.minLength(4)]],
+      localidad: ['', [Validators.required, Validators.pattern(/^[a-zA-Z ]+$/),  Validators.maxLength(30), Validators.minLength(4)]],
+      adress: ['', [Validators.required, Validators.maxLength(30), Validators.minLength(4)]],
+      phoneNumber: ['', [Validators.required, Validators.pattern(/^-?(0|[1-9]\d*)?$/), Validators.maxLength(12), Validators.minLength(8)]],
     });
   }
 
@@ -313,9 +316,9 @@ export class OrderComponent implements OnInit, AfterViewInit {
       this.alertService.showError('Para poder comprar debe tener una cuenta de usuario.','')
       //alert('Para poder comprar debe tener una cuenta de usuario.');
     } else {
-      // 1) crear la orden, detalle de orden, venta, detalle de venta
       event.preventDefault();
       if (this.form.valid) {
+        //this.btnDisabled = false; // se habilita el btn pagar
         //  EFECTUANDO EL PAGO
         const { token, error } = await stripe.createToken(this.card);
         if (token) {
@@ -364,7 +367,8 @@ export class OrderComponent implements OnInit, AfterViewInit {
           );
         } else {
           this.ngZone.run(() => (this.cardError = error.message));
-          alert('No se pudo efectuar el pago');
+          //alert('No se pudo efectuar el pago');
+          this.alertService.showError('Los datos de la tarjeta no son correctos','ERROR DE PAGO')
         }
       }
     }

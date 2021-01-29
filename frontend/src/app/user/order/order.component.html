@@ -80,7 +80,16 @@
                   />
                   <div *ngIf="provinciaField.errors && provinciaField.dirty">
                     <p *ngIf="provinciaField.hasError('required')">
-                      Complete este campo.
+                      <small class="text-danger">Complete este campo.</small>
+                    </p>
+                    <p *ngIf="provinciaField.hasError('pattern')">
+                      <small class="text-danger">Ingrese solo letras.</small>
+                    </p>
+                    <p *ngIf="provinciaField.hasError('maxlength')">
+                      <small class="text-danger">Maximo 30 caracteres</small>
+                    </p>
+                    <p *ngIf="provinciaField.hasError('minlength')">
+                      <small class="text-danger">Minimo 4 caracteres</small>
                     </p>
                   </div>
                 </mat-form-field>
@@ -99,7 +108,16 @@
                   />
                   <div *ngIf="localidadField.errors && localidadField.dirty">
                     <p *ngIf="localidadField.hasError('required')">
-                      Complete este campo.
+                      <small class="text-danger">Complete este campo.</small>
+                    </p>
+                    <p *ngIf="localidadField.hasError('pattern')">
+                      <small class="text-danger">Ingrese solo letras.</small>
+                    </p>
+                    <p *ngIf="localidadField.hasError('maxlength')">
+                      <small class="text-danger">Maximo 30 caracteres</small>
+                    </p>
+                    <p *ngIf="localidadField.hasError('minlength')">
+                      <small class="text-danger">Minimo 4 caracteres</small>
                     </p>
                   </div>
                 </mat-form-field>
@@ -118,7 +136,13 @@
                   />
                   <div *ngIf="adressField.errors && adressField.dirty">
                     <p *ngIf="adressField.hasError('required')">
-                      Complete este campo.
+                      <small class="text-danger">Complete este campo.</small>
+                    </p>
+                    <p *ngIf="adressField.hasError('maxlength')">
+                      <small class="text-danger">Maximo 30 caracteres</small>
+                    </p>
+                    <p *ngIf="adressField.hasError('minlength')">
+                      <small class="text-danger">Minimo 4 caracteres</small>
                     </p>
                   </div>
                 </mat-form-field>
@@ -140,7 +164,16 @@
                     *ngIf="phoneNumberField.errors && phoneNumberField.dirty"
                   >
                     <p *ngIf="phoneNumberField.hasError('required')">
-                      Complete este campo.
+                      <small class="text-danger">Complete este campo.</small>
+                    </p>
+                    <p *ngIf="phoneNumberField.hasError('pattern')">
+                      <small class="text-danger">Ingrese solo números sin espacios.</small>
+                    </p>
+                    <p *ngIf="phoneNumberField.hasError('minlength')">
+                      <small class="text-danger">Ingrese un mínimo de 8 números.</small>
+                    </p>
+                    <p *ngIf="phoneNumberField.hasError('maxlength')">
+                      <small class="text-danger">Hasta 12 números permitidos.</small>
                     </p>
                   </div>
                 </mat-form-field>
@@ -151,11 +184,10 @@
               <div id="box2">
                 <div #cardInfo></div>
                 <div class="error" *ngIf="cardError">
-                  {{ cardError }}
+                  <small class="text-danger">{{ cardError }}</small>
                 </div>
               </div>
-
-              <button mat-raised-button>
+              <button [disabled]="form.invalid" mat-raised-button type="submit">
                 <mat-icon>done</mat-icon>
                 Pagar
               </button>
