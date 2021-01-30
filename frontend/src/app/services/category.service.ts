@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { Category } from '../models/category';
 import { Observable } from 'rxjs';
 
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -44,5 +46,11 @@ export class CategoryService {
     // return true o false
     return this.http.get('http://localhost:4000/categories/exist/' + name);
   }
+
+  // cleanUnnecessaryWhiteSpaces(control: AbstractControl) {
+  //   // return cadena.replace(/\s{2,}/g, ' ').trim();
+  //   const text = control.value;
+  //   return text.replace(/\s{2,}/g, ' ').trim();
+  // }
 
 }

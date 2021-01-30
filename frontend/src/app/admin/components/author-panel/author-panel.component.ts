@@ -12,8 +12,8 @@ import { FormControl, Validators } from '@angular/forms';
   styleUrls: ['./author-panel.component.scss'],
 })
 export class AuthorPanelComponent implements OnInit {
+  
   authorName: FormControl;
-
   authorList$: Observable<Author[]>;
   authorArray: Author[]; // array de tipo User
   author = {} as Author; // declaro un objeto
