@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CategoryService } from './../../../services/category.service';
 import { Category } from './../../../models/category';
-import { NgForm } from '@angular/forms';
 import { MyValidationsService } from './../../../services/my-validations.service';
 import { FormControl, Validators } from '@angular/forms';
 
@@ -29,20 +28,21 @@ export class CategoryPanelComponent implements OnInit {
       Validators.required,
       Validators.pattern(/^[a-zA-Z ]+$/),
       Validators.maxLength(25),
-      Validators.minLength(4),
+      Validators.minLength(4)
     ]);
 
     this.categoryNameEdit = new FormControl('', [
       Validators.required,
       Validators.pattern(/^[a-zA-Z ]+$/),
       Validators.maxLength(25),
-      Validators.minLength(4),
-      //this.categoryService.cleanUnnecessaryWhiteSpaces
+      Validators.minLength(4)
     ]);
 
     this.inputValueSearch = new FormControl('', [
       Validators.required,
       Validators.pattern(/^[a-zA-Z ]+$/),
+      Validators.maxLength(25),
+      Validators.minLength(4)
     ]);
   }
 
@@ -101,9 +101,7 @@ export class CategoryPanelComponent implements OnInit {
         (err) =>
           console.error('No se pudo obtener la categoria por nombre ' + err)
       );
-    } else {
-      alert('Escriba un nombre de categoria para poder agregarla');
-    }
+    } 
   }
 
   editCategory(event, id) {
@@ -138,26 +136,19 @@ export class CategoryPanelComponent implements OnInit {
     }
   }
 
-  cancel() {
-    this.editing = false;
-    //this.categoryEdit.name = '';
-    this.categoryNameEdit.setValue('');
-  }
-
   getCategoryByName() {
     if (this.inputValueSearch.valid) {
+      this.activated = false; // habilita boton listar Todos
       const name = this.myValidationsService.textCapitalize(
         this.inputValueSearch.value
       );
       this.categoryService.getCategoryByName(name).subscribe(
         (res) => {
           if (res.length === 0) {
-            this.searchResult = false;
-            this.activated = false; // habilita boton listar Todos
+            this.searchResult = false;        
           } else {
             this.searchResult = true;
-            this.categoryArray = res;
-            this.activated = false; // habilita boton listar Todos          
+            this.categoryArray = res;      
           }
         },
         (err) => console.error('No se pudo obtener la categoria ' + err)

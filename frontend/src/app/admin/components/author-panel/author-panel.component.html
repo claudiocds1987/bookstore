@@ -3,15 +3,13 @@
     <div class="col-sm-4">
       <div class="card">
         <div class="card-body">
-          <!--  <form #authorForm="ngForm" (ngSubmit)="createAuthor(authorForm)"> -->
           <div class="form-group">
             <input
               type="text"
               name="name"
               class="form-control capitalize"
               [formControl]="authorName"
-              [(ngModel)]="authorValue"
-              (blur)="authorValue = cleanUnnecessaryWhiteSpaces(authorValue)"
+              (blur)="cleanUnnecessaryWhiteSpaces(authorName)"
               placeholder="Ingrese nombre de autor"
               maxlength="50"
             />
@@ -19,13 +17,13 @@
               <small class="text-danger">Campo requerido.</small>
             </p>
             <p *ngIf="authorName.hasError('pattern') && authorName.dirty">
-                <small class="text-danger">No ingrese números.</small>
+              <small class="text-danger">No ingrese números.</small>
             </p>
             <p *ngIf="authorName.hasError('maxlength') && authorName.dirty">
-                <small class="text-danger">Solo hasta 35 caracteres.</small>
+              <small class="text-danger">Solo hasta 35 caracteres.</small>
             </p>
             <p *ngIf="authorName.hasError('minlength') && authorName.dirty">
-                <small class="text-danger">Mínimo 4 caracteres.</small>
+              <small class="text-danger">Mínimo 4 caracteres.</small>
             </p>
             <button
               [disabled]="authorName.invalid"
@@ -44,34 +42,54 @@
     <div class="col-sm-8">
       <div class="card">
         <div class="card-body">
-          <form
-            #searchForm="ngForm"
-            (ngSubmit)="getAuthorByName()"
-            class="form-inline my-2 my-lg-0"
-          >
             <input
               class="form-control mr-sm-2 search capitalize"
               type="text"
               name="search"
               placeholder="Autor"
               aria-label="Search"
-              [(ngModel)]="inputValueSearch"
-              (blur)="
-                inputValueSearch = cleanUnnecessaryWhiteSpaces(inputValueSearch)
-              "
-              maxlength="50"
+              [formControl]="inputValueSearch"
+              (blur)="cleanUnnecessaryWhiteSpaces(inputValueSearch)"
+              maxlength="36"
             />
-            <button class="btn btn-outline-success mr-1" type="submit">
+            <p
+              *ngIf="
+                inputValueSearch.hasError('pattern') && inputValueSearch.dirty
+              "
+            >
+              <small class="text-danger">No ingrese números.</small>
+            </p>
+            <p
+              *ngIf="
+                inputValueSearch.hasError('maxlength') && inputValueSearch.dirty
+              "
+            >
+              <small class="text-danger"
+                >No ingrese mas de 35 caracteres.</small
+              >
+            </p>
+            <p
+              *ngIf="
+                inputValueSearch.hasError('minlength') && inputValueSearch.dirty
+              "
+            >
+              <small class="text-danger">Mínimo 4 caracteres.</small>
+            </p>
+            <button class="btn btn-outline-success mr-1" 
+            type="button" 
+            (click)="getAuthorByName()"
+            [disabled]="inputValueSearch.invalid"
+            >
               Search
             </button>
             <button
               class="btn btn-outline-success"
               type="button"
               (click)="getAuthors()"
+              [disabled]="activated"
             >
               Listar todos
             </button>
-          </form>
           <p style="color: red" *ngIf="authorService.authorArray.length <= 0">
             No se encontraron resultados
           </p>
@@ -90,24 +108,49 @@
                 <td class="text-center">
                   {{ a.name }}
                   <div *ngIf="editing && authorEdit.id_author == a.id_author">
-                    <form #editForm="ngForm" (ngSubmit)="updateAuthor()">
                       <div class="form-group">
                         <input
                           type="text"
                           name="editedName"
-                          [(ngModel)]="authorEdit.name"
-                          (blur)="
-                            authorEdit.name = cleanUnnecessaryWhiteSpaces(
-                              authorEdit.name
-                            )
-                          "
+                          [formControl]="authorNameEdit"
+                          (blur)="cleanUnnecessaryWhiteSpaces(authorNameEdit)"
                           class="form-control capitalize"
-                          maxlength="50"
+                          maxlength="36"
                           placeholder="{{ a.name }}"
                         />
+                        <p
+                          *ngIf="
+                            authorNameEdit.hasError('pattern') &&
+                            authorNameEdit.dirty
+                          "
+                        >
+                          <small class="text-danger">No ingrese números.</small>
+                        </p>
+                        <p
+                          *ngIf="
+                            authorNameEdit.hasError('maxlength') &&
+                            authorNameEdit.dirty
+                          "
+                        >
+                          <small class="text-danger"
+                            >Solo hasta 35 caracteres.</small
+                          >
+                        </p>
+                        <p
+                          *ngIf="
+                            authorNameEdit.hasError('minlength') &&
+                            authorNameEdit.dirty
+                          "
+                        >
+                          <small class="text-danger"
+                            >Mínimo 4 caracteres.</small
+                          >
+                        </p>
                         <button
                           class="btn btn-outline-success mr-1"
-                          type="submit"
+                          type="button"
+                          (click)="updateAuthor()"
+                          [disabled]="authorNameEdit.invalid"
                         >
                           Update
                         </button>
@@ -119,7 +162,6 @@
                           Cancelar
                         </button>
                       </div>
-                    </form>
                   </div>
                 </td>
                 <td class="text-center">

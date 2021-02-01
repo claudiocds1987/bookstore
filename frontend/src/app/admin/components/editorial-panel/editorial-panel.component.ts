@@ -1,73 +1,102 @@
 import { Component, OnInit } from '@angular/core';
 import { EditorialService } from './../../../services/editorial.service';
 import { Editorial } from './../../../models/editoral';
-import { NgForm } from '@angular/forms';
 import { MyValidationsService } from './../../../services/my-validations.service';
+import { FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-editorial-panel',
   templateUrl: './editorial-panel.component.html',
-  styleUrls: ['./editorial-panel.component.scss']
+  styleUrls: ['./editorial-panel.component.scss'],
 })
 export class EditorialPanelComponent implements OnInit {
+  editorialName: FormControl;
+  editorialNameEdit: FormControl;
+  inputValueSearch: FormControl;
 
-  // authorValue: string;
   editorialArray: Editorial[];
   editing = false;
-  inputValueSearch: string;
+  //inputValueSearch: string;
   editorialEdit = {} as Editorial;
   editorial = {} as Editorial;
   searchResult: boolean;
+  activated: boolean = true;
 
   constructor(
     public editorialService: EditorialService,
     public myValidationsService: MyValidationsService
-  ) { }
+  ) {
+    this.editorialName = new FormControl('', [
+      Validators.required,
+      Validators.maxLength(30),
+      Validators.minLength(4),
+    ]);
+    this.editorialNameEdit = new FormControl('', [
+      Validators.required,
+      Validators.maxLength(30),
+      Validators.minLength(4),
+    ]);
+    this.inputValueSearch = new FormControl('', [
+      Validators.required,
+      Validators.maxLength(30),
+      Validators.minLength(4),
+    ]);
+  }
 
   ngOnInit(): void {
     this.getEditorials();
   }
 
   getEditorials() {
+    this.activated = true; //deshabilita boton listar Todos
     this.searchResult = true;
-    this.inputValueSearch = '';
+    this.inputValueSearch.setValue(''); // limpia input
     this.editorialService.getEditorials().subscribe(
-      res => {
+      (res) => {
         this.editorialArray = res;
       },
-      err => console.error('Error, no se pudo obtener todas las editoriales' + err)
+      (err) =>
+        console.error('Error, no se pudo obtener todas las editoriales' + err)
     );
   }
 
-  createEditorial(form: NgForm) {
-    if (this.editorial.name) {
-      this.editorial.name = this.myValidationsService.textCapitalize(this.editorial.name);
-      // verifico si la editorial ya existe en la db
-      this.editorialService.existEditorialByName(this.editorial.name).subscribe(
-        res => {
-          if (res === false) {
-            if (confirm('¿Esta seguro/a que desea agregar la editorial: ' + this.editorial.name + '?')) {
-              this.editorialService.createEditorial(this.editorial).subscribe(
-                resp => {
-                  alert('Se insertó una nueva editorial');
-                  this.getEditorials();
-                  form.resetForm();
-                },
-                err => console.error('No se pudo insertar una nueva editorial ' + err)
-              );
-            }
-          }
-          else {
-            alert('Ya existe una editorial con ese nombre');
-            this.editorial.name = '';
-          }
-        },
-        err => console.error('No se pudo obtener la editorial por nombre ' + err)
-      );
-
-    }
-    else {
-      alert('Escriba un nombre de categoria para poder agregarla');
+  createEditorial() {
+    if (this.editorialName.valid) {
+      if (
+        confirm(
+          '¿Esta seguro/a que desea agregar la editorial ' +
+            this.editorialName.value
+        )
+      ) {
+        this.editorial.name = this.myValidationsService.textCapitalize(
+          this.editorialName.value
+        );
+        // verifico si la editorial ya existe en la db
+        this.editorialService
+          .existEditorialByName(this.editorial.name)
+          .subscribe(
+            (res) => {
+              if (res === false) {
+                this.editorialService.createEditorial(this.editorial).subscribe(
+                  (resp) => {
+                    alert('Se insertó una nueva editorial');
+                    this.getEditorials();
+                    this.editorialName.setValue(''); // limpia el input
+                  },
+                  (err) =>
+                    console.error(
+                      'No se pudo insertar una nueva editorial ' + err
+                    )
+                );
+              } else {
+                alert('Ya existe una editorial con ese nombre');
+                // this.editorialName.setValue ('');
+              }
+            },
+            (err) =>
+              console.error('No se pudo obtener la editorial por nombre ' + err)
+          );
+      }
     }
   }
 
@@ -77,26 +106,19 @@ export class EditorialPanelComponent implements OnInit {
     this.editorialEdit.id_editorial = id;
   }
 
-  updateEditorial(form: NgForm) {
-    if (this.editorialEdit.name === undefined || this.editorialEdit.name === '') {
-      alert('escriba el nombre de la editorial para actualizar');
-    }
-    else if (this.editorialEdit.name.length > 50) {
-      alert('El nombre de editorial no puede tener mas de 50 caracteres');
-    }
-    else if (this.editorialEdit.id_editorial == null) {
-      alert('error, no esta el id de editorial para poder actualizar');
-    }
-    else {
-      this.editorialEdit.name = this.myValidationsService.textCapitalize(this.editorialEdit.name);
+  updateEditorial() {
+    if (this.editorialNameEdit.valid) {
       if (confirm('¿Esta seguro/a que desea actualizar la editorial?')) {
+        this.editorialEdit.name = this.myValidationsService.textCapitalize(
+          this.editorialNameEdit.value //get value del formControl
+        );
         this.editorialService.updateEditorial(this.editorialEdit).subscribe(
-          res => {
+          (res) => {
             this.editing = false;
             this.getEditorials(); // lista toda las editoriales
             this.editorialEdit = {} as Editorial; // limpio el objeto
           },
-          err => console.error('No se pudo actualizar la editorial ' + err)
+          (err) => console.error('No se pudo actualizar la editorial ' + err)
         );
         alert('La editorial ah sido actualizada');
       }
@@ -104,29 +126,26 @@ export class EditorialPanelComponent implements OnInit {
   }
 
   getEditorialByName() {
-    if (this.inputValueSearch) {
-      this.editorialService.getEditorialByName(this.inputValueSearch).subscribe(
-        res => {
+    if (this.inputValueSearch.valid) {
+      this.activated = false; // habilita boton listar Todos
+      const name = this.inputValueSearch.value; // get value del fromControl inputValueSearch
+      this.editorialService.getEditorialByName(name).subscribe(
+        (res) => {
           if (res.length === 0) {
             this.searchResult = false;
-          }
-          else {
+          } else {
             this.searchResult = true;
             this.editorialArray = res;
           }
         },
-        err => console.error('No se pudo obtener la categoria ' + err)
+        (err) => console.error('No se pudo obtener la categoria ' + err)
       );
     }
-    else {
-      alert('Ingrese el nombre de la categoria para hacer la búsqueda');
-    }
   }
 
-  cleanUnnecessaryWhiteSpaces(cadena: string) {
-    const a = this.myValidationsService.cleanUnnecessaryWhiteSpaces(cadena);
-    return a;
+  cleanUnnecessaryWhiteSpaces(control: FormControl) {
+    let value = control.value;
+    value = this.myValidationsService.cleanUnnecessaryWhiteSpaces(value);
+    control.setValue(value);
   }
-
-
 }
