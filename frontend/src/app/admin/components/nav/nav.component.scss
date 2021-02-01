@@ -1,6 +1,6 @@
 // clase que pone el boton activado
 .activo{
-    background-color: #2690e5;
+    background-color: #ff0226;
     color: white;
 }
 
@@ -90,8 +90,9 @@ header{
   
   .menu a:hover{
     border-bottom:rgb(255, 255, 255,0.3);
-    background: rgb(41, 50, 64);
-    color: #c5fd43;
+    //background: rgb(41, 50, 64);
+    background:  #ff0226;
+    color: white;
   }
   
   #a-shopping-cart:hover{
