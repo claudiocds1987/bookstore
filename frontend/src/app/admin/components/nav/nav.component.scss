@@ -27,12 +27,10 @@ header{
     margin-top: 8px;
   }
 
-
   .sub-menu{
     position: absolute;
     margin-left: 200px;
     margin-top: 5px;
-  
   }
   
   .icon-menu{
@@ -64,7 +62,7 @@ header{
   }
 
   header .contenedor{
-    display: table; // para limpia los floats
+    display: table; // para limpiar los floats
   }
   
   .menu{
