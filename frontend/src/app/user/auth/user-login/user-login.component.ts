@@ -8,6 +8,9 @@ import { TokenService } from '../../../services/token.service';
 import { AlertService } from '../../../services/alert.service';
 import { Router } from '@angular/router';
 
+import { debounceTime } from 'rxjs/operators';
+import { UserService } from '../../../services/user.service';
+
 @Component({
   selector: 'app-user-login',
   templateUrl: './user-login.component.html',
@@ -19,6 +22,7 @@ export class UserLoginComponent implements OnInit {
   password: string;
   form: FormGroup;
   message: string;
+  usernameExist: boolean = true;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -27,9 +31,30 @@ export class UserLoginComponent implements OnInit {
     public cartService: CartService,
     public router: Router,
     public tokenService: TokenService,
-    public alertService: AlertService
+    public alertService: AlertService,
+    public userService: UserService
   ) {
     this.buildForm();
+
+    this.form.get('username').valueChanges
+    .pipe(
+      debounceTime(350)
+    )
+    .subscribe(value => {
+      console.log(value);
+      this.userService.existUsername(value)
+      .subscribe(res => {
+        if(res){
+          console.log("el username es valido: " + res);
+          this.usernameExist = true;
+        }else{
+          console.log("el username no es valido: " + res);
+          this.usernameExist = false;
+        }     
+      }),
+      err => console.error('Error en la db al verificar el username ' + err);
+    });
+
   }
 
   ngOnInit(): void {
@@ -68,7 +93,13 @@ export class UserLoginComponent implements OnInit {
       username: ['', [Validators.required, Validators.minLength(5),Validators.maxLength(15)]],
       password: ['', [Validators.required, Validators.minLength(5),Validators.maxLength(15)]],
     });
+
   }
+
+  // // convenienza getter para facil acceso a lo campos del formulario 
+  // get f() {
+  //   return this.form.controls;
+  // }
 
   cleanUnnecessaryWhiteSpaces(cadena: string) {
     // return cadena.replace(/\s{2,}/g, ' ').trim();

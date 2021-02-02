@@ -114,7 +114,7 @@ export class UserSignupComponent implements OnInit {
       const matchingControl = formGroup.controls[matchingControlName];
 
       if (matchingControl.errors && !matchingControl.errors.mustMatch) {
-        // return if another validator has already found an error on the matchingControl
+        // return if validador ya ha encontrado un error en el control coincidente
         return;
       }
 

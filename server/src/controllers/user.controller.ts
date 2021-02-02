@@ -27,7 +27,8 @@ export const existUsername = async (req: Request, res: Response): Promise<Respon
     console.log('username recibido:' + req.params.username);
 
     try {
-        const response: QueryResult = await pool.query(`SELECT * FROM users WHERE username LIKE '%${req.params.username}%'`);
+        // const response: QueryResult = await pool.query(`SELECT * FROM users WHERE username LIKE '%${req.params.username}%'`);
+        const response: QueryResult = await pool.query(`SELECT * FROM users WHERE username LIKE '${req.params.username}'`);
         if (res.json(response.rowCount > 0)) {
              // en Angular obtengo true
              return res.status(200);
