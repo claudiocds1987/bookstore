@@ -32,10 +32,9 @@
             type="text"
             id="username"
             formControlName="username"
-            class="form-control"
-            [(ngModel)]="usernameClean"
+            class="form-control"       
             [ngClass]="{ 'is-invalid': submitted && f.username.errors }"
-            (blur)="usernameClean = deleteWhiteSpace(usernameClean)"
+            (blur)="deleteWhiteSpace(f.username.value)"
           />
           <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
             <div *ngIf="f.username.errors.required">

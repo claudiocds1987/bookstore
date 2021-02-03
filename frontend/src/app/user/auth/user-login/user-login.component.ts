@@ -18,8 +18,7 @@ import { UserService } from '../../../services/user.service';
 })
 export class UserLoginComponent implements OnInit {
 
-  username: string;
-  password: string;
+  //password: string;
   form: FormGroup;
   message: string;
   usernameExist: boolean = true;
@@ -35,20 +34,20 @@ export class UserLoginComponent implements OnInit {
     public userService: UserService
   ) {
     this.buildForm();
-
+    // para verificar el username en la db reactivamente
     this.form.get('username').valueChanges
     .pipe(
-      debounceTime(350)
+      debounceTime(350) // pasado este tiempo realiza la búsqueda en la db
     )
     .subscribe(value => {
       console.log(value);
       this.userService.existUsername(value)
       .subscribe(res => {
         if(res){
-          console.log("el username es valido: " + res);
+          // username valido porque existe en la db
           this.usernameExist = true;
         }else{
-          console.log("el username no es valido: " + res);
+          // username no valido, no existe en la db
           this.usernameExist = false;
         }     
       }),
@@ -102,7 +101,6 @@ export class UserLoginComponent implements OnInit {
   // }
 
   cleanUnnecessaryWhiteSpaces(cadena: string) {
-    // return cadena.replace(/\s{2,}/g, ' ').trim();
     const a = this.myValidationsService.cleanUnnecessaryWhiteSpaces(cadena);
     return a;
   }
@@ -110,7 +108,9 @@ export class UserLoginComponent implements OnInit {
   login(event: Event) {
     event.preventDefault();
     if (this.form.valid) {
-      this.authService.loginUser(this.username, this.password)
+      const name = this.form.get('username').value;
+      const password = this.form.get('password').value;
+      this.authService.loginUser(name, password)
         .subscribe(
           res => {
             console.log('Autorizado: ' + JSON.stringify(res.username));

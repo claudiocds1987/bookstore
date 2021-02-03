@@ -5,7 +5,7 @@ import { UserService } from '../../../services/user.service';
 import { AlertService } from '../../../services/alert.service';
 import { Router } from '@angular/router';
 // formuluario
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { User } from 'src/app/models/user';
 
 @Component({
@@ -17,7 +17,7 @@ export class UserSignupComponent implements OnInit {
 
   form: FormGroup;
   submitted = false;
-  usernameClean = '';
+  //usernameClean = '';
   // form: FormGroup;
   password2 = '';
   user = {} as User;
@@ -34,6 +34,9 @@ export class UserSignupComponent implements OnInit {
     private router: Router
   ) {
     this.buildForm();
+
+    //this.form.get()
+
   }
 
   ngOnInit(): void {
@@ -54,10 +57,16 @@ export class UserSignupComponent implements OnInit {
     return this.form.controls;
   }
 
-  deleteWhiteSpace(cadena: string) {
-    // return cadena.replace(/\s{2,}/g, ' ').trim();
-    const a = this.myValidationsService.deleteWhiteSpice(cadena);
-    return a;
+  deleteWhiteSpace(control: FormControl) {
+    let value = control.value;
+    value = this.myValidationsService.deleteWhiteSpice(value);
+    control.setValue(value);
+  }
+
+  cleanUnnecessaryWhiteSpaces(control: FormControl) {
+    let value = control.value;
+    value = this.myValidationsService.cleanUnnecessaryWhiteSpaces(value);
+    control.setValue(value);
   }
 
   signUp(event: Event) {
@@ -66,7 +75,7 @@ export class UserSignupComponent implements OnInit {
     if (this.form.valid) {
       // obtengo todos los valores del formulario
       this.user = this.form.value;
-      this.user.username = this.usernameClean;
+      this.user.username = this.form.get('username').value;
       this.user.registration_date = this.currentDate;
       this.user.pass = this.form.value['password'];
       // check si username existe en la db.
@@ -87,12 +96,11 @@ export class UserSignupComponent implements OnInit {
                 else{
                   // signup
                   console.log('username e email permitidos');
-                  console.log('PASSWORD POR GRABAR: ' + this.user.pass);
                   this.authService.userSignup(this.user).subscribe(
                     resp => {
                       this.alertService.showSuccess('Gracias por registrarse', 'Registrado!');
                       // redirijo al login de usuario
-                      this.router.navigate(['login']);  
+                      this.router.navigate(['auth/login']);  
                     },
                     err => {
                       alert('Ups error de servidor!\n\n'+ 'no se pudo hacer el registro de usuario');

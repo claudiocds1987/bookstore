@@ -177,7 +177,6 @@ export class AddBookComponent implements OnInit {
   }
 
   cleanUnnecessaryWhiteSpaces(cadena: string) {
-    // return cadena.replace(/\s{2,}/g, ' ').trim();
     const a = this.myValidationsService.cleanUnnecessaryWhiteSpaces(cadena);
     return a;
   }

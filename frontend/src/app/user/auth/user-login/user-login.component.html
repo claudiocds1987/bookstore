@@ -16,15 +16,15 @@
             type="text"
             class="form-control"
             formControlName="username"
-            [(ngModel)]="username"
             placeholder="Nombre de usuario"
+            maxlength="16"
           />
           <p *ngIf="usernameExist && form.get('username').dirty">
             <small style="color: green;">Usuario valido.</small>
           </p>
-          <div *ngIf="!usernameExist && form.get('username').dirty">
+          <p *ngIf="!usernameExist && form.get('username').dirty">
             <small class="text-danger">No existe el nombre de usuario</small>
-          </div>
+          </p>
           <div
             *ngIf="form.get('username').errors && form.get('username').dirty"
           >
@@ -56,8 +56,8 @@
             type="password"
             class="form-control"
             formControlName="password"
-            [(ngModel)]="password"
             placeholder="Contraseña"
+            maxlength="16"
           />
           <div
             *ngIf="form.get('password').errors && form.get('password').dirty"
@@ -104,7 +104,9 @@
         <p>
           ¿No tiene una cuenta? <a routerLink="/auth/signup">Registrarme</a>
         </p>
-        <p class="text-danger" *ngIf="message != null">{{ message }}</p>
+        <p *ngIf="message != null">
+            <small class="text-danger">{{ message }}</small>
+        </p>
       </div>
     </div>
   </div>
