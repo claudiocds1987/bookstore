@@ -34,9 +34,6 @@ export class UserSignupComponent implements OnInit {
     private router: Router
   ) {
     this.buildForm();
-
-    //this.form.get()
-
   }
 
   ngOnInit(): void {

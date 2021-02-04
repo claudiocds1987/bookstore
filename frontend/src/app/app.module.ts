@@ -34,6 +34,8 @@ import { EditorialPanelComponent } from './admin/components/editorial-panel/edit
 import { BannerComponent } from './user/banner/banner.component';
 import { OrderComponent } from './user/order/order.component';
 
+import {NgxPaginationModule} from 'ngx-pagination'; // para los pagination
+
 // -------------INTERCEPTOR PARA EL TOKEN------------------------------------------------------
 import { HTTP_INTERCEPTORS} from '@angular/common/http';
 import { AuthInterceptorService } from './services/auth-interceptor.service';
@@ -94,6 +96,7 @@ import { MatConfirmDialogComponent } from './mat-confirm-dialog/mat-confirm-dial
     MatButtonModule,
     MatSidenavModule,
     MatListModule,
+    NgxPaginationModule,
     ToastrModule.forRoot() // ToastrModule added,
   ],
   providers: [

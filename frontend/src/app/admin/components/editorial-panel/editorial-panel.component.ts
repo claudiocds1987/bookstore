@@ -21,6 +21,7 @@ export class EditorialPanelComponent implements OnInit {
   editorial = {} as Editorial;
   searchResult: boolean;
   activated: boolean = true;
+  actualPage: number = 1; // para el pagination
 
   constructor(
     public editorialService: EditorialService,

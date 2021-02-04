@@ -22,6 +22,8 @@ export class BooksListComponent implements OnInit {
   filterArray: any[] = [];
   btnDisabled: boolean = true;
 
+  actualPage: number = 1; // para el pagination
+
   constructor(
     public bookService: BookService,
     public myValidationsService: MyValidationsService,

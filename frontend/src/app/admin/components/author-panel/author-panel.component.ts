@@ -21,6 +21,7 @@ export class AuthorPanelComponent implements OnInit {
   authorEdit = {} as Author; // declaro objeto Author para editar author
   editing = false;
   activated: boolean = true;
+  actualPage: number = 1; // para el pagination
 
   constructor(
     public authorService: AuthorService,

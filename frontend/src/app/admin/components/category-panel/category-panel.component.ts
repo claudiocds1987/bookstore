@@ -19,6 +19,7 @@ export class CategoryPanelComponent implements OnInit {
   category = {} as Category;
   searchResult: boolean;
   activated: boolean = true;
+  actualPage: number = 1; // para el pagination
 
   constructor(
     public categoryService: CategoryService,

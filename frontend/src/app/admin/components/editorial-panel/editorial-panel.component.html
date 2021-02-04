@@ -99,7 +99,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let ed of editorialArray; index as i">
+              <tr *ngFor="let ed of editorialArray | paginate: { itemsPerPage: 7, currentPage: actualPage }; let i = index">
                 <input type="hidden" value="{{ ed.id_editorial }}" />
                 <td>{{ i + 1 }}</td>
                 <td class="text-center">
@@ -164,6 +164,10 @@
               </tr>
             </tbody>
           </table>
+           <!-- controles del pagination -->
+           <pagination-controls
+           (pageChange)="actualPage = $event"
+         ></pagination-controls>
           <p *ngIf="!searchResult">
             <small class="text-danger">No se encontraron resultados</small>
           </p>
