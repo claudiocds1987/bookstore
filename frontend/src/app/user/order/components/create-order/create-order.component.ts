@@ -5,18 +5,20 @@ import {
   ElementRef,
   AfterViewInit,
   NgZone,
+  Pipe
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+
 // services
-import { CartService } from '../../services/cart.service';
-import { OrderService } from '../../services/order.service';
-import { OrderDetailService } from '../../services/order-detail.service';
-import { StripeService } from '../../services/stripe.service';
-import { SaleService } from '../../services/sale.service';
-import { SaleDetailService } from '../../services/sale-detail.service';
-import { UserService } from '../../services/user.service';
-import { AlertService } from '../../services/alert.service';
+import { CartService } from '../../../../services/cart.service';
+import { OrderService } from '../../../../services/order.service';
+import { OrderDetailService } from '../../../../services/order-detail.service';
+import { StripeService } from '../../../../services/stripe.service';
+import { SaleService } from '../../../../services/sale.service';
+import { SaleDetailService } from '../../../../services/sale-detail.service';
+import { UserService } from '../../../../services/user.service';
+import { AlertService } from '../../../../services/alert.service';
 // models
 import { Order } from 'src/app/models/order';
 import { OrderDetail } from 'src/app/models/orderDetail';
@@ -29,17 +31,15 @@ import {
   MatDialogRef,
 } from '@angular/material/dialog';
 // componente a mostrar cuando se utilice Material Dialog para eliminar un producto
-import { MatConfirmDialogComponent } from '../../mat-confirm-dialog/mat-confirm-dialog.component';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
-import * as ts from 'typescript';
-import { maxLength } from '@rxweb/reactive-form-validators';
+import { MatConfirmDialogComponent } from '../../../../mat-confirm-dialog/mat-confirm-dialog.component';
 
 @Component({
-  selector: 'app-order',
-  templateUrl: './order.component.html',
-  styleUrls: ['./order.component.scss'],
+  selector: 'app-create-order',
+  templateUrl: './create-order.component.html',
+  styleUrls: ['./create-order.component.scss']
 })
-export class OrderComponent implements OnInit, AfterViewInit {
+export class CreateOrderComponent implements OnInit, AfterViewInit {
+
   form: FormGroup;
   // variables para el api de pagos Stripe
   @ViewChild('cardInfo') cardInfo: ElementRef;
@@ -79,7 +79,7 @@ export class OrderComponent implements OnInit, AfterViewInit {
     private stripeService: StripeService,
     private router: Router,
     private dialog: MatDialog
-  ) {
+  ) { 
     this.buildForm();
     // Obteniendo la data de la localStorage 'shoppingCart' creada en cart.services.ts
     if (localStorage.getItem('shoppingCart') != null) {
@@ -106,7 +106,7 @@ export class OrderComponent implements OnInit, AfterViewInit {
     }
   }
 
-  //funcion que checkea si todos los inputs estan bien ?
+   //funcion que checkea si todos los inputs estan bien ?
   // public findInvalidControls() {
   //   const invalid = [];
   //   const controls = this.AddCustomerForm.controls;
@@ -339,10 +339,6 @@ export class OrderComponent implements OnInit, AfterViewInit {
               localStorage.removeItem('shoppingCart');
               // seteo el carrito a 0 items en el boton del carrito del componente main-nav
               this.cartService.cart.next([]);
-              // redirije a view purchase-completed !
-              //this.router.navigate(['purchase-completed']); !
-
-              ///////////////////////////////////////////////////////
               // this.dialog.open(le paso por parametro el componente mat-confirm-dialog.component.html);
               // es el componente que se va a mostrar en la ventana(modal) antes de eliminar el producto
               this.dialogRef = this.dialog.open(MatConfirmDialogComponent, {
@@ -354,14 +350,13 @@ export class OrderComponent implements OnInit, AfterViewInit {
               // me subscribo a lo que recibio el modal ("true" si confirmo, "false" si cancelo)
               this.dialogRef.afterClosed().subscribe((result) => {
                 if (result) {
-                  // aca solucionar problema, no redirije a user-purchases
-                  this.router.navigate(['/purchases/user-purchases']);
+                  // aca solucionar problema, no redirije a orders-list
+                  this.router.navigate(['/orders-list/orders-list']);
                 }
                 this.dialogRef = null;
                 /// si cancela va a home
                 this.router.navigate(['home']);
               });
-              //////////////////////////////////////////////////////
             },
             (err) => console.error('Falla al intentar pagar')
           );
@@ -445,3 +440,5 @@ export class OrderComponent implements OnInit, AfterViewInit {
     }
   }
 }
+
+

@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { Order } from 'src/app/models/order';
 import { User } from 'src/app/models/user';
-import { OrderService } from '../../../services/order.service';
-import { UserService } from '../../../services/user.service';
-import { AlertService } from '../../../services/alert.service';
+import { OrderService } from '../../../../services/order.service';
+import { UserService } from '../../../../services/user.service';
+import { AlertService } from '../../../../services/alert.service';
 
 @Component({
-  selector: 'app-user-purchases',
-  templateUrl: './user-purchases.component.html',
-  styleUrls: ['./user-purchases.component.scss']
+  selector: 'app-orders-list',
+  templateUrl: './orders-list.component.html',
+  styleUrls: ['./orders-list.component.scss']
 })
-export class UserPurchasesComponent implements OnInit {
+export class OrdersListComponent implements OnInit {
 
   constructor(
     public orderService: OrderService,
@@ -18,25 +18,28 @@ export class UserPurchasesComponent implements OnInit {
     public alertService: AlertService
   ) { }
 
-  ordersArray: Order[] = []; // array de tipo Order
+  ordersArray: Order[] = []; // ordersArray para hacer el .filter cuyo resultado se guarda en filterOrdersArray
   filterOrdersArray: Order[] = [];
   userArray: User[] = []; 
   date1: Date;
   date2: Date;
   btnDisabled: boolean = true;
   message = 'No se encontraron resultados'; 
- 
+  actualPage: number = 1 // para pagination
+
   ngOnInit(): void {
-    // localStorage 'username' fue creada en auth.service.ts funcion loginUser() cuando hizo login en user-login.component.ts
-    const username = localStorage.getItem('username');
-    this.getUserByUserName(username);
+     // localStorage 'username' fue creada en auth.service.ts funcion loginUser() cuando hizo login en user-login.component.ts
+     const username = localStorage.getItem('username');
+     this.getOrders(username);
   }
 
-  getUserByUserName(username: string) {
+  getOrders(username: string) {
+    // antes de obtener las orders traigo la data del usuario 
     this.userService.getUserByUserName(username)
       .subscribe(res => {
         console.log('res: ' + JSON.stringify(res));
-        this.userArray = res;
+        this.userArray = res; // obtengo la data del usuario
+        //paso el id_user porque en orders el user se identifica con su id
         this.getOrdersByUserId(this.userArray[0].id_user);
       },
         err => console.error('Error al obtener el username en ngOnInit ' + err)
@@ -46,6 +49,8 @@ export class UserPurchasesComponent implements OnInit {
   getOrdersByUserId(idUser: number) {
     this.orderService.getOrdersByUserId(idUser)
       .subscribe(res => {
+        // res lo guardo en los 2 array porque si se hace filterOrdersByDate() necesito filtrar array ordersArray
+        // cuyo resultado lo guardo en array filterOrdersArray
         this.ordersArray = res;
         this.filterOrdersArray = res;
       },
@@ -53,12 +58,9 @@ export class UserPurchasesComponent implements OnInit {
       );
   }
 
-
   filterOrdersByDate() {
-    if (this.date1 === undefined || this.date2 === undefined) {
-      
+    if (this.date1 === undefined || this.date2 === undefined) {    
       this.alertService.showWarning('Debe elegir un rango de fecha', '');
-      //alert('Debe elegir un rango de fecha');
     }
     else {
       this.btnDisabled = false; // se habilita btn listar todos
@@ -79,5 +81,5 @@ export class UserPurchasesComponent implements OnInit {
     this.getOrdersByUserId(this.userArray[0].id_user);
   }
 
-
 }
+

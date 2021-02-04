@@ -15,7 +15,7 @@ import { AdminGuard } from './admin.guard';
 import { AuthorPanelComponent } from './admin/components/author-panel/author-panel.component';
 import { CategoryPanelComponent } from './admin/components/category-panel/category-panel.component';
 import { EditorialPanelComponent } from './admin/components/editorial-panel/editorial-panel.component';
-import { OrderComponent } from './user/order/order.component';
+//import { OrderComponent } from './order/components/order/order.component';
 //import { UserLoginComponent } from './user/components/auth/user-login/user-login.component';
 //import { UserSignupComponent } from './user/components/auth/user-signup/user-signup.component';
 //import { UserPurchasesComponent } from './user-purchases/user-purchases/user-purchases.component';
@@ -34,8 +34,8 @@ const routes: Routes = [
       },
       {
         path: 'home',
+        // carga al modulo con todos sus componentes
         loadChildren: () => import('./user/home/home.module').then(m => m.HomeModule)
-        //component: HomeComponent
       },
       {
         path: 'auth',
@@ -43,12 +43,7 @@ const routes: Routes = [
       },
       {
         path: 'order',
-        component: OrderComponent
-        //loadChildren: () => import('./user/components/order/order.module').then(m => m.OrderModule)
-      },
-      {
-        path: 'purchases',
-        loadChildren: () => import('./user/user-purchases/user-purchases.module').then(m => m.UserPurchasesModule)
+        loadChildren: () => import('./user/order/order.module').then(m => m.OrderModule)
       },
       {
         path: 'book-detail/:idBook',

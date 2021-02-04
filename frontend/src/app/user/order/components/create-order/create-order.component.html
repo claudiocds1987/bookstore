@@ -167,13 +167,19 @@
                       <small class="text-danger">Complete este campo.</small>
                     </p>
                     <p *ngIf="phoneNumberField.hasError('pattern')">
-                      <small class="text-danger">Ingrese solo números sin espacios.</small>
+                      <small class="text-danger"
+                        >Ingrese solo números sin espacios.</small
+                      >
                     </p>
                     <p *ngIf="phoneNumberField.hasError('minlength')">
-                      <small class="text-danger">Ingrese un mínimo de 8 números.</small>
+                      <small class="text-danger"
+                        >Ingrese un mínimo de 8 números.</small
+                      >
                     </p>
                     <p *ngIf="phoneNumberField.hasError('maxlength')">
-                      <small class="text-danger">Hasta 12 números permitidos.</small>
+                      <small class="text-danger"
+                        >Hasta 12 números permitidos.</small
+                      >
                     </p>
                   </div>
                 </mat-form-field>

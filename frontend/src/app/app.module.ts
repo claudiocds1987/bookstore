@@ -32,7 +32,7 @@ import { AuthorPanelComponent } from './admin/components/author-panel/author-pan
 import { CategoryPanelComponent } from './admin/components/category-panel/category-panel.component';
 import { EditorialPanelComponent } from './admin/components/editorial-panel/editorial-panel.component';
 import { BannerComponent } from './user/banner/banner.component';
-import { OrderComponent } from './user/order/order.component';
+//import { OrderComponent } from './order/components/order/order.component';
 
 import {NgxPaginationModule} from 'ngx-pagination'; // para los pagination
 
@@ -73,7 +73,7 @@ import { MatConfirmDialogComponent } from './mat-confirm-dialog/mat-confirm-dial
     CategoryPanelComponent,
     EditorialPanelComponent,
     BannerComponent,
-    OrderComponent,
+    //OrderComponent,
     //UserSignupComponent,
     // UserPurchasesComponent,
     // UserPurchaseDetailComponent,

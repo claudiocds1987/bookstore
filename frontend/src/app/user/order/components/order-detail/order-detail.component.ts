@@ -2,20 +2,17 @@ import { Component, OnInit } from '@angular/core';
 // PARA OBTENER EL ID de la orden ENVIADO EN LA URL DESDE user-purchases.component.html al pulsar boton "detalle"
 import { ActivatedRoute, Params } from '@angular/router';
 
-import { OrderDetailService } from '../../../services/order-detail.service';
-import { BookService } from '../../../services/book.service';
-import { OrderDetail } from '../../../models/orderDetail';
-import { Book } from '../../../models/book';
+import { OrderDetailService } from '../../../../services/order-detail.service';
+import { BookService } from '../../../../services/book.service';
+import { OrderDetail } from '../../../../models/orderDetail';
+import { Book } from '../../../../models/book';
 
 @Component({
-  selector: 'app-user-purchase-detail',
-  templateUrl: './user-purchase-detail.component.html',
-  styleUrls: ['./user-purchase-detail.component.scss']
+  selector: 'app-order-detail',
+  templateUrl: './order-detail.component.html',
+  styleUrls: ['./order-detail.component.scss']
 })
-export class UserPurchaseDetailComponent implements OnInit {
-
-  // NOTA: utilizo el detalle de la orden para mostrar que el detalle de la compra
-  // porque seria lo mismo.
+export class OrderDetailComponent implements OnInit {
 
   orderDetailArray: OrderDetail[] = []; // array de tipo orderDetail
   bookArray: Book[] = [];
@@ -27,8 +24,8 @@ export class UserPurchaseDetailComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    // obtengo el idOrder que viene como parametro en la url
-    this.route.params.subscribe((params: Params) => {
+     // obtengo el idOrder que viene como parametro en la url
+     this.route.params.subscribe((params: Params) => {
       // params.IdOrder porque en app-routing.mdoule.ts el parametro esta declarado como idOrder
       console.log('idOrder recibido: ' + params.idOrder);
       const idOrder = params.idOrder;
@@ -72,3 +69,4 @@ export class UserPurchaseDetailComponent implements OnInit {
   }
 
 }
+
