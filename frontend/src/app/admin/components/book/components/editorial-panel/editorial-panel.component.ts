@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { EditorialService } from './../../../services/editorial.service';
-import { Editorial } from './../../../models/editoral';
-import { MyValidationsService } from './../../../services/my-validations.service';
+import { EditorialService } from '../../../../../services/editorial.service';
+import { Editorial } from '../../../../../models/editoral';
+import { MyValidationsService } from '../../../../../services/my-validations.service';
 import { FormControl, Validators } from '@angular/forms';
 
 @Component({

@@ -7,13 +7,18 @@ import { MaterialModule } from '../../../material/material.module';
 import { BookListComponent } from './components/book-list/book-list.component';
 import { NgxPaginationModule } from 'ngx-pagination'; // para los pagination
 import { EditBookComponent } from './components/edit-book/edit-book.component';
-
+import { AuthorPanelComponent } from './components/author-panel/author-panel.component';
+import { CategoryPanelComponent } from './components/category-panel/category-panel.component';
+import { EditorialPanelComponent } from './components/editorial-panel/editorial-panel.component';
 
 @NgModule({
   declarations: [
     CreateBookComponent,
     BookListComponent,
-    EditBookComponent
+    EditBookComponent,
+    AuthorPanelComponent,
+    CategoryPanelComponent,
+    EditorialPanelComponent
   ],
   imports: [
     CommonModule,

@@ -351,7 +351,7 @@ export class CreateOrderComponent implements OnInit, AfterViewInit {
               this.dialogRef.afterClosed().subscribe((result) => {
                 if (result) {
                   // aca solucionar problema, no redirije a orders-list
-                  this.router.navigate(['/orders-list/orders-list']);
+                  this.router.navigate(['order/orders-list']);
                 }
                 this.dialogRef = null;
                 /// si cancela va a home

@@ -11,9 +11,9 @@ import { AdminLoginComponent } from './admin/components/admin-login/admin-login.
 // Guardianes
 import { AdminGuard } from './admin.guard';
 
-import { AuthorPanelComponent } from './admin/components/author-panel/author-panel.component';
-import { CategoryPanelComponent } from './admin/components/category-panel/category-panel.component';
-import { EditorialPanelComponent } from './admin/components/editorial-panel/editorial-panel.component';
+import { AuthorPanelComponent } from './admin/components/book/components/author-panel/author-panel.component';
+import { CategoryPanelComponent } from './admin/components/book/components/category-panel/category-panel.component';
+import { EditorialPanelComponent } from './admin/components/book/components/editorial-panel/editorial-panel.component';
 //import { OrderComponent } from './order/components/order/order.component';
 //import { UserLoginComponent } from './user/components/auth/user-login/user-login.component';
 //import { UserSignupComponent } from './user/components/auth/user-signup/user-signup.component';
@@ -77,31 +77,11 @@ const routes: Routes = [
         path: 'book',
         loadChildren: () => import('./admin/components/book/book.module').then(m => m.BookModule)
       },
-      // {
-      //   path: 'add-book',
-      //   canActivate: [AdminGuard],
-      //   component: AddBookComponent
-      // },
-      {
-        path: 'author-panel',
-        canActivate: [AdminGuard],
-        component: AuthorPanelComponent
-      },
-      {
-        path: 'category-panel',
-        canActivate: [AdminGuard],
-        component: CategoryPanelComponent
-      },
       {
         path: 'editorial-panel',
         canActivate: [AdminGuard],
         component: EditorialPanelComponent
       },
-      // {
-      //   path: 'editar-libro/:id',
-      //   canActivate: [AdminGuard],
-      //   component: EditFormBookComponent
-      // }
     ]
   },
 ];

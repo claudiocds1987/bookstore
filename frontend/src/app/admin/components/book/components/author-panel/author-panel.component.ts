@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AuthorService } from './../../../services/author.service';
-import { Author } from './../../../models/author';
-import { MyValidationsService } from './../../../services/my-validations.service';
+import { AuthorService } from '../../../../../services/author.service';
+import { Author } from '../../../../../models/author';
+import { MyValidationsService } from '../../../../../services/my-validations.service';
 import { FormControl, Validators } from '@angular/forms';
 
 @Component({

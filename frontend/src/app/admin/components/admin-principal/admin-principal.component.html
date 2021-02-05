@@ -89,22 +89,15 @@
       <div class="modal-body">
         <ul>
           <li>
-            <a [routerLink]="'/book/create-book'"data-dismiss="modal" aria-label="Close"
-              >
-              <mat-icon style="vertical-align: middle">add_circle</mat-icon>
-              Agregar libro</a
-            >
-          </li>
-          <li>
             <a [routerLink]="'/book/book-list'" data-dismiss="modal" aria-label="Close"
               >
               <mat-icon style="vertical-align: middle">build_circle</mat-icon>
-              Panel de libro (listar, editar, eliminar libros)</a
+              Panel de libro (Agregar, listar, editar, eliminar)</a
             >
           </li>
           <li>
             <a
-              routerLink="/author-panel"
+              [routerLink]="'/book/author-panel'"
               data-dismiss="modal"
               aria-label="Close"
             >
@@ -114,7 +107,7 @@
           </li>
           <li>
             <a
-              routerLink="/editorial-panel"
+            [routerLink]="'/book/editorial-panel'"
               data-dismiss="modal"
               aria-label="Close"
             >
@@ -124,7 +117,7 @@
           </li>
           <li>
             <a
-              routerLink="/category-panel"
+              [routerLink]="'/book/category-panel'"
               data-dismiss="modal"
               aria-label="Close"
             >
