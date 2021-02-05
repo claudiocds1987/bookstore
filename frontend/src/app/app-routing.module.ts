@@ -4,9 +4,8 @@ import { AdminPrincipalComponent } from './admin/components/admin-principal/admi
 import { AdminLayoutComponent } from './admin-layout/admin-layout.component';
 import { UserLayoutComponent } from './user/user-layout/user-layout.component';
 import { ClientsComponent } from './admin/components/clients/clients.component';
-import { BooksListComponent } from './admin/components/books-list/books-list.component';
-import { AddBookComponent } from './admin/components/add-book/add-book.component';
-import { EditFormBookComponent } from './admin/components/edit-form-book/edit-form-book.component';
+// import { BooksListComponent } from './admin/components/books-list/books-list.component';
+// import { EditFormBookComponent } from './admin/components/edit-form-book/edit-form-book.component';
 import { AdminLoginComponent } from './admin/components/admin-login/admin-login.component';
 //import { HomeComponent } from './user/components/home/home/home.component';
 // Guardianes
@@ -75,10 +74,14 @@ const routes: Routes = [
         component: ClientsComponent
       },
       {
-        path: 'add-book',
-        canActivate: [AdminGuard],
-        component: AddBookComponent
+        path: 'book',
+        loadChildren: () => import('./admin/components/book/book.module').then(m => m.BookModule)
       },
+      // {
+      //   path: 'add-book',
+      //   canActivate: [AdminGuard],
+      //   component: AddBookComponent
+      // },
       {
         path: 'author-panel',
         canActivate: [AdminGuard],
@@ -94,16 +97,11 @@ const routes: Routes = [
         canActivate: [AdminGuard],
         component: EditorialPanelComponent
       },
-      {
-        path: 'books-list',
-        canActivate: [AdminGuard],
-        component: BooksListComponent
-      },
-      {
-        path: 'editar-libro/:id',
-        canActivate: [AdminGuard],
-        component: EditFormBookComponent
-      }
+      // {
+      //   path: 'editar-libro/:id',
+      //   canActivate: [AdminGuard],
+      //   component: EditFormBookComponent
+      // }
     ]
   },
 ];

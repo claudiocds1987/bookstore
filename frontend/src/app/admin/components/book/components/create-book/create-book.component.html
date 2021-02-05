@@ -30,7 +30,7 @@
                 </p>
               </div>
             </div>
-  
+
             <div class="form-group col-md-3 mb-3">
               <label>Año</label>
               <input
@@ -64,7 +64,7 @@
               </div>
             </div>
           </div>
-  
+
           <div class="box">
             <div class="form-group">
               <label>Autor</label>
@@ -85,7 +85,10 @@
                   {{ author.name }}
                 </option>
               </select>
-              <div *ngIf="form.get('author').invalid && form.dirty" class="error">
+              <div
+                *ngIf="form.get('author').invalid && form.dirty"
+                class="error"
+              >
                 <p *ngIf="form.get('author').hasError('invalid')">
                   <small class="text-danger">Este campo es obligatorio!</small>
                 </p>
@@ -96,7 +99,7 @@
                 >Nuevo autor</a
               >
             </div>
-  
+
             <div class="form-group">
               <label>Categoria</label>
               <select
@@ -164,7 +167,7 @@
               >
             </div>
           </div>
-  
+
           <div class="form-group">
             <label>Descripción</label>
             <textarea
@@ -195,7 +198,7 @@
               </p>
             </div>
           </div>
-  
+
           <div class="form-row">
             <div class="form-group col-md-6 mb-3">
               <label>Cantidad</label>
@@ -207,7 +210,9 @@
                 placeholder="Cantidad"
               />
               <div
-                *ngIf="form.get('quantity').errors && form.get('quantity').dirty"
+                *ngIf="
+                  form.get('quantity').errors && form.get('quantity').dirty
+                "
               >
                 <p
                   class="text-center mt-1"
@@ -223,7 +228,7 @@
                 </p>
               </div>
             </div>
-  
+
             <div class="form-group col-md-6 mb-3">
               <label>Precio</label>
               <input
@@ -244,7 +249,7 @@
               </div>
             </div>
           </div>
-  
+
           <div class="form-group">
             <label>Imagen</label>
             <input
@@ -260,7 +265,7 @@
               <a class="button" (click)="cleanImgPreview()">Cancelar imagen</a>
             </div>
           </div>
-  
+
           <div class="text-center">
             <button
               [disabled]="form.invalid"
@@ -281,5 +286,4 @@
       </div>
     </div>
   </div>
-  
 </div>

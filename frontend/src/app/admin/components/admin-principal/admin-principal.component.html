@@ -89,14 +89,14 @@
       <div class="modal-body">
         <ul>
           <li>
-            <a routerLink="/add-book" data-dismiss="modal" aria-label="Close"
+            <a [routerLink]="'/book/create-book'"data-dismiss="modal" aria-label="Close"
               >
               <mat-icon style="vertical-align: middle">add_circle</mat-icon>
               Agregar libro</a
             >
           </li>
           <li>
-            <a routerLink="/books-list" data-dismiss="modal" aria-label="Close"
+            <a [routerLink]="'/book/book-list'" data-dismiss="modal" aria-label="Close"
               >
               <mat-icon style="vertical-align: middle">build_circle</mat-icon>
               Panel de libro (listar, editar, eliminar libros)</a

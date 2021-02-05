@@ -1,18 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { BookService } from './../../../services/book.service';
-import { MyValidationsService } from './../../../services/my-validations.service';
-import { AuthorService } from './../../../services/author.service';
-import { Book } from 'src/app/models/book';
-import { Observable } from 'rxjs';
-import { map, filter } from 'rxjs/operators';
+import { BookService } from './../../../../../services/book.service';
+import { MyValidationsService } from './../../../../../services/my-validations.service';
+import { AuthorService } from './../../../../../services/author.service';
 import { Author } from 'src/app/models/author';
 
 @Component({
-  selector: 'app-books-list',
-  templateUrl: './books-list.component.html',
-  styleUrls: ['./books-list.component.scss']
+  selector: 'app-book-list',
+  templateUrl: './book-list.component.html',
+  styleUrls: ['./book-list.component.scss']
 })
-export class BooksListComponent implements OnInit { 
+export class BookListComponent implements OnInit {
+
   inputValue;
   // declaro como "any" porque bookService.getOneBookWithAuthorName() devuelve un campo autors.name as "Autor"
   // entonces si desde el html quiero mostrar esa propiedad si es de tipo Book no la va a reconocer
@@ -111,6 +109,5 @@ export class BooksListComponent implements OnInit {
       }
     }   
   }
-
 
 }

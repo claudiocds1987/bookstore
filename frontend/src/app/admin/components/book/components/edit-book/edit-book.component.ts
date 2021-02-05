@@ -1,27 +1,27 @@
 import { Component, OnInit} from '@angular/core';
-import { Router, ActivatedRoute, Params, ParamMap } from '@angular/router';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 import { FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { Book } from 'src/app/models/book';
 import { Author } from 'src/app/models/author';
 import { Category } from 'src/app/models/category';
 import { Editorial } from 'src/app/models/editoral';
 import { Observable } from 'rxjs';
-import { BookService } from './../../../services/book.service';
-import { AuthorService } from './../../../services/author.service';
-import { CategoryService } from './../../../services/category.service';
-import { EditorialService } from './../../../services/editorial.service';
-import { MyValidationsService } from './../../../services/my-validations.service';
+import { BookService } from './../../../../../services/book.service';
+import { AuthorService } from './../../../../../services/author.service';
+import { CategoryService } from './../../../../../services/category.service';
+import { EditorialService } from './../../../../../services/editorial.service';
+import { MyValidationsService } from './../../../../../services/my-validations.service';
 import { map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
-import { NONE_TYPE } from '@angular/compiler';
 
 
 @Component({
-  selector: 'app-edit-form-book',
-  templateUrl: './edit-form-book.component.html',
-  styleUrls: ['./edit-form-book.component.scss']
+  selector: 'app-edit-book',
+  templateUrl: './edit-book.component.html',
+  styleUrls: ['./edit-book.component.scss']
 })
-export class EditFormBookComponent implements OnInit {
+export class EditBookComponent implements OnInit {
+
   form: FormGroup;
   idBook_url: string;
   selectedIdAut: string = '';
@@ -45,7 +45,6 @@ export class EditFormBookComponent implements OnInit {
   public arrayToIterate = new Set([]);
   mostrar = true;
   imageDefault;
-  // gg = 'localhost:4000/';
 
   constructor(
     public bookService: BookService,
@@ -57,9 +56,9 @@ export class EditFormBookComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private activeRoute: ActivatedRoute
-  ) {
+  ) { 
     this.buildForm(); // function buildForm
-   }
+  }
 
   ngOnInit(): void {
     this.activeRoute.params.subscribe((params: Params) => {
@@ -287,7 +286,6 @@ export class EditFormBookComponent implements OnInit {
     this.book.name = this.cleanUnnecessaryWhiteSpaces(this.book.name);
     // convierto solo la 1er letra de cada palabra a mayuscula (capitalize)
     this.book.name = this.myValidationsService.textCapitalize(this.book.name);
-    alert('capitalize: ' + this.book.name);
     // actualizo los datos
     this.bookService.updateBook(this.book).subscribe(
       res => {
@@ -298,11 +296,10 @@ export class EditFormBookComponent implements OnInit {
         this.selectedIdEdi = '';
         // para limpiar el formulario
         this.resetForm();
-        this.router.navigateByUrl('books-list');
+        this.router.navigateByUrl('book/book-list');
       },
       err => alert('No se pudo actualizar')
     );
   }
-
 
 }

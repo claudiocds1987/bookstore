@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { BookService } from './../../../services/book.service';
-import { AuthorService } from './../../../services/author.service';
-import { CategoryService } from './../../../services/category.service';
-import { EditorialService } from './../../../services/editorial.service';
-import { MyValidationsService } from './../../../services/my-validations.service';
+import { BookService } from '../../../../../services/book.service';
+import { AuthorService } from '../../../../../services/author.service';
+import { CategoryService } from '../../../../../services/category.service';
+import { EditorialService } from '../../../../../services/editorial.service';
+import { MyValidationsService } from '../../../../../services/my-validations.service';
 // formuluario
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Book } from 'src/app/models/book';
@@ -11,15 +11,14 @@ import { Author } from 'src/app/models/author';
 import { Category } from 'src/app/models/category';
 import { Editorial } from 'src/app/models/editoral';
 import { Observable } from 'rxjs';
-
 import { HttpClient } from '@angular/common/http'; // para imagen
 
 @Component({
-  selector: 'app-add-book',
-  templateUrl: './add-book.component.html',
-  styleUrls: ['./add-book.component.scss']
+  selector: 'app-create-book',
+  templateUrl: './create-book.component.html',
+  styleUrls: ['./create-book.component.scss']
 })
-export class AddBookComponent implements OnInit {
+export class CreateBookComponent implements OnInit {
 
   form: FormGroup;
   selectedIdAut: string = '';
@@ -30,7 +29,7 @@ export class AddBookComponent implements OnInit {
   editorialList$: Observable<Editorial[]>;
   bookList$: Observable<Book[]>;
   image$: Observable<any>;
-  book = {} as Book; // declaro un objeto Book vacio, no es un array
+  book = {} as Book; // declaro un objeto Book vacio
   // obteniendo año actual
   today = new Date();
   year = this.today.getFullYear();
@@ -52,7 +51,7 @@ export class AddBookComponent implements OnInit {
     private http: HttpClient,
     public myValidationsService: MyValidationsService,
     private formBuilder: FormBuilder
-  ) {
+  ) { 
     this.buildForm(); // function buildForm
   }
 
@@ -204,6 +203,5 @@ export class AddBookComponent implements OnInit {
       onlySelf: true
     });
   }
-
 
 }
