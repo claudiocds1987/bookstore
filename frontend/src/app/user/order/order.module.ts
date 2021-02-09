@@ -9,6 +9,7 @@ import { OrderRoutingModule } from './order-routing.module';
 import { NgxPaginationModule } from 'ngx-pagination'; // para los pagination
 
 
+
 @NgModule({
   declarations: [
     OrdersListComponent,

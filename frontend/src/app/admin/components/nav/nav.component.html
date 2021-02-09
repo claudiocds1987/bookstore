@@ -30,15 +30,14 @@
           Libros
         </a>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <a class="dropdown-item" [routerLink]="'book/book-list'">Listar/editar</a>
-          <a class="dropdown-item" [routerLink]="'/book/create-book'">Agregar</a>
-          <a class="dropdown-item" [routerLink]="'book/author-panel'">Autor</a>
-          <a class="dropdown-item" [routerLink]="'/book/editorial-panel'">Editorial</a>
-          <a class="dropdown-item" [routerLink]="'book/category-panel'">Categoria</a>
+          <a class="dropdown-item" [routerLink]="'book/book-list'">Panel libro</a>
+          <a class="dropdown-item" [routerLink]="'book/author-panel'">Panel autor</a>
+          <a class="dropdown-item" [routerLink]="'/book/editorial-panel'">Panel editorial</a>
+          <a class="dropdown-item" [routerLink]="'book/category-panel'">Panel categoria</a>
         </div>
       </div>     
       <a routerLinkActive="activo" [routerLink]="'admin-principal'">Home</a>
-      <a [routerLink]="'admin-principal'">Clientes</a>
+      <a [routerLink]="'customer/customer-list'">Clientes</a>
       <a [routerLink]="'admin-principal'">Ventas</a>
     </nav>
   </div>

@@ -4,6 +4,7 @@ import { AuthorService } from '../../../../../services/author.service';
 import { CategoryService } from '../../../../../services/category.service';
 import { EditorialService } from '../../../../../services/editorial.service';
 import { MyValidationsService } from '../../../../../services/my-validations.service';
+import { AlertService } from '../../../../../services/alert.service';
 // formuluario
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Book } from 'src/app/models/book';
@@ -12,6 +13,9 @@ import { Category } from 'src/app/models/category';
 import { Editorial } from 'src/app/models/editoral';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http'; // para imagen
+
+//import { CurrencyPipe, DecimalPipe } from '@angular/common';
+
 
 @Component({
   selector: 'app-create-book',
@@ -42,9 +46,13 @@ export class CreateBookComponent implements OnInit {
   imgPreview: string | ArrayBuffer;
 
   newId: number;
-
+  public numeroConFormato;
   constructor(
+    // private _decimalPipe: DecimalPipe, //???
+    // private currencyPipe: CurrencyPipe,
+
     public bookService: BookService,
+    public alertService: AlertService,
     public authorService: AuthorService,
     public categoryService: CategoryService,
     public editorialService: EditorialService,
@@ -53,6 +61,24 @@ export class CreateBookComponent implements OnInit {
     private formBuilder: FormBuilder
   ) { 
     this.buildForm(); // function buildForm
+
+    // ---------------------SE PEUDE BORRAR -------------------------------
+    // this.form.get('price').valueChanges.subscribe(value => {
+    //   let decimal_formatted = this._decimalPipe.transform(value, "1.2-2");
+    //   //this.form.get('price').setValue(decimal_formatted);
+    //   console.log('Y Q ONDA: ' + decimal_formatted);       
+    //   })
+    // -------------------------------------------------------------------
+    // cuando escribe el precio 
+    // this.form.valueChanges.subscribe(formulario => {
+    //   if(formulario.price){
+    //     this.form.patchValue({
+    //       price: this.currencyPipe.transform(formulario.price.replace(/\D/g, '').replace(/^0+/, ''), '', '', '1.0-0')
+    //     }, {emitEvent: false});
+    //   }
+    // })
+
+
   }
 
   ngOnInit(): void {
@@ -70,7 +96,8 @@ export class CreateBookComponent implements OnInit {
       editorial: ['', [Validators.required]],
       description: ['', [Validators.required, Validators.maxLength(2500)]],
       quantity: ['', [Validators.required]],
-      price: [0, [Validators.required]],
+      //!!price: [0, [Validators.required]],
+      price: ['', [Validators.required]],
       image: [''],
       state: [true]
     });
@@ -83,6 +110,9 @@ export class CreateBookComponent implements OnInit {
       if (confirm('¿Esta seguro/a que desea agregar un nuevo libro?')) {
         // obtengo todos los valores del formulario
         this.book = this.form.value;
+        // const precio = this.form.get('price').value;
+        // this.book.price = parseInt(precio);
+        // console.log('CACA ' + this.book.price);
         this.book.id_author = parseInt(this.selectedIdAut);
         this.book.id_editorial = parseInt(this.selectedIdEdi);
         this.book.id_category = parseInt(this.selectedIdCat);
@@ -130,7 +160,7 @@ export class CreateBookComponent implements OnInit {
           // guardo los datos
           this.bookService.createBook(this.book).subscribe(
             resp => {
-              alert('El libro se ha guardado exitosamente ' + resp);
+              this.alertService.showSuccess('El libro se ha guardado exitosamente!','');
               // vuelvo a a traer los libros
               this.bookList$ = this.bookService.getBooksWithAuthorName();
               this.resetForm();

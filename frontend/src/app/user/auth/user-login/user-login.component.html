@@ -85,7 +85,7 @@
 
         <div class="text-center">
           <button
-            [disabled]="form.invalid"
+            [disabled]="form.invalid || usernameExist === false"
             type="submit"
             mat-raised-button
             color="color-blue-light"

@@ -11,8 +11,8 @@ import { AdminLoginComponent } from './admin/components/admin-login/admin-login.
 // Guardianes
 import { AdminGuard } from './admin.guard';
 
-import { AuthorPanelComponent } from './admin/components/book/components/author-panel/author-panel.component';
-import { CategoryPanelComponent } from './admin/components/book/components/category-panel/category-panel.component';
+//import { AuthorPanelComponent } from './admin/components/book/components/author-panel/author-panel.component';
+//import { CategoryPanelComponent } from './admin/components/book/components/category-panel/category-panel.component';
 import { EditorialPanelComponent } from './admin/components/book/components/editorial-panel/editorial-panel.component';
 //import { OrderComponent } from './order/components/order/order.component';
 //import { UserLoginComponent } from './user/components/auth/user-login/user-login.component';
@@ -69,10 +69,15 @@ const routes: Routes = [
         component: AdminPrincipalComponent
       },
       {
-        path: 'clientes',
+        path: 'customer',
         canActivate: [AdminGuard],
-        component: ClientsComponent
+        loadChildren: () => import('./admin/components/customer/customer.module').then(m => m.CustomerModule)
       },
+      // {
+      //   path: 'clientes',
+      //   canActivate: [AdminGuard],
+      //   component: ClientsComponent
+      // },
       {
         path: 'book',
         loadChildren: () => import('./admin/components/book/book.module').then(m => m.BookModule)

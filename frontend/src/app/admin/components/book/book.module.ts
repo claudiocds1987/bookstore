@@ -10,6 +10,7 @@ import { EditBookComponent } from './components/edit-book/edit-book.component';
 import { AuthorPanelComponent } from './components/author-panel/author-panel.component';
 import { CategoryPanelComponent } from './components/category-panel/category-panel.component';
 import { EditorialPanelComponent } from './components/editorial-panel/editorial-panel.component';
+import { CurrencyPipe, DecimalPipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,12 @@ import { EditorialPanelComponent } from './components/editorial-panel/editorial-
     ReactiveFormsModule,
     NgxPaginationModule,
     MaterialModule
-  ]
+  ],
+  providers: [CurrencyPipe, DecimalPipe]
+  // providers: [{
+  //   provide: LOCALE_ID,
+  //   useValue: 'es-Ar'
+  //   },
+  // ]
 })
 export class BookModule { }

@@ -62,6 +62,10 @@ export class OrdersListComponent implements OnInit {
     if (this.date1 === undefined || this.date2 === undefined) {    
       this.alertService.showWarning('Debe elegir un rango de fecha', '');
     }
+    else if(this.date1 > this.date2){
+      this.alertService.showError('Fecha 1 no puede ser mayor a Fecha 2', 'ERROR DE FECHAS');
+    }
+
     else {
       this.btnDisabled = false; // se habilita btn listar todos
       const startDate = new Date(this.date1);

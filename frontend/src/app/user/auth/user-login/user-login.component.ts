@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { MyValidationsService } from '../../../services/my-validations.service';
 // formuluario
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../../services/auth.service';
 import { CartService } from '../../../services/cart.service';
 import { TokenService } from '../../../services/token.service';
 import { AlertService } from '../../../services/alert.service';
 import { Router } from '@angular/router';
 
-import { debounceTime } from 'rxjs/operators';
+import { debounceTime, map } from 'rxjs/operators';
 import { UserService } from '../../../services/user.service';
 
 @Component({
