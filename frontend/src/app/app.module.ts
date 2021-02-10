@@ -10,7 +10,6 @@ import { AdminPrincipalComponent } from './admin/components/admin-principal/admi
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FooterComponent } from './admin/components/footer/footer.component';
 import { AdminLayoutComponent } from './admin-layout/admin-layout.component';
-import { ClientsComponent } from './admin/components/clients/clients.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MatIconModule } from '@angular/material/icon';
 import { UserLayoutComponent } from './user/user-layout/user-layout.component';
@@ -45,7 +44,6 @@ import { MatConfirmDialogComponent } from './mat-confirm-dialog/mat-confirm-dial
     AdminPrincipalComponent,
     FooterComponent,
     AdminLayoutComponent,
-    ClientsComponent,
     UserLayoutComponent,
     HeaderComponent,
     UserFooterComponent,

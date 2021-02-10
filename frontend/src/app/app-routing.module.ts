@@ -3,22 +3,10 @@ import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 import { AdminPrincipalComponent } from './admin/components/admin-principal/admin-principal.component';
 import { AdminLayoutComponent } from './admin-layout/admin-layout.component';
 import { UserLayoutComponent } from './user/user-layout/user-layout.component';
-import { ClientsComponent } from './admin/components/clients/clients.component';
-// import { BooksListComponent } from './admin/components/books-list/books-list.component';
-// import { EditFormBookComponent } from './admin/components/edit-form-book/edit-form-book.component';
 import { AdminLoginComponent } from './admin/components/admin-login/admin-login.component';
-//import { HomeComponent } from './user/components/home/home/home.component';
 // Guardianes
 import { AdminGuard } from './admin.guard';
-
-//import { AuthorPanelComponent } from './admin/components/book/components/author-panel/author-panel.component';
-//import { CategoryPanelComponent } from './admin/components/book/components/category-panel/category-panel.component';
 import { EditorialPanelComponent } from './admin/components/book/components/editorial-panel/editorial-panel.component';
-//import { OrderComponent } from './order/components/order/order.component';
-//import { UserLoginComponent } from './user/components/auth/user-login/user-login.component';
-//import { UserSignupComponent } from './user/components/auth/user-signup/user-signup.component';
-//import { UserPurchasesComponent } from './user-purchases/user-purchases/user-purchases.component';
-//import { UserPurchaseDetailComponent } from './user-purchases/user-purchase-detail/user-purchase-detail.component';
 import { BookDetailComponent } from './user/book-detail/book-detail.component';
 
 const routes: Routes = [
@@ -73,11 +61,6 @@ const routes: Routes = [
         canActivate: [AdminGuard],
         loadChildren: () => import('./admin/components/customer/customer.module').then(m => m.CustomerModule)
       },
-      // {
-      //   path: 'clientes',
-      //   canActivate: [AdminGuard],
-      //   component: ClientsComponent
-      // },
       {
         path: 'book',
         loadChildren: () => import('./admin/components/book/book.module').then(m => m.BookModule)
