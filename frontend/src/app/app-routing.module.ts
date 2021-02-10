@@ -6,7 +6,7 @@ import { UserLayoutComponent } from './user/user-layout/user-layout.component';
 import { AdminLoginComponent } from './admin/components/admin-login/admin-login.component';
 // Guardianes
 import { AdminGuard } from './admin.guard';
-import { EditorialPanelComponent } from './admin/components/book/components/editorial-panel/editorial-panel.component';
+//import { EditorialPanelComponent } from './admin/components/book/components/editorial-panel/editorial-panel.component';
 import { BookDetailComponent } from './user/book-detail/book-detail.component';
 
 const routes: Routes = [
@@ -35,7 +35,7 @@ const routes: Routes = [
       {
         path: 'book-detail/:idBook',
         component: BookDetailComponent
-      }
+      },
     ]
   },
   {
@@ -65,13 +65,17 @@ const routes: Routes = [
         path: 'book',
         loadChildren: () => import('./admin/components/book/book.module').then(m => m.BookModule)
       },
-      {
-        path: 'editorial-panel',
-        canActivate: [AdminGuard],
-        component: EditorialPanelComponent
-      },
+      // {
+      //   path: 'editorial-panel',
+      //   canActivate: [AdminGuard],
+      //   component: EditorialPanelComponent
+      // },
     ]
   },
+  {
+    path: '**',
+    loadChildren: () => import('./page-not-found/page-not-found.module').then(m => m.PageNotFoundModule)
+  }, 
 ];
 
 @NgModule({
