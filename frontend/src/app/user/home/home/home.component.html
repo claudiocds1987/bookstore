@@ -73,7 +73,7 @@
     <div *ngIf="bookList$ | async as books">
       <div *ngIf="books.length > 0" class="book-grid">
         <div
-          *ngFor="let book of books"
+          *ngFor="let book of books | paginate: { itemsPerPage: 15, currentPage: actualPage }"
           class="card rounded shadow-sm border-0 fade-in"
         >
           <img [src]="book.url_image" [alt]="book.name" class="crop-image" />
@@ -101,4 +101,9 @@
       </div>
     </div>
   </div>
+  <!-- controles del pagination -->
+  <pagination-controls
+  class="custom-pagination"
+  (pageChange)="actualPage = $event"
+></pagination-controls>
 </div>

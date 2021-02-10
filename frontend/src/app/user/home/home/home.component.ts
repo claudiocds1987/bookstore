@@ -18,9 +18,8 @@ export class HomeComponent implements OnInit {
   inputValue = '';
   hideButton = false;
   username: string;
-  //btnDisabled: boolean = true;
-
   ocultar = false;
+  actualPage: number = 1;
 
   constructor(
     public bookService: BookService,

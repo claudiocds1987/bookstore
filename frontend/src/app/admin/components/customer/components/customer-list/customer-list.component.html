@@ -1,46 +1,58 @@
 <div class="container-fluid fondo">
   <div class="container box-principal">
-    <table class="table table-hover">
-      <thead class="thead-dark">
-        <tr class="text-center">
-          <th>#</th>
-          <th>Username</th>
-          <th>Email</th>
-          <th>Fecha de registro</th>
-          <th>
-            <input
-              class="form-control"
-              type="search"
-              placeholder="Buscar cliente por username"
-              aria-label="Search"
-              [formControl]="searchValue"
-            />
-          </th>
-        </tr>
-      </thead>
-      <tbody *ngIf="customers.length > 0">
-        <tr
-          *ngFor="
-            let customer of filteredCustomers
-              | paginate: { itemsPerPage: 7, currentPage: actualPage };
-            let i = index
-          "
-          class="text-center"
-        >
-          <th class="align-middle" scope="row">{{ i + 1 }}</th>
-          <td>{{ customer.username }}</td>
-          <td>{{ customer.email }}</td>
-          <td>{{ customer.registration_date | date: "dd/MM/yyyy" }}</td>
-          <td>
-            <a style="text-decoration: none" mat-raised-button>
-              <mat-icon>details</mat-icon>
-              Ventas
-            </a>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <!-- controles del pagination -->
-    <pagination-controls (pageChange)="actualPage = $event"></pagination-controls>
-  </div>  
+    <div class="card">
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <thead class="thead-dark">
+            <tr class="text-center">
+              <th>#</th>
+              <th>Username</th>
+              <th>Email</th>
+              <th>Fecha de registro</th>
+              <th>
+                <input
+                  class="form-control"
+                  type="search"
+                  placeholder="Buscar cliente por username"
+                  aria-label="Search"
+                  [formControl]="searchValue"
+                />
+              </th>
+            </tr>
+          </thead>
+          <tbody *ngIf="customers.length > 0">
+            <tr
+              *ngFor="
+                let customer of filteredCustomers
+                  | paginate: { itemsPerPage: 7, currentPage: actualPage };
+                let i = index
+              "
+              class="text-center text-muted"
+            >
+              <td class="align-middle" scope="row">{{ i + 1 }}</td>
+              <td>{{ customer.username }}</td>
+              <td>{{ customer.email }}</td>
+              <td>{{ customer.registration_date | date: "dd/MM/yyyy" }}</td>
+              <td>
+                <a style="text-decoration: none" mat-raised-button color="blue">
+                  <i
+                    style="color: #2199e8"
+                    class="fa fa-shopping-bag"
+                    aria-hidden="true"
+                  ></i>
+                  Ventas
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <!-- controles del pagination -->
+        <pagination-controls
+          class="custom-pagination"
+          (pageChange)="actualPage = $event"
+        ></pagination-controls>
+      </div>
+    </div>
+    
+  </div>
 </div>
