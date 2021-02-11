@@ -4,14 +4,11 @@ import { QueryResult } from 'pg'
 // en consola poner npm run dev (para iniciar el servidor?)
 import { pool } from '../database'
 
-
-export const createSaleDetail = async (req: Request, res: Response): Promise<Response> => {
-    
+export const createSaleDetail = async (req: Request, res: Response): Promise<Response> => {   
     //evalúo si hay datos null o undefined en el cuerpo
     if (!req.body.id_sale || !req.body.id_book || !req.body.quantity || !req.body.price) {
         res.status(400).send('FALTA CONTENIDO EN EL CUERPO');
     }
-
     //recibo los datos (de un form, insomnia rest, etc..)
     const { id_sale, id_book, quantity, price } = (req.body);
     console.log(id_sale, id_book, quantity, price)
@@ -38,6 +35,32 @@ export const createSaleDetail = async (req: Request, res: Response): Promise<Res
     catch (e) {
         console.log(e);
         return res.status(500).json('Error, no se pudo insertar el detalle de venta en la base de datos');
+    }
+}
+
+
+
+
+
+export const getSaleDetail = async (req: Request, res: Response): Promise<Response> => {
+    
+    //evalúo si hay datos null o undefined en el cuerpo
+    if (!req.params.id_sale) {
+        res.status(400).send('FALTA CONTENIDO EN EL CUERPO');
+    }
+
+    //recibo los datos (de un form, insomnia rest, etc..)
+    console.log(req.params.id_sale)
+    // el id_sale en la db es autonumerico no hace falta
+    let idSale = parseInt(req.params.id_sale);
+  
+    try {
+        const response: QueryResult = await pool.query('SELECT * FROM sales_detail where id_sale = $1', [idSale]);
+        return res.status(200).json(response.rows);
+    }
+    catch (e) {
+        console.log(e);
+        return res.status(500).json('Internal server error');
     }
 }
 

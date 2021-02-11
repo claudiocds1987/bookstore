@@ -5,4 +5,5 @@ const router = express_1.Router();
 const sales_controller_1 = require("../controllers/sales.controller");
 router.post('/sales/create', sales_controller_1.createSale);
 router.get('/sales/lastIdSale', sales_controller_1.getLastIdSale);
+router.get('/sales/customer/:id_user', sales_controller_1.getSalesByCustomerId);
 exports.default = router;

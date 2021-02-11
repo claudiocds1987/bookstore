@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getLastIdSale = exports.createSale = void 0;
+exports.getSalesByCustomerId = exports.getLastIdSale = exports.createSale = void 0;
 // pool es la conexion a db tmb se puede llamar db en vez de pool
 // en consola poner npm run dev (para iniciar el servidor?)
 const database_1 = require("../database");
@@ -31,7 +31,7 @@ exports.createSale = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         return res.json({
             message: 'La venta ah sido creada exitosamente!',
             body: {
-                orders: {
+                sales: {
                     idUser,
                     totalPrice,
                     date
@@ -48,6 +48,16 @@ exports.getLastIdSale = (req, res) => __awaiter(void 0, void 0, void 0, function
     try {
         const response = yield database_1.pool.query('select max(id_sale) as "lastIdSale" from sales');
         return res.status(200).json(response.rows[0]);
+    }
+    catch (e) {
+        console.log(e);
+        return res.status(500).json('Internal server error');
+    }
+});
+exports.getSalesByCustomerId = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const response = yield database_1.pool.query('select * from sales where id_user = $1', [req.params.id_user]);
+        return res.status(200).json(response.rows);
     }
     catch (e) {
         console.log(e);

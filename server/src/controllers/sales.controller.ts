@@ -4,7 +4,6 @@ import { QueryResult } from 'pg'
 // en consola poner npm run dev (para iniciar el servidor?)
 import { pool } from '../database'
 
-
 export const createSale = async (req: Request, res: Response): Promise<Response> => {
 
   // En mi sales.routes, la router.post('router.post('/sales/create', no recibe ningun parametro por url, sino que recibe todos los datos por el body, por esta razon se evalua como !req.body.id_user etc..
@@ -26,7 +25,7 @@ export const createSale = async (req: Request, res: Response): Promise<Response>
     return res.json({
       message: 'La venta ah sido creada exitosamente!',
       body: {
-        orders: {
+        sales: {
           idUser,
           totalPrice,
           date
@@ -51,3 +50,15 @@ export const getLastIdSale = async (req: Request, res: Response): Promise<Respon
     return res.status(500).json('Internal server error');
   }
 }
+
+export const getSalesByCustomerId = async (req: Request, res: Response): Promise<Response> => {
+  try {
+    const response: QueryResult = await pool.query('select * from sales where id_user = $1', [req.params.id_user]);
+    return res.status(200).json(response.rows);
+  }
+  catch (e) {
+    console.log(e);
+    return res.status(500).json('Internal server error');
+  }
+}
+

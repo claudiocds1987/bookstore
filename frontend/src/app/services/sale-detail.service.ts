@@ -13,4 +13,8 @@ export class SaleDetailService {
     return this.http.post('http://localhost:4000/salesDetail/create', saleDetail);
   }
 
+  getSaleDetail(id_sale: number){
+    return this.http.get<SaleDetail[]>('http://localhost:4000/salesDetail/' + id_sale);
+  }
+
 }

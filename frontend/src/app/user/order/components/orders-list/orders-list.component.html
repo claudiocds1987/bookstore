@@ -76,7 +76,7 @@
               >
                 <th scope="row">{{ i + 1 }}</th>
                 <td>{{ order.order_date | date: "dd/MM/yyyy" }}</td>
-                <td>{{ order.total_price | currency }}</td>
+                <td>{{ order.total_price | currency: "ARS ":"symbol" }}</td>
                 <td>{{ order.adress }} - {{ order.localidad }}</td>
                 <td>
                   <a

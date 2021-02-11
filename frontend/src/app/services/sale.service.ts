@@ -17,4 +17,8 @@ export class SaleService {
     return this.http.get<number>('http://localhost:4000/sales/lastIdSale');
   }
 
+  getSalesByCustomerId(id: Number){
+    return this.http.get<Sale[]>('http://localhost:4000/sales/customer/' + id);
+  }
+
 }

@@ -73,7 +73,10 @@
     <div *ngIf="bookList$ | async as books">
       <div *ngIf="books.length > 0" class="book-grid">
         <div
-          *ngFor="let book of books | paginate: { itemsPerPage: 15, currentPage: actualPage }"
+          *ngFor="
+            let book of books
+              | paginate: { itemsPerPage: 15, currentPage: actualPage }
+          "
           class="card rounded shadow-sm border-0 fade-in"
         >
           <img [src]="book.url_image" [alt]="book.name" class="crop-image" />
@@ -91,9 +94,10 @@
               color="banner-color"
               (click)="addCarrito(book)"
             >
-              <mat-icon class="icon-shopping-cart">shopping_cart</mat-icon>
+              <!-- <mat-icon class="icon-shopping-cart">shopping_cart</mat-icon> -->
+              <i class="fa fa-shopping-cart mr-2 icon-shopping-cart" aria-hidden="true"></i>
               <span style="font-size: smaller; color: white">{{
-                book.price | currency:'ARS':'symbol'
+                book.price | currency: "ARS ":"symbol"
               }}</span>
             </button>
           </div>
@@ -102,8 +106,10 @@
     </div>
   </div>
   <!-- controles del pagination -->
-  <pagination-controls
-  class="custom-pagination"
-  (pageChange)="actualPage = $event"
-></pagination-controls>
+  <div class="text-center">
+    <pagination-controls
+      class="custom-pagination"
+      (pageChange)="actualPage = $event"
+    ></pagination-controls>
+  </div>
 </div>

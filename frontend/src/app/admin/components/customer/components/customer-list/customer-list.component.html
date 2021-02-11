@@ -2,7 +2,7 @@
   <div class="container box-principal">
     <div class="card">
       <div class="table-responsive">
-        <table class="table table-hover">
+        <table class="table table-hover table-striped">
           <thead class="thead-dark">
             <tr class="text-center">
               <th>#</th>
@@ -34,10 +34,10 @@
               <td>{{ customer.email }}</td>
               <td>{{ customer.registration_date | date: "dd/MM/yyyy" }}</td>
               <td>
-                <a style="text-decoration: none" mat-raised-button color="blue">
+                <a style="text-decoration: none" mat-raised-button color="blue" [routerLink]="['/customer/customer-sales', customer.id_user]">
                   <i
                     style="color: #2199e8"
-                    class="fa fa-shopping-bag"
+                    class="fa fa-shopping-bag mr-2"
                     aria-hidden="true"
                   ></i>
                   Ventas
@@ -47,12 +47,13 @@
           </tbody>
         </table>
         <!-- controles del pagination -->
-        <pagination-controls
-          class="custom-pagination"
-          (pageChange)="actualPage = $event"
-        ></pagination-controls>
+        <div class="text-center">
+          <pagination-controls
+            class="custom-pagination"
+            (pageChange)="actualPage = $event"
+          ></pagination-controls>
+        </div>
       </div>
     </div>
-    
   </div>
 </div>
