@@ -20,6 +20,12 @@ export class HomeComponent implements OnInit {
   username: string;
   ocultar = false;
   actualPage: number = 1;
+  //** VARIABLES PARA DETALLE DE LIBRO ** */
+  book = {} as Book; //objeto book
+  authorName;
+  editorialName;
+  categoryName;
+  //************************************* */
 
   constructor(
     public bookService: BookService,
@@ -40,7 +46,6 @@ export class HomeComponent implements OnInit {
   }
 
   getBooksWithAuthorName() {
-    //this.bookList$ = this.bookService.getBooksWithAuthorName();
     this.bookList$ = this.bookService.getBooksWithAuthorName().pipe(
       // explicacion: todo lo que hay en "bookList$"" copialo a array "books: Book[]"
       // y "mapealo (accede a sus elementos)" con la "variable book"
@@ -49,7 +54,7 @@ export class HomeComponent implements OnInit {
           return {
             // devuelve el objeto book con la url_image limpia para verla en html y quantity seteado en 1 para order.html
             ...book,
-            url_image: this.linkImg(book.url_image),
+            url_image: this.linkImg(book.url_image)
             //quantity: 1,
           };
         })
@@ -165,4 +170,35 @@ export class HomeComponent implements OnInit {
       }
     }
   }
+
+
+  getBookDetail(idBook: number){
+    const id_book = idBook.toString();
+    this.bookService.getRealDataBook(id_book).subscribe(
+      res => {      
+        //****************************************************
+        this.book.description = res[0].description;
+        this.book.id_author = res[0].id_author;
+        this.book.id_book = res[0].id_book;
+        this.book.id_category = res[0].id_category;
+        this.book.id_editorial = res[0].id_editorial;
+        this.book.name = res[0].name;
+        this.book.price = res[0].price;
+        this.book.quantity = res[0].quantity;
+        this.book.state = res[0].state;
+        //this.urlImgDirty = res[0].url_image;
+        this.book.url_image = this.linkImg(res[0].url_image);
+        //this.book.url_image = res[0].url_image;
+        this.book.year = res[0].year;
+        this.authorName = res[0].autor;
+        this.editorialName = res[0].editorial;
+        this.categoryName = res[0].category;
+        //****************************************************
+
+      },
+      err => console.error('Error al intentar obtener el libro por id ' + err)
+    );
+  }
+
+
 }

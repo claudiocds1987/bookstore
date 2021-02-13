@@ -1,43 +1,43 @@
+p {
+  font-style: italic;
+  margin-top: 5px;
+}
+
 .box-principal {
   min-height: 100vh;
+  .box-container1 {
+    margin-top: 50px;
+  }
+  .box-search {
+    display: flex;
+    justify-content: space-around;
+    .btn-buscar {
+      margin-top: 10px !important;
+    }
+    .btn-listar-todos {
+      margin-top: 15px !important;
+      height: 32px !important;
+    }
+  }
 }
 
-.box-container1 {
-  margin-top: 50px;
-}
+// .icon {
+//   vertical-align: middle !important;
+// }
 
-.box-search {
-  display        : flex;
-  justify-content: space-around;
-}
+// .box-listarTodos {
+//   margin-left: 8px;
+// }
 
-.icon {
-  vertical-align: middle !important;
-}
+// .btn-listarTodos {
+//   margin-top: 15px !important;
+// }
 
-.btn-buscar {
-  //margin-top: 25% !important;
-  margin-top: 10px !important;
-}
-
-.btn-listar-todos {
-  margin-top: 15px !important;
-  height    : 32px !important;
-}
-
-.box-listarTodos {
-  margin-left: 8px;
-}
-
-.btn-listarTodos {
-  margin-top: 15px !important;
-}
-
-h3 {
-  margin-top : 15px !important;
-  font-style : italic;
-  font-weight: 500;
-}
+// h3 {
+//   margin-top: 15px !important;
+//   font-style: italic;
+//   font-weight: 500;
+// }
 
 header,
 .box-icons-social-media {
@@ -45,9 +45,81 @@ header,
 }
 
 .box-icons-social-media {
-  display        : flex;
+  display: flex;
   // cuando es flex la prop. margin deja de funcionar, utilizo flex-end para alinear a la derecha
   justify-content: flex-end;
+  .logo {
+    max-width: 30px;
+    max-height: 30px;
+  }
+}
+
+.box-container2 {
+  a {
+    cursor: pointer;
+  }
+  .book-grid {
+    display: grid;
+    grid-template-columns: repeat(
+      auto-fill,
+      minmax(200px, 1fr)
+    ); // nos hará breakpoints cada 200px
+    .card {
+      margin: 15px;
+      border-radius: 5px;
+      display: block; // para que el ancho y alto sean dinamico respecto al elemento
+      .crop-image {
+        margin-top: 2px;
+        padding: 8px;
+        display: block;
+        height: 250px;
+        width: 100%;     
+        img {
+          object-fit: contain;
+          height: 100%;
+          width: 100%;
+          object-position: center;
+        }
+      }
+      .box-btn-border {
+        margin-bottom: 10px;
+        .btn-border {
+          border-radius: 15px !important;
+        }
+        // boton para agregar a carrito
+        .mat-banner-color {
+          background: rgb(41, 50, 64);
+        }
+        .icon-shopping-cart {
+          color: #c5fd43 !important;
+        }
+        .box-btn-border {
+          margin-bottom: 10px;
+          .btn-border {
+            border-radius: 15px !important;
+          }
+          // boton para agregar a carrito
+          .mat-banner-color {
+            background: rgb(41, 50, 64);
+          }
+          .icon-shopping-cart {
+            color: #c5fd43 !important;
+          }
+        }
+      }
+    }
+  } 
+}
+
+.modal-dialog{
+  // importante poner width 100% para que el modal en resoluciones de pantalla movil como 320x568 y 375x667
+  // quede bien centrado
+  width: 100%;
+  img{
+    max-width: 200px;
+    max-height: 220px;
+    padding: 0px 10px 10px 0px;
+  }
 }
 
 @media (max-width: 760px) {
@@ -60,76 +132,17 @@ header,
   }
 }
 
-p {
-  font-style: italic;
-  margin-top: 5px;
-}
-
-.logo {
-  //margin-top: 15px !important;
-  max-width : 30px;
-  max-height: 30px;
-}
-
-.book-grid {
-  // margin-top           : 10px !important;
-  display              : grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); // nos hará breakpoints cada 182x
-}
-
-.card {
-  margin       : 15px;
-  border-radius: 5px;
-  display      : block; // para que el ancho y alto sean dinamico respecto al elemento
-  //box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
-
-}
-
-// boton para agregar a carrito
-.mat-banner-color{
-  background: rgb(41, 50, 64);
-}
-
-.icon-shopping-cart{
-  color: #c5fd43 !important;
-}
-
-.crop-image {
-  margin-top: 2px;
-  padding   : 8px;
-  display   : block;
-  height    : 250px;
-  width     : 100%;
-
-  img {
-    object-fit     : contain;
-    height         : 100%;
-    width          : 100%;
-    object-position: center;
-  }
-}
-
-
 .box-description {
   margin-bottom: 10px !important;
 }
 
-.box-btn-border {
-  margin-bottom: 10px;
-}
-
-.btn-border {
-  border-radius  : 15px !important;
-  //margin-bottom: 10px;
-}
-
 a {
-  color          : grey;
+  color: grey;
   text-decoration: none;
 }
 
 a:hover {
-  color: #298ccf
+  color: #298ccf;
 }
 
 .fade-in {

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { map } from 'rxjs/operators';
 // PARA OBTENER EL ID de la orden ENVIADO EN LA URL DESDE user-purchases.component.html al pulsar boton "detalle"
 import { ActivatedRoute, Params } from '@angular/router';
 // services
@@ -65,6 +66,8 @@ export class CustomerSalesComponent implements OnInit {
   getBookById(idBook: string) {
     this.bookService.getBookById(idBook).subscribe(
       res => {
+        // limpio la url de la img
+        res[0].url_image = this.linkImg(res[0].url_image);
         // cargando los libros en array bookArray
         this.bookArray.push(...res);
       },

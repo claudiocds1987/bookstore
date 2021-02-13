@@ -34,7 +34,12 @@
               <td>{{ customer.email }}</td>
               <td>{{ customer.registration_date | date: "dd/MM/yyyy" }}</td>
               <td>
-                <a style="text-decoration: none" mat-raised-button color="blue" [routerLink]="['/customer/customer-sales', customer.id_user]">
+                <a
+                  style="text-decoration: none"
+                  mat-raised-button
+                  color="blue"
+                  [routerLink]="['/customer/customer-sales', customer.id_user]"
+                >
                   <i
                     style="color: #2199e8"
                     class="fa fa-shopping-bag mr-2"

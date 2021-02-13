@@ -10,30 +10,28 @@ import { AlertService } from '../../services/alert.service';
 @Component({
   selector: 'app-book-detail',
   templateUrl: './book-detail.component.html',
-  styleUrls: ['./book-detail.component.scss']
+  styleUrls: ['./book-detail.component.scss'],
 })
 export class BookDetailComponent implements OnInit {
-
   book = {} as Book; //objeto book
-  autorName;
+  authorName;
   editorialName;
   categoryName;
   urlImgDirty;
-  
 
   constructor(
     private route: ActivatedRoute,
     public bookService: BookService,
     public cartService: CartService,
     public alertService: AlertService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
       // params.IdBook porque en app-routing.mdoule.ts el parametro esta declarado como idBook
       console.log('idBook recibido: ' + params.idBook);
       this.bookService.getRealDataBook(params.idBook).subscribe(
-        res => {      
+        (res) => {
           //****************************************************
           this.book.description = res[0].description;
           this.book.id_author = res[0].id_author;
@@ -48,19 +46,19 @@ export class BookDetailComponent implements OnInit {
           this.book.url_image = this.linkImg(res[0].url_image);
           //this.book.url_image = res[0].url_image;
           this.book.year = res[0].year;
-          this.autorName = res[0].autor;
+          this.authorName = res[0].autor;
           this.editorialName = res[0].editorial;
           this.categoryName = res[0].category;
           //****************************************************
-
         },
-        err => console.error('Error al intentar obtener el libro por id ' + err)
+        (err) =>
+          console.error('Error al intentar obtener el libro por id ' + err)
       );
     });
   }
 
   linkImg(urlImage) {
-    console.log('img sin procesar: ' + urlImage)
+    console.log('img sin procesar: ' + urlImage);
     // quito la palabra public
     let str = urlImage.replace(/public/g, '');
     // quito la barra '\'
@@ -75,58 +73,56 @@ export class BookDetailComponent implements OnInit {
   }
 
   addShoppingCart(book: Book) {
-    // // ojo con la imagen cuando guardas el book ya que la url_img esta limpia ? 
+    // // ojo con la imagen cuando guardas el book ya que la url_img esta limpia ?
     // // y en order_detail vuelve a limpiarla os ea le saca public/ puede que no t la muestre en order detail
-    if(book.quantity <= 0){
+    if (book.quantity <= 0) {
       this.alertService.showError('', 'NO HAY STOCK');
-    }
-    else{
+    } else {
       let idBookArray = [];
-    //let items = [];
-    let exist = false;
-    // existe la localStorageStorage ?
-    if (localStorage.getItem('idBooks') != null) {
-      // Obtiene la información almacenada desde localStorage
-      const items = JSON.parse(localStorage.getItem('idBooks'));
-      // guardo el contenido de la localStorage en array
-      for (const id of items) {
-        // aca por ej si el id grabado fue 14, en vez de mostrar "14" muestra 1 y despues 4
-        console.log('id: ' + id)
-        idBookArray = [...idBookArray, id];
-      }
-      // checkeo si el nuevo producto ya existe en el carrito
-      for (const item of items) {
-        if (book.id_book.toString() === item.toString()) {
-          exist = true;
+      //let items = [];
+      let exist = false;
+      // existe la localStorageStorage ?
+      if (localStorage.getItem('idBooks') != null) {
+        // Obtiene la información almacenada desde localStorage
+        const items = JSON.parse(localStorage.getItem('idBooks'));
+        // guardo el contenido de la localStorage en array
+        for (const id of items) {
+          // aca por ej si el id grabado fue 14, en vez de mostrar "14" muestra 1 y despues 4
+          console.log('id: ' + id);
+          idBookArray = [...idBookArray, id];
         }
-      }
-      if (exist) {
-        this.alertService.showWarning('El producto ya esta agregado al carrito', '')
-      }
-      else {
-        // guardo en array el nuevo proucto
+        // checkeo si el nuevo producto ya existe en el carrito
+        for (const item of items) {
+          if (book.id_book.toString() === item.toString()) {
+            exist = true;
+          }
+        }
+        if (exist) {
+          this.alertService.showWarning(
+            'El producto ya esta agregado al carrito',
+            ''
+          );
+        } else {
+          // guardo en array el nuevo proucto
+          idBookArray = [...idBookArray, book.id_book];
+          // grabo array actualizado en localStorage
+          localStorage.setItem('idBooks', JSON.stringify(idBookArray));
+          // localStorage.setItem('idBooks', idBookArray.toString());
+          // guardo el libro en el carrito
+          //this.book.url_image = this.urlImgDirty;
+          this.cartService.addCart(book);
+          this.alertService.showSuccess('Producto agregado al carrito', '');
+        }
+      } else {
         idBookArray = [...idBookArray, book.id_book];
-        // grabo array actualizado en localStorage
+        // 1er carga del producto y creo la localStorage
         localStorage.setItem('idBooks', JSON.stringify(idBookArray));
-        // localStorage.setItem('idBooks', idBookArray.toString());
+        //localStorage.setItem('idBooks', idBookArray.toString());
         // guardo el libro en el carrito
-        //this.book.url_image = this.urlImgDirty;
         this.cartService.addCart(book);
         this.alertService.showSuccess('Producto agregado al carrito', '');
       }
     }
-    else {  
-      idBookArray = [...idBookArray, book.id_book];
-      // 1er carga del producto y creo la localStorage
-      localStorage.setItem('idBooks', JSON.stringify(idBookArray));
-      //localStorage.setItem('idBooks', idBookArray.toString());
-      // guardo el libro en el carrito
-      this.cartService.addCart(book);
-      this.alertService.showSuccess('Producto agregado al carrito', '');
-    }
-    
-    }
-    
   }
 
 }

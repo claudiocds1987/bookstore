@@ -1,55 +1,51 @@
-<div class="container box-principal">
-  <div class="row">
-    <div class="col-md-1"></div>
-    <div class="col-md-10">
-      <!-- si ordersArray tiene contenido muestro tabla -->
-      <div *ngIf="orderDetailArray.length > 0" class="card">
-        <div class="card-body">
-          <h4 style="font-weight: bolder" class="text-center">
-            Detalle de tu compra
-          </h4>
-          <!-- <img src="./../../../../assets/images/my-purchases.svg"> -->
+<!-- Modal -->
+  <div
+    class="modal fade"
+    id="myModal"
+    tabindex="-1"
+    role="dialog"
+    data-backdrop="static"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title">Detalle</h1>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body text-muted">
           <table class="table table-hover">
             <thead class="thead-dark">
               <tr class="text-center">
-                <th></th>
+                <th scope="col"></th>
                 <th scope="col">Producto</th>
-                <th scope="col">Precio/unitario</th>
+                <th scope="col">Precio</th>
                 <th scope="col">Cantidad</th>
               </tr>
             </thead>
             <tbody>
-              <tr
-                class="text-center"
-                *ngFor="let detail of orderDetailArray; index as i"
-              >
-                <td>
-                  <img
-                    [src]="linkImg(this.bookArray[i].url_image)"
-                    [alt]="this.bookArray[i].name"
-                    class="image-size"
-                  />
-                </td>
-                <td>{{ this.bookArray[i].name }}</td>
+              <tr class="text-center" *ngFor="let detail of orderDetail; index as i">
+                <td><img [src]="books[i].url_image"></td>
+                <td>{{ books[i].name }}</td>
                 <td>{{ detail.product_price | currency: "ARS ":"symbol" }}</td>
                 <td>{{ detail.product_quantity }}</td>
               </tr>
             </tbody>
           </table>
-          <div id="box-btn-volver">
-            <a
-              style="text-decoration: none"
-              mat-raised-button
-              color="basic"
-              routerLink="/order/orders-list"
-            >
-              <mat-icon class="icon-volver">arrow_back_ios_new</mat-icon>
-              Volver
-            </a>
-          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">
+            <i class="fa fa-times-circle" aria-hidden="true"></i>
+          </button>
         </div>
       </div>
     </div>
-    <div class="col-md-1"></div>
   </div>
-</div>
+

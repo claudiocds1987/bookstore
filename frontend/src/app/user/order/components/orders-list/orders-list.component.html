@@ -79,13 +79,21 @@
                 <td>{{ order.total_price | currency: "ARS ":"symbol" }}</td>
                 <td>{{ order.adress }} - {{ order.localidad }}</td>
                 <td>
-                  <a
+                  <!-- <a
                     style="text-decoration: none"
                     mat-raised-button
                     [routerLink]="['/order/order-detail', order.id_order]"
                   >
                     <mat-icon>details</mat-icon>
                     detalle
+                  </a> -->
+                  <a
+                    style="text-decoration: none"
+                    mat-raised-button
+                   (click)="getDetalle(order.id_order)"
+                  >
+                    <mat-icon>details</mat-icon>
+                    Detalle
                   </a>
                 </td>
               </tr>
@@ -101,3 +109,15 @@
     <div class="col-md-1"></div>
   </div>
 </div>
+
+<div *ngIf="orderDetailArray.length > 0"> 
+  <app-order-detail [orderDetail]="orderDetailArray" [books]="bookArray"></app-order-detail>
+</div>
+
+
+
+
+
+
+
+

@@ -4,6 +4,14 @@ import { User } from 'src/app/models/user';
 import { OrderService } from '../../../../services/order.service';
 import { UserService } from '../../../../services/user.service';
 import { AlertService } from '../../../../services/alert.service';
+import { OrderDetail } from 'src/app/models/orderDetail';
+
+// ??????????????????????
+import { OrderDetailService } from '../../../../services/order-detail.service';
+import { BookService } from '../../../../services/book.service'
+import { Book } from 'src/app/models/book';
+// ??????????????????????
+declare var $: any; // para que funcione jquery
 
 @Component({
   selector: 'app-orders-list',
@@ -15,7 +23,9 @@ export class OrdersListComponent implements OnInit {
   constructor(
     public orderService: OrderService,
     public userService: UserService,
-    public alertService: AlertService
+    public alertService: AlertService,
+    public orderDetailService: OrderDetailService, // ????
+    public bookService: BookService // ???
   ) { }
 
   ordersArray: Order[] = []; // ordersArray para hacer el .filter cuyo resultado se guarda en filterOrdersArray
@@ -26,6 +36,11 @@ export class OrdersListComponent implements OnInit {
   btnDisabled: boolean = true;
   message = 'No se encontraron resultados'; 
   actualPage: number = 1 // para pagination
+
+  // ???????????????
+  orderDetailArray: OrderDetail[] = [];
+  bookArray: Book[] = [];
+  // ???????????????
 
   ngOnInit(): void {
      // localStorage 'username' fue creada en auth.service.ts funcion loginUser() cuando hizo login en user-login.component.ts
@@ -85,5 +100,47 @@ export class OrdersListComponent implements OnInit {
     this.getOrdersByUserId(this.userArray[0].id_user);
   }
 
+
+  getDetalle(id_order: number){
+    this.orderDetailService.getOrderDetail(id_order).subscribe(
+      res => {
+        this.orderDetailArray = res;
+        // recorro el array
+        this.orderDetailArray.forEach(element => {
+          const idBook = element.id_product.toString();
+          //Obtengo el libro
+          this.getBookById(idBook);
+        })
+        $('#myModal').modal('show');
+      },
+      err => console.error('error al obtener el order_detail ' + err)
+    );
+  }
+
+  getBookById(idBook: string) {
+    this.bookService.getBookById(idBook).subscribe(
+      (res) => {
+        res[0].url_image = this.linkImg(res[0].url_image);
+        this.bookArray.push(...res);
+      },
+      (err) => console.error('error al intentar obtener el libro por id ' + err)
+    );
+     
+  }
+
+  linkImg(urlImage) {
+    // quito la palabra public
+    let str = urlImage.replace(/public/g, '');
+    // quito la barra '\'
+    str = str.replace('\\', '');
+    // invierto la barra en sentido a '/'
+    str = str.replace('\\', '/');
+    // console.log(str);
+    const URL = 'http://localhost:4000/';
+    const link = URL + str;
+    // console.log(link);
+    return link;
+  }
+ 
 }
 
