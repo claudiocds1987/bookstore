@@ -91,7 +91,7 @@
               data-target="#exampleModalCenter"
               (click)="getBookDetail(book.id_book)"
             >
-            {{ book.name }}
+              {{ book.name }}
             </a>
           </div>
           <div class="text-center box-btn-border">
@@ -140,7 +140,7 @@
         </h1>
         <button
           type="button"
-          class="close"
+          class="close text-white"
           data-dismiss="modal"
           aria-label="Close"
         >
@@ -148,19 +148,26 @@
         </button>
       </div>
       <div class="modal-body text-muted">
-        <img [src]="book.url_image" class="img-fluid float-left"/> 
+        <img
+          [src]="book.url_image"
+          class="img-fluid img-thumbnail float-left mr-2"
+        />
         <p>Autor: {{ authorName }}</p>
         <p>Editorial: {{ editorialName }}</p>
         <p>Categoria: {{ categoryName }}</p>
-        <hr>
-        <p class="text-justify">{{ book.description }}</p>
+        <hr />
+        <p id="p-description" class="text-justify">{{ book.description }}</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal">
-          <i class="fa fa-times-circle" aria-hidden="true"></i>
+        <button
+          type="button"
+          class="btn btn-success"
+          (click)="addCarrito(book)"
+        >
+          <i class="fa fa-shopping-cart fa-lg" aria-hidden="true"></i>
         </button>
-        <button type="button" class="btn btn-success" (click)="addCarrito(book)">
-          <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">
+          <i class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
         </button>
       </div>
     </div>

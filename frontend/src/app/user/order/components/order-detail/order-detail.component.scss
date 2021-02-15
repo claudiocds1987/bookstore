@@ -1,5 +1,11 @@
+@import "./../../../../sass/variables";
+
 .modal-dialog{
   width: 100%;
+  .modal-header, .modal-footer{
+    background: $colorDos;
+    color: white;
+  }
   img{
     width:70px;
     height: 90px;
