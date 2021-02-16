@@ -102,6 +102,8 @@ export class OrdersListComponent implements OnInit {
 
 
   getDetalle(id_order: number){
+    this.orderDetailArray = [];
+
     this.orderDetailService.getOrderDetail(id_order).subscribe(
       res => {
         this.orderDetailArray = res;
@@ -118,6 +120,8 @@ export class OrdersListComponent implements OnInit {
   }
 
   getBookById(idBook: string) {
+    this.bookArray = [];
+    
     this.bookService.getBookById(idBook).subscribe(
       (res) => {
         res[0].url_image = this.linkImg(res[0].url_image);

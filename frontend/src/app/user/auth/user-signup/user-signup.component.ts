@@ -4,6 +4,7 @@ import { AuthService } from '../../../services/auth.service';
 import { UserService } from '../../../services/user.service';
 import { AlertService } from '../../../services/alert.service';
 import { Router } from '@angular/router';
+import { debounceTime } from 'rxjs/operators';
 // formuluario
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { User } from 'src/app/models/user';
@@ -17,13 +18,12 @@ export class UserSignupComponent implements OnInit {
 
   form: FormGroup;
   submitted = false;
-  //usernameClean = '';
-  // form: FormGroup;
   password2 = '';
   user = {} as User;
   // fecha local
   currentDate = new Date();
   message: string;
+  usernameExist: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -34,6 +34,9 @@ export class UserSignupComponent implements OnInit {
     private router: Router
   ) {
     this.buildForm();
+
+    this.checkUsername();
+
   }
 
   ngOnInit(): void {
@@ -52,6 +55,27 @@ export class UserSignupComponent implements OnInit {
   // convenienza getter para facil acceso a lo campos del formulario 
   get f() {
     return this.form.controls;
+  }
+
+  checkUsername(){
+    this.form.get('username').valueChanges
+    .pipe(
+      debounceTime(350) // pasado este tiempo realiza la búsqueda en la db
+    )
+    .subscribe(value => {
+      console.log(value);
+      this.userService.existUsername(value)
+      .subscribe(res => {
+        if(res){
+          // username valido porque existe en la db
+          this.usernameExist = true;
+        }else{
+          // username no valido, no existe en la db
+          this.usernameExist = false;
+        }     
+      }),
+      err => console.error('Error en la db al verificar el username ' + err);
+    });
   }
 
   deleteWhiteSpace(control: FormControl) {

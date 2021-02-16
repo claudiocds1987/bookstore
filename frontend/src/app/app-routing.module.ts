@@ -6,8 +6,6 @@ import { UserLayoutComponent } from './user/user-layout/user-layout.component';
 import { AdminLoginComponent } from './admin/components/admin-login/admin-login.component';
 // Guardianes
 import { AdminGuard } from './admin.guard';
-//import { EditorialPanelComponent } from './admin/components/book/components/editorial-panel/editorial-panel.component';
-import { BookDetailComponent } from './user/book-detail/book-detail.component';
 
 const routes: Routes = [
   {
@@ -33,8 +31,8 @@ const routes: Routes = [
         loadChildren: () => import('./user/order/order.module').then(m => m.OrderModule)
       },
       {
-        path: 'book-detail/:idBook',
-        component: BookDetailComponent
+        path: 'contact',
+        loadChildren: () => import('./user/contact/contact.module').then(m => m.ContactModule)
       },
     ]
   },

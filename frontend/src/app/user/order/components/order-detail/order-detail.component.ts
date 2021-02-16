@@ -17,13 +17,13 @@ export class OrderDetailComponent implements OnInit {
   @Input() orderDetail: OrderDetail[] = []; //?
   @Input() books: Book[] = []; //?
 
-  orderDetailArray: OrderDetail[] = []; // array de tipo orderDetail
-  bookArray: Book[] = [];
+  // orderDetailArray: OrderDetail[] = []; // array de tipo orderDetail
+  // bookArray: Book[] = [];
 
   constructor(
-    private route: ActivatedRoute,
-    public orderDetailService: OrderDetailService,
-    public bookService: BookService
+    // private route: ActivatedRoute,
+    // public orderDetailService: OrderDetailService,
+    // public bookService: BookService
   ) {
     
   }
@@ -53,26 +53,26 @@ export class OrderDetailComponent implements OnInit {
     // });
   }
 
-  getBookById(idBook: string) {
-    this.bookService.getBookById(idBook).subscribe(
-      (res) => {
-        this.bookArray.push(...res);
-      },
-      (err) => console.error('error al intentar obtener el libro por id ' + err)
-    );
-  }
+  // getBookById(idBook: string) {
+  //   this.bookService.getBookById(idBook).subscribe(
+  //     (res) => {
+  //       this.bookArray.push(...res);
+  //     },
+  //     (err) => console.error('error al intentar obtener el libro por id ' + err)
+  //   );
+  // }
 
-  linkImg(urlImage) {
-    // quito la palabra public
-    let str = urlImage.replace(/public/g, '');
-    // quito la barra '\'
-    str = str.replace('\\', '');
-    // invierto la barra en sentido a '/'
-    str = str.replace('\\', '/');
-    // console.log(str);
-    const URL = 'http://localhost:4000/';
-    const link = URL + str;
-    // console.log(link);
-    return link;
-  }
+  // linkImg(urlImage) {
+  //   // quito la palabra public
+  //   let str = urlImage.replace(/public/g, '');
+  //   // quito la barra '\'
+  //   str = str.replace('\\', '');
+  //   // invierto la barra en sentido a '/'
+  //   str = str.replace('\\', '/');
+  //   // console.log(str);
+  //   const URL = 'http://localhost:4000/';
+  //   const link = URL + str;
+  //   // console.log(link);
+  //   return link;
+  // }
 }

@@ -72,7 +72,7 @@
               <mat-card-content class="mt-4" style="-webkit-text-fill-color: #5eba7d">
                 <div class="row row-input">
                   <div class="col-xs box-input">
-                    <mat-form-field>
+                    <mat-form-field>           
                       <input
                         [(ngModel)]="order.provincia"
                         formControlName="provincia"
@@ -220,12 +220,11 @@
                     </div>
                   </div>
                   <button
-                    [disabled]="form.invalid"
+                    [disabled]="form.invalid"    
                     mat-raised-button
                     type="submit"
                   >
-                    <mat-icon>done</mat-icon>
-                    Pagar
+                    Pagar {{ total | currency}}
                   </button>
                 </div>
               </mat-card-content>

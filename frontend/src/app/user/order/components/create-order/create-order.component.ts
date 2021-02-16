@@ -314,7 +314,6 @@ export class CreateOrderComponent implements OnInit, AfterViewInit {
   async pagar(event: Event) {
     if (localStorage.getItem('username') === null) {
       this.alertService.showError('Para poder comprar debe tener una cuenta de usuario.','')
-      //alert('Para poder comprar debe tener una cuenta de usuario.');
     } else {
       event.preventDefault();
       if (this.form.valid) {
@@ -323,10 +322,8 @@ export class CreateOrderComponent implements OnInit, AfterViewInit {
         const { token, error } = await stripe.createToken(this.card);
         if (token) {
           // console.log(token);
-          // le paso como cantidad(monto) de plata 1, para prueba.
-          // si quiero la cantidad real de plata a cobrar como parametro le paso la variable this.total
-          // const response = await this.stripeService.charge(1, token.id);
-          // console.log(response);
+          // el total a pagar esta seteado en 1 pr prueba, si quiero el valor real a pagar por parametro le paso la variable this.total
+          // const response = await this.stripeService.charge(this.total, token.id);
           await this.stripeService.charge(1, token.id).then(
             (res) => {
               console.log('el pago fue realizado');
@@ -368,20 +365,6 @@ export class CreateOrderComponent implements OnInit, AfterViewInit {
       }
     }
   }
-
-  // linkImg(urlImage) {
-  //   // quito la palabra public
-  //   let str = urlImage.replace(/public/g, '');
-  //   // quito la barra '\'
-  //   str = str.replace('\\', '');
-  //   // invierto la barra en sentido a '/'
-  //   str = str.replace('\\', '/');
-  //   // console.log(str);
-  //   const URL = 'http://localhost:4000/';
-  //   const link = URL + str;
-  //   // console.log(link);
-  //   return link;
-  // }
 
   onDelete(idProduct: number) {
     // this.dialog.open(le paso por parametro el componente mat-confirm-dialog.component.html);

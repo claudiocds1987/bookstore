@@ -28,7 +28,6 @@ import {NgxPaginationModule} from 'ngx-pagination'; // para los pagination
 // -------------INTERCEPTOR PARA EL TOKEN------------------------------------------------------
 import { HTTP_INTERCEPTORS} from '@angular/common/http';
 import { AuthInterceptorService } from './services/auth-interceptor.service';
-import { BookDetailComponent } from './user/book-detail/book-detail.component';
 // abajo de todo en providers tambien se agregaron lineas de código
 // ---------------------------------------------------------------------------------
 // TOASTR PARA ALERTS
@@ -49,7 +48,6 @@ import { MatConfirmDialogComponent } from './mat-confirm-dialog/mat-confirm-dial
     UserFooterComponent,
     MainNavComponent,
     BannerComponent,
-    BookDetailComponent,
     MatConfirmDialogComponent
   ],
   imports: [

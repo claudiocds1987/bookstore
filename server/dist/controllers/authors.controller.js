@@ -18,67 +18,70 @@ exports.createAuthor = (req, res) => __awaiter(void 0, void 0, void 0, function*
     // check empty name
     if (!req.body.name) {
         return res.status(400).send({
-            message: "FALTA CONTENIDO EN EL CUERPO PARA PODER AGREGAR UN AUTOR"
+            message: "FALTA CONTENIDO EN EL CUERPO PARA PODER AGREGAR UN AUTOR",
         });
     }
     // guardo en const name lo que llega en el request
-    const { name } = (req.body);
+    const { name } = req.body;
     if (name.length > 50)
         return res.status(400).send({
-            message: "NO PUEDE TENER UN NOMBRE DE AUTOR CON MAS DE 50 CARACTERES"
+            message: "NO PUEDE TENER UN NOMBRE DE AUTOR CON MAS DE 50 CARACTERES",
         });
     // insert en PostgreSQL
-    const response = yield database_1.pool.query('INSERT INTO authors (name) VALUES ($1)', [name]);
+    const response = yield database_1.pool.query("INSERT INTO authors (name) VALUES ($1)", [name]);
     return res.json({
-        message: 'El author ah sido creado exitosamente!',
+        message: "El author ah sido creado exitosamente!",
         body: {
             author: {
-                name
-            }
-        }
+                name,
+            },
+        },
     });
 });
 exports.updateAuthor = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     // check empty name
     if (!req.body.name || !req.body.id_author) {
         return res.status(400).send({
-            message: "FALTA CONTENIDO EN EL CUERPO PARA ACTUALIZAR EL AUTOR"
+            message: "FALTA CONTENIDO EN EL CUERPO PARA ACTUALIZAR EL AUTOR",
         });
     }
     // recibo los datos (de un form, insomnia rest, etc..)
-    const { name, id_author } = (req.body);
+    const { name, id_author } = req.body;
     if (name.length > 50)
         return res.status(400).send({
-            message: "NO SE PUEDE TENER UN NOMBRE DE AUTOR CON MAS DE 50 CARACTERES"
+            message: "NO SE PUEDE TENER UN NOMBRE DE AUTOR CON MAS DE 50 CARACTERES",
         });
     let id_aut = parseInt(id_author);
-    console.log('data recibida: ' + id_aut, name);
+    console.log("data recibida: " + id_aut, name);
     // consulta a PostgreSQL
-    yield database_1.pool.query('UPDATE authors set name = $1 WHERE id_author = $2', [name, id_aut]);
+    yield database_1.pool.query("UPDATE authors set name = $1 WHERE id_author = $2", [
+        name,
+        id_aut,
+    ]);
     return res.json({
-        message: 'El autor ah sido actualizado exitosamente!',
+        message: "El autor ah sido actualizado exitosamente!",
         body: {
             author: {
-                name
-            }
-        }
+                name,
+            },
+        },
     });
 });
 exports.getAuthors = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const response = yield database_1.pool.query('SELECT * from authors order by name asc');
+        const response = yield database_1.pool.query("SELECT * from authors order by name asc");
         return res.status(200).json(response.rows);
     }
     catch (e) {
         console.log(e);
-        return res.status(500).json('Internal server error');
+        return res.status(500).json("Internal server error");
     }
 });
 exports.getAuthorByName = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log('valor recibido: ' + req.params.name);
+    console.log("valor recibido: " + req.params.name);
     if (!req.params.name) {
         return res.status(400).send({
-            message: "FALTA CONTENIDO EN EL CUERPO, falta el nombre para buscar el autor por nombre"
+            message: "FALTA CONTENIDO EN EL CUERPO, falta el nombre para buscar el autor por nombre",
         });
     }
     try {
@@ -87,19 +90,19 @@ exports.getAuthorByName = (req, res) => __awaiter(void 0, void 0, void 0, functi
     }
     catch (e) {
         console.log(e);
-        return res.status(500).json('error al buscar el autor por nombre');
+        return res.status(500).json("error al buscar el autor por nombre");
     }
 });
 exports.getAuthorById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const id = parseInt(req.params.id);
-        const response = yield database_1.pool.query('SELECT * FROM authors WHERE id_author = $1', [id]);
+        const response = yield database_1.pool.query("SELECT * FROM authors WHERE id_author = $1", [id]);
         return res.json(response.rows[0]);
     }
     catch (e) {
         console.log(e);
         return res.status(500).send({
-            message: 'Ha ocurrido un error al intentar obtener el autor por id'
+            message: "Ha ocurrido un error al intentar obtener el autor por id",
         });
         // return res.status(500).json('Internal server error');
     }
@@ -107,7 +110,7 @@ exports.getAuthorById = (req, res) => __awaiter(void 0, void 0, void 0, function
 exports.filterAuthorsByName = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     if (!req.params.name) {
         return res.status(400).send({
-            message: "FALTA CONTENIDO EN EL CUERPO, falta el nombre de autor para buscar el autor"
+            message: "FALTA CONTENIDO EN EL CUERPO, falta el nombre de autor para buscar el autor",
         });
     }
     try {
@@ -116,14 +119,16 @@ exports.filterAuthorsByName = (req, res) => __awaiter(void 0, void 0, void 0, fu
     }
     catch (e) {
         console.log(e);
-        return res.status(500).json('Error, no se pudo filtrar autores por el nombre');
+        return res
+            .status(500)
+            .json("Error, no se pudo filtrar autores por el nombre");
     }
 });
 exports.existAuthorByName = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log('Nombre de el autor para evaluar si existe autor: ' + req.params.name);
+    console.log("Nombre de el autor para evaluar si existe autor: " + req.params.name);
     if (!req.params.name) {
         return res.status(400).send({
-            message: "FALTA CONTENIDO EN EL CUERPO, falta el nombre para buscar el autor"
+            message: "FALTA CONTENIDO EN EL CUERPO, falta el nombre para buscar el autor",
         });
     }
     try {
@@ -140,6 +145,6 @@ exports.existAuthorByName = (req, res) => __awaiter(void 0, void 0, void 0, func
     }
     catch (e) {
         console.log(e);
-        return res.status(500).json('error al buscar el autor por nombre');
+        return res.status(500).json("error al buscar el autor por nombre");
     }
 });

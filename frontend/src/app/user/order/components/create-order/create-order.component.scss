@@ -86,13 +86,10 @@
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
+    .caca{
+        color: white;
+    }
 }
-
-.InputElement{
-    background: yellow !important;
-}
-
-
 
 #box2{
     margin-bottom: 15px !important;
