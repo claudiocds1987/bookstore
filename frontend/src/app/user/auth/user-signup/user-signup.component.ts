@@ -6,16 +6,21 @@ import { AlertService } from '../../../services/alert.service';
 import { Router } from '@angular/router';
 import { debounceTime } from 'rxjs/operators';
 // formuluario
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { User } from 'src/app/models/user';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-user-signup',
   templateUrl: './user-signup.component.html',
-  styleUrls: ['./user-signup.component.scss']
+  styleUrls: ['./user-signup.component.scss'],
 })
 export class UserSignupComponent implements OnInit {
-
   form: FormGroup;
   submitted = false;
   password2 = '';
@@ -24,6 +29,7 @@ export class UserSignupComponent implements OnInit {
   currentDate = new Date();
   message: string;
   usernameExist: boolean = false;
+  emailExist: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -34,48 +40,85 @@ export class UserSignupComponent implements OnInit {
     private router: Router
   ) {
     this.buildForm();
-
+    this.checkEmail();
     this.checkUsername();
-
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   buildForm() {
-    this.form = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.email]],
-      username: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(15)]],
-      password: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(15)]],
-      confirmPassword: ['', Validators.required]
-    }, {
-      validator: this.MustMatch('password', 'confirmPassword')
-    });
+    this.form = this.formBuilder.group(
+      {
+        email: ['', [Validators.required, Validators.email]],
+        username: [
+          '',
+          [
+            Validators.required,
+            Validators.minLength(5),
+            Validators.maxLength(15),
+          ],
+        ],
+        password: [
+          '',
+          [
+            Validators.required,
+            Validators.minLength(5),
+            Validators.maxLength(15),
+          ],
+        ],
+        confirmPassword: ['', Validators.required],
+      },
+      {
+        validator: this.MustMatch('password', 'confirmPassword'),
+      }
+    );
   }
-  // convenienza getter para facil acceso a lo campos del formulario 
+  // convenienza getter para facil acceso a lo campos del formulario
   get f() {
     return this.form.controls;
   }
 
-  checkUsername(){
-    this.form.get('username').valueChanges
-    .pipe(
-      debounceTime(350) // pasado este tiempo realiza la búsqueda en la db
-    )
-    .subscribe(value => {
-      console.log(value);
-      this.userService.existUsername(value)
-      .subscribe(res => {
-        if(res){
-          // username valido porque existe en la db
-          this.usernameExist = true;
-        }else{
-          // username no valido, no existe en la db
-          this.usernameExist = false;
-        }     
-      }),
-      err => console.error('Error en la db al verificar el username ' + err);
-    });
+  checkEmail() {
+    this.form
+      .get('email')
+      .valueChanges.pipe(
+        debounceTime(350) // pasado este tiempo realiza la búsqueda en la db
+      )
+      .subscribe((value) => {
+        console.log(value);
+        this.userService.existUserEmail(value).subscribe((res) => {
+          if (res) {
+            // email valido porque existe en la db
+            this.emailExist = true;
+          } else {
+            // email no valido, no existe en la db
+            this.emailExist = false;
+          }
+        }),
+          (err) => console.error('Error en la db al verificar el email ' + err);
+      });
+  }
+
+  checkUsername() {
+    this.form
+      .get('username')
+      .valueChanges.pipe(
+        debounceTime(350) // pasado este tiempo realiza la búsqueda en la db
+      )
+      .subscribe((value) => {
+        console.log(value);
+        this.userService.existUsername(value).subscribe((res) => {
+          if (res) {
+            // username valido porque existe en la db
+            this.usernameExist = true;
+          } else {
+            // username no valido, no existe en la db
+            this.usernameExist = false;
+          }
+        }),
+          (err) =>
+            console.error('Error en la db al verificar el username ' + err);
+      });
   }
 
   deleteWhiteSpace(control: FormControl) {
@@ -100,40 +143,46 @@ export class UserSignupComponent implements OnInit {
       this.user.registration_date = this.currentDate;
       this.user.pass = this.form.value['password'];
       // check si username existe en la db.
-      this.userService.existUsername(this.user.username).subscribe(
-        resp => {
-          if(resp === true){
-            this.alertService.showWarning('Ya existe un usuario con el mismo nombre de usuario', '');
-            this.message = 'Ya existe un usuario con este nombre de usuario';
-          }
-          else{
-            // check si email existe en la db.
-            this.userService.existUserEmail(this.user.email).subscribe(
-              resp => {
-                if(resp === true){
-                  this.alertService.showWarning('Ya existe un usuario con el mismo email', '');
-                  this.message = 'Ya existe un usuario con este email';
+      this.userService.existUsername(this.user.username).subscribe((resp) => {
+        if (resp === true) {
+          this.alertService.showWarning(
+            'Ya existe un usuario con el mismo nombre de usuario',
+            ''
+          );
+          this.message = 'Ya existe un usuario con este nombre de usuario';
+        } else {
+          // check si email existe en la db.
+          this.userService.existUserEmail(this.user.email).subscribe((resp) => {
+            if (resp === true) {
+              this.alertService.showWarning(
+                'Ya existe un usuario con el mismo email',
+                ''
+              );
+              this.message = 'Ya existe un usuario con este email';
+            } else {
+              // signup
+              console.log('username e email permitidos');
+              this.authService.userSignup(this.user).subscribe(
+                (resp) => {
+                  this.alertService.showSuccess(
+                    'Gracias por registrarse',
+                    'Registrado!'
+                  );
+                  // redirijo al login de usuario
+                  this.router.navigate(['auth/login']);
+                },
+                (err) => {
+                  alert(
+                    'Ups error de servidor!\n\n' +
+                      'no se pudo hacer el registro de usuario'
+                  );
+                  console.error(err.message);
                 }
-                else{
-                  // signup
-                  console.log('username e email permitidos');
-                  this.authService.userSignup(this.user).subscribe(
-                    resp => {
-                      this.alertService.showSuccess('Gracias por registrarse', 'Registrado!');
-                      // redirijo al login de usuario
-                      this.router.navigate(['auth/login']);  
-                    },
-                    err => {
-                      alert('Ups error de servidor!\n\n'+ 'no se pudo hacer el registro de usuario');
-                      console.error(err.message);
-                    }
-                  )
-                }
-              }
-            )
-          }
+              );
+            }
+          });
         }
-      )     
+      });
     }
   }
 
@@ -153,8 +202,6 @@ export class UserSignupComponent implements OnInit {
       } else {
         matchingControl.setErrors(null);
       }
-    }
+    };
   }
-
-
 }

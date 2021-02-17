@@ -25,6 +25,7 @@ import { OrderDetail } from 'src/app/models/orderDetail';
 import { Sale } from 'src/app/models/sale';
 import { SaleDetail } from 'src/app/models/saleDetail';
 import { User } from 'src/app/models/user';
+import { Book } from 'src/app/models/book';
 import {
   MatDialog,
   MatDialogConfig,
@@ -46,7 +47,7 @@ export class CreateOrderComponent implements OnInit, AfterViewInit {
   cardError: string;
   card: any;
   // ------------------------------------------------
-  idBooks = [];
+  idBooks: Book[] = [];
   // bookList: any[]; de tipo any porque en localStorage('shopingCart') trae un elemento "autor" que no existe en type Book
   // si la declaro como bookList: book[]; en html cuando muestre book.autor va a marcar error.
   bookList: any[];
@@ -79,7 +80,7 @@ export class CreateOrderComponent implements OnInit, AfterViewInit {
     private stripeService: StripeService,
     private router: Router,
     private dialog: MatDialog
-  ) { 
+  ) {
     this.buildForm();
     // Obteniendo la data de la localStorage 'shoppingCart' creada en cart.services.ts
     if (localStorage.getItem('shoppingCart') != null) {
@@ -87,7 +88,7 @@ export class CreateOrderComponent implements OnInit, AfterViewInit {
       this.bookList = JSON.parse(localStorage.getItem('shoppingCart'));
 
       // seteo quantity = 1 de cada libro
-      for (let item of this.bookList) {
+      for (const item of this.bookList) {
         this.maxQuantity.push(item.quantity); // quantity de la db para max limit en input
         item.quantity = 1; // seteo quantity = 1 de cada libro
       }
@@ -98,8 +99,8 @@ export class CreateOrderComponent implements OnInit, AfterViewInit {
         .reduce((count, item) => count + item, 0);
     }
     // Obteniendo la data de la localStorage 'idBooks' creada en home.ts
-    if (localStorage.getItem('idBooks') != null) {
-      const data = localStorage.getItem('idBooks');
+    if (localStorage.getItem('books') != null) {
+      const data = JSON.parse(localStorage.getItem('books'));
       for (const value of data) {
         this.idBooks = [...this.idBooks, value];
       }
@@ -332,7 +333,7 @@ export class CreateOrderComponent implements OnInit, AfterViewInit {
               // se crea la venta y el detalle de venta que esta adentro de la funcion createSale()
               this.createSale();
               // borro las local storage
-              localStorage.removeItem('idBooks');
+              localStorage.removeItem('books');
               localStorage.removeItem('shoppingCart');
               // seteo el carrito a 0 items en el boton del carrito del componente main-nav
               this.cartService.cart.next([]);
@@ -386,32 +387,33 @@ export class CreateOrderComponent implements OnInit, AfterViewInit {
   }
 
   deleteItem(id: number) {
-    //if (confirm('¿Realmente desea eliminar el producto?')) {
     // borro el producto del array que contiene la data de la localStorage 'shoppingCart'
     for (let i = 0; i < this.bookList.length; i++) {
       if (id === this.bookList[i].id_book) {
         this.bookList.splice(i, 1);
       }
     }
-
     // actualizo el precio total
-    this.total = this.bookList
-      .map((item) => Number(item.price))
-      .reduce((count, item) => count + item, 0);
+    this.calculateTotalPrice();
 
-    const idBook = id.toString();
+    // actualizo el precio total funciona mal
+    // this.total = this.bookList
+    //   .map((item) => Number(item.price))
+    //   .reduce((count, item) => count + item, 0);
+
+    //const idBook = id.toString();
     // elimino el id del producto en el array que contiene la data de la localStorage 'idBooks'
     for (let z = 0; z < this.idBooks.length; z++) {
-      if (idBook === this.idBooks[z]) {
+      if (id === this.idBooks[z].id_book) {
         this.idBooks.splice(z, 1);
       }
     }
     // actualizo la localStorage 'idBooks' creada en home.ts
-    localStorage.setItem('idBooks', this.idBooks.toString());
+    localStorage.setItem('books', JSON.stringify(this.idBooks));
     // si se eliminaron todos los productos en order.html borro las localStorage
     if (this.bookList.length <= 0) {
       localStorage.removeItem('shoppingCart');
-      localStorage.removeItem('idBooks');
+      localStorage.removeItem('books');
       this.cartService.cart.next(this.bookList);
       // redirije a view home
       this.router.navigate(['home']);

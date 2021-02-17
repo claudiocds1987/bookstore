@@ -18,6 +18,12 @@
             class="form-control"
             [ngClass]="{ 'is-invalid': f.email.errors && f.email.dirty }"
           />
+          <!-- important las 2 condiciones juntas ya que en la db busca por LIKE'%#%',apenas se escribe busca si contiene la letra/s del email en la db -->
+          <div *ngIf="emailExist && f.email.valid">
+            <small class="text-danger"
+              >Ya existe otro usuario con el mismo email</small
+            >
+          </div>
           <div *ngIf="f.email.errors" class="invalid-feedback">
             <div *ngIf="f.email.errors.required">el email es obligatorio</div>
             <div *ngIf="f.email.errors.email">
@@ -33,22 +39,24 @@
             type="text"
             id="username"
             formControlName="username"
-            class="form-control"       
+            class="form-control"
             [ngClass]="{ 'is-invalid': f.username.errors && f.username.dirty }"
             (blur)="deleteWhiteSpace(f.username.value)"
           />
           <div *ngIf="usernameExist">
-            <small class="text-danger">Ya existe otro usuario con el mismo nombre</small>
+            <small class="text-danger"
+              >Ya existe otro usuario con el mismo nombre</small
+            >
           </div>
           <div *ngIf="f.username.errors" class="invalid-feedback">
             <div *ngIf="f.username.errors.required">
               <small>este campo es obligatorio!</small>
             </div>
             <div *ngIf="f.username.errors.minlength">
-              <small>debe tener un mínimo de 5 caracteres</small>          
+              <small>debe tener un mínimo de 5 caracteres</small>
             </div>
             <div *ngIf="f.username.errors.maxlength">
-              <small>solo hasta 15 caracteres permitidos</small>            
+              <small>solo hasta 15 caracteres permitidos</small>
             </div>
           </div>
         </div>
@@ -83,12 +91,11 @@
             id="pass2"
             formControlName="confirmPassword"
             class="form-control"
-            [ngClass]="{ 'is-invalid': f.confirmPassword.errors && f.confirmPassword.dirty }"
+            [ngClass]="{
+              'is-invalid': f.confirmPassword.errors && f.confirmPassword.dirty
+            }"
           />
-          <div
-            *ngIf="f.confirmPassword.errors"
-            class="invalid-feedback"
-          >
+          <div *ngIf="f.confirmPassword.errors" class="invalid-feedback">
             <div *ngIf="f.confirmPassword.errors.required">
               <small>este campo es obligatorio!</small>
             </div>
@@ -103,7 +110,7 @@
             mat-raised-button
             color="color-dark"
             class="btn-block"
-            [disabled]="form.invalid || usernameExist"
+            [disabled]="form.invalid || usernameExist || emailExist"
           >
             Registrarse
           </button>

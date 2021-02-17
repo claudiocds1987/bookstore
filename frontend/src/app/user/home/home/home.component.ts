@@ -133,37 +133,37 @@ export class HomeComponent implements OnInit {
     if (book.quantity <= 0) {
       this.alertService.showError('', 'NO HAY STOCK');
     } else {
-      let idBookArray = [];
+      let bookArray: Book[] = [];
       let exist = false;
       // existe la localStorageStorage ?
-      if (localStorage.getItem('idBooks') != null) {
+      if (localStorage.getItem('books') != null) {
         // Obtiene la información almacenada desde localStorage
-        const items = JSON.parse(localStorage.getItem('idBooks'));
-        // guardo el contenido de la localStorage en array
+        const items = JSON.parse(localStorage.getItem('books'));
+        // guardo el contenido de la localStorage en bookArray
         for (const value of items) {
-          idBookArray = [...idBookArray, value];
+          bookArray = [...bookArray, value];
         }
         // checkeo si el nuevo producto ya existe en el carrito
-        for (const item of idBookArray) {
-          if (book.id_book.toString() === item.toString()) {
+        for (const item of bookArray) {
+          if (book.id_book === item.id_book) {
             exist = true;
           }
         }
         if (exist) {
           this.alertService.showWarning('El producto ya fue agregado al carrito!', '');
         } else {
-          // guardo en array el nuevo proucto
-          idBookArray = [...idBookArray, book.id_book];
+          // guardo en bokkArray el nuevo proucto
+          bookArray = [...bookArray, book];
           // grabo array actualizado en localStorage
-          localStorage.setItem('idBooks', JSON.stringify(idBookArray));
+          localStorage.setItem('books', JSON.stringify(bookArray));
           // guardo el libro en el carrito
           this.cartService.addCart(book);
           this.alertService.showSuccess('Producto agregado al carrito', '');
         }
       } else {
-        idBookArray = [...idBookArray, book.id_book];
+        bookArray = [...bookArray, book];
         // 1er carga del producto y creo la localStorage
-        localStorage.setItem('idBooks', JSON.stringify(idBookArray));
+        localStorage.setItem('books', JSON.stringify(bookArray));
         // guardo el libro en el carrito
         this.cartService.addCart(book);
         this.alertService.showSuccess('Producto agregado al carrito', '');
@@ -171,12 +171,10 @@ export class HomeComponent implements OnInit {
     }
   }
 
-
   getBookDetail(idBook: number){
-    const id_book = idBook.toString();
-    this.bookService.getRealDataBook(id_book).subscribe(
-      res => {      
-        //****************************************************
+    const id = idBook.toString();
+    this.bookService.getRealDataBook(id).subscribe(
+      res => {
         this.book.description = res[0].description;
         this.book.id_author = res[0].id_author;
         this.book.id_book = res[0].id_book;
@@ -186,15 +184,11 @@ export class HomeComponent implements OnInit {
         this.book.price = res[0].price;
         this.book.quantity = res[0].quantity;
         this.book.state = res[0].state;
-        //this.urlImgDirty = res[0].url_image;
         this.book.url_image = this.linkImg(res[0].url_image);
-        //this.book.url_image = res[0].url_image;
         this.book.year = res[0].year;
         this.authorName = res[0].autor;
         this.editorialName = res[0].editorial;
         this.categoryName = res[0].category;
-        //****************************************************
-
       },
       err => console.error('Error al intentar obtener el libro por id ' + err)
     );

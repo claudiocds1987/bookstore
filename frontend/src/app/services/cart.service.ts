@@ -10,11 +10,11 @@ export class CartService {
 
   private bookArray: Book[] = [];
   // cart es como un canal (BehaviorSubject)
-  public cart = new BehaviorSubject<Book[]>([]); 
+  public cart = new BehaviorSubject<Book[]>([]);
   // cart$ (Es el "Observable" de BehaviorSubject cart), escucha o se entera de las actualizaciones que va teniendo "BehaviorSubject cart"
   // entonces a medida que el carrito se va llenando en el "BehaviorSubject cart", con el "Observable cart$"" se puede 
   // saber desde cualquier componente cual es el estado actual del carrito (cuantos items tiene).
-  public cart$ = this.cart.asObservable(); 
+  public cart$ = this.cart.asObservable();
 
   constructor() { }
 
