@@ -9,11 +9,12 @@ import { MyValidationsService } from '../../../services/my-validations.service';
 import { AlertService } from '../../../services/alert.service';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss'],
+  selector: 'app-borrar2',
+  templateUrl: './borrar2.component.html',
+  styleUrls: ['./borrar2.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class Borrar2Component implements OnInit {
+
   bookList$: Observable<Book[]>;
   inputValue = '';
   hideButton = false;

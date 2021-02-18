@@ -4,17 +4,21 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HomeComponent } from './home/home.component';
 import { MaterialModule } from './../../material/material.module';
 import { HomeRoutingModule } from './home-routing.module';
-import { NgxPaginationModule } from 'ngx-pagination'; // para los pagination
-
+// para los pagination
+import { NgxPaginationModule } from 'ngx-pagination';
+import { BorrarComponent } from './borrar/borrar.component';
+import { Borrar2Component } from './borrar2/borrar2.component';
 
 @NgModule({
   declarations: [
-    HomeComponent
+    HomeComponent,
+    BorrarComponent,
+    Borrar2Component
   ],
   imports: [
     CommonModule,
     HomeRoutingModule,
-    FormsModule, 
+    FormsModule,
     ReactiveFormsModule,
     MaterialModule,
     NgxPaginationModule

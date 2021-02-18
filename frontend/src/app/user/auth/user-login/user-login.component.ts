@@ -47,9 +47,17 @@ export class UserLoginComponent implements OnInit {
         if(res){
           // username valido porque existe en la db
           this.usernameExist = true;
+          // add clase is-valid al input
+          // let element = document.getElementById("input-username");
+          // element.classList.remove('is-invalid');
+          // element.classList.add('is-valid');        
         }else{
-          // username no valido, no existe en la db
-          this.usernameExist = false;
+           // username no valido, no existe en la db
+          this.usernameExist = false; 
+          // add clase is-invalid al input
+          // let element = document.getElementById("input-username");
+          // element.classList.remove('is-valid');
+          // element.classList.add('is-invalid');      
         }     
       }),
       err => console.error('Error en la db al verificar el username ' + err);
@@ -96,10 +104,10 @@ export class UserLoginComponent implements OnInit {
 
   }
 
-  // // convenienza getter para facil acceso a lo campos del formulario 
-  // get f() {
-  //   return this.form.controls;
-  // }
+  // convenienza getter para facil acceso a lo campos del formulario 
+  get f() {
+    return this.form.controls;
+  }
 
   cleanUnnecessaryWhiteSpaces(cadena: string) {
     const a = this.myValidationsService.cleanUnnecessaryWhiteSpaces(cadena);

@@ -40,7 +40,9 @@ export class UserSignupComponent implements OnInit {
     private router: Router
   ) {
     this.buildForm();
+   
     this.checkEmail();
+  
     this.checkUsername();
   }
 
@@ -82,17 +84,15 @@ export class UserSignupComponent implements OnInit {
     this.form
       .get('email')
       .valueChanges.pipe(
-        debounceTime(350) // pasado este tiempo realiza la búsqueda en la db
+        debounceTime(450) // pasado este tiempo realiza la búsqueda en la db
       )
       .subscribe((value) => {
         console.log(value);
         this.userService.existUserEmail(value).subscribe((res) => {
           if (res) {
-            // email valido porque existe en la db
-            this.emailExist = true;
+            this.emailExist = true; // email valido porque existe en la db
           } else {
-            // email no valido, no existe en la db
-            this.emailExist = false;
+            this.emailExist = false; // email no valido, no existe en la db
           }
         }),
           (err) => console.error('Error en la db al verificar el email ' + err);
@@ -107,17 +107,17 @@ export class UserSignupComponent implements OnInit {
       )
       .subscribe((value) => {
         console.log(value);
-        this.userService.existUsername(value).subscribe((res) => {
-          if (res) {
-            // username valido porque existe en la db
-            this.usernameExist = true;
-          } else {
-            // username no valido, no existe en la db
-            this.usernameExist = false;
-          }
-        }),
-          (err) =>
-            console.error('Error en la db al verificar el username ' + err);
+          this.userService.existUsername(value).subscribe((res) => {
+            if (res) {
+              // username valido porque existe en la db
+              this.usernameExist = true; // para el boton registrar [disabled]
+            } else {
+              // username no valido, no existe en la db
+              this.usernameExist = false; // para el boton registrar [disabled]
+            }
+          }),
+            (err) =>
+              console.error('Error en la db al verificar el username ' + err);
       });
   }
 

@@ -67,7 +67,7 @@ export class MainNavComponent implements OnInit {
           // "href" para que haga "refresh" cada vez que entra en "view order.html" sino "stripe" muestra el pago
           // tarjeta una vez sola(al entrar por 1ra vez a order), si salgo de order y vuelvo a entrar desaparece, 
           // "stripe" necesita hacer un refresh para no tener problema.
-          window.location.href="/order/create-order";       
+          window.location.href = '/order/create-order';
         }
       }
 

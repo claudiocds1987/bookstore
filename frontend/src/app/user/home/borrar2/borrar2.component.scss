@@ -9,6 +9,11 @@ p {
   min-height: 100vh;
   .box-container1 {
     margin-top: 50px;
+    .fila{
+        color: #fff;
+        //background:  #383838;
+        background-image: linear-gradient(to top, #ffffff, #c6c6cb, #8f919a, #5b5f6b, #293240);
+    }
   }
   .box-search {
     display: flex;
@@ -22,7 +27,6 @@ p {
     }
   }
 }
-
 
 header,
 .box-icons-social-media {
@@ -50,90 +54,100 @@ header,
       minmax(200px, 1fr)
     ); // nos hará breakpoints cada 200px
     .card {
+      //max-width: 300px;
+      background-color: #fff;
+      //box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.1);
+      background-position: center;
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+      border-radius: 10px;
       margin: 15px;
-      border-radius: 5px;
       display: block; // para que el ancho y alto sean dinamico respecto al elemento
+
+      .profile-name {
+        position: absolute;
+        left: 30px;
+        bottom: 70px;
+        font-size: 20px;
+        color: #fff;
+        text-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
+        font-weight: bold;
+        transition: all linear 0.25s;
+      }
+
+      .profile-name:hover {
+        bottom: 80px;
+      }
+
+      .profile-icons {
+        position: absolute;
+        bottom: 30px;
+        font-size: 15px; //
+        text-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5); //
+        right: 30px;
+        color: #fff;
+        transition: all linear 0.25s;
+        .fa-shopping-cart{
+            color: #c3fb43;
+            margin-right: 5px;
+        }
+      }
+
+      .profile-icons:hover {
+        right: 40px;
+      }
+
       .crop-image {
         margin-top: 2px;
         padding: 8px;
         display: block;
         height: 250px;
-        width: 100%;     
-        img {
-          object-fit: contain;
-          height: 100%;
-          width: 100%;
-          object-position: center;
-        }
+        width: 100%;
+        // img {
+        //   object-fit: contain;
+        //   height: 100%;
+        //   width: 100%;
+        //   object-position: center;
+        // }
       }
-      .box-btn-border {
-        margin-bottom: 10px;
-        .btn-border {
-          border-radius: 15px !important;
-        }
-        // boton para agregar a carrito
-        .mat-banner-color {
-          background: rgb(41, 50, 64);
-         
-        }
-        .mat-banner-color:hover {
-          //background: rgb(86, 93, 104);
-          transition: all linear 0.25s;
-          opacity: 0.5;
-        }
-        .icon-shopping-cart {
-          color: #c5fd43 !important;
-        }
-        .box-btn-border {
-          margin-bottom: 10px;
-          .btn-border {
-            border-radius: 15px !important;
-          }
-          // boton para agregar a carrito
-          .mat-banner-color {
-            background: rgb(41, 50, 64);
-          }
-          .icon-shopping-cart {
-            color: #c5fd43 !important;
-          }
-        }
+
+      .crop-image:hover{
+        filter: grayscale(100%);
       }
+      
     }
-    .card:hover{
-      transition: all linear 0.50s;
-      background: $colorNav;
-    }
-  } 
+  }
 }
 
-.modal{
-  .modal-dialog{
+.modal {
+  .modal-dialog {
     // importante poner width 100% para que el modal en resoluciones de pantalla movil como 320x568 y 375x667
     // quede bien centrado
     width: 100%;
-    .modal-header, .modal-footer{
-      background: $colorTres; 
+    .modal-header,
+    .modal-footer {
+      background: $colorTres;
       color: white;
     }
-    .modal-title{
+    .modal-title {
       letter-spacing: 0.1em;
     }
-    .modal-body{
-      #p-description{
+    .modal-body {
+      #p-description {
         line-height: 25px;
       }
     }
-    .img-thumbnail{
+    .img-thumbnail {
       //border: solid;
       background-color: #e5e5e5;
     }
-    img{
+    img {
       max-width: 200px;
       max-height: 220px;
     }
-  }  
+  }
 }
-
 
 @media (max-width: 760px) {
   .box-icons-social-media {
@@ -171,5 +185,3 @@ a:hover {
     opacity: 1;
   }
 }
-
-

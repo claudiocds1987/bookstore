@@ -13,8 +13,10 @@
             <mat-icon class="icon">face</mat-icon>
             <input
               type="text"
+              id="input-username"
               class="form-control"
               formControlName="username"
+              [ngClass]="{ 'is-invalid': f.username.errors  && f.username.dirty || !usernameExist, 'is-valid': usernameExist && !f.username.errors }"
               placeholder="Nombre de usuario"
               maxlength="16"
             />

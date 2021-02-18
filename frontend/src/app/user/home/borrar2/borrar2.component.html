@@ -62,11 +62,12 @@
       </div>
     </div>
   </div>
+    
 
   <!-- First Row [Prosucts]-->
   <!-- <h2 class="font-weight-bold mb-2">From the Shop</h2>
-    <p class="font-italic text-muted mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-        incididunt.</p> -->
+      <p class="font-italic text-muted mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+          incididunt.</p> -->
 
   <div class="container box-container2">
     <div *ngIf="bookList$ | async as books">
@@ -79,9 +80,8 @@
           class="card rounded shadow-sm border-0 fade-in"
         >
           <img [src]="book.url_image" [alt]="book.name" class="crop-image" />
-          <div class="text-center box-description">
+          <div class="profile-name">
             <a
-              class="font-italic font-weight-light"
               data-toggle="modal"
               data-target="#exampleModalCenter"
               (click)="getBookDetail(book.id_book)"
@@ -89,21 +89,11 @@
               {{ book.name }}
             </a>
           </div>
-          <div class="text-center box-btn-border">
-            <button
-              class="btn-border"
-              mat-raised-button
-              color="banner-color"
-              (click)="addCarrito(book)"
-            >
-              <i
-                class="fa fa-shopping-cart mr-2 icon-shopping-cart"
-                aria-hidden="true"
-              ></i>
-              <span style="font-size: smaller; color: white">{{
-                book.price | currency: "ARS ":"symbol"
-              }}</span>
-            </button>
+          <div class="profile-icons">
+            <a (click)="addCarrito(book)"
+              ><i class="fa fa-shopping-cart fa-lg" aria-hidden="true"></i
+              >{{ book.price | currency: "ARS ":"symbol" }}
+            </a>
           </div>
         </div>
       </div>
@@ -168,8 +158,3 @@
     </div>
   </div>
 </div>
-
-
-
-
-

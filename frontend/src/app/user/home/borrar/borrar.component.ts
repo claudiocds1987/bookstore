@@ -9,11 +9,13 @@ import { MyValidationsService } from '../../../services/my-validations.service';
 import { AlertService } from '../../../services/alert.service';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss'],
+  selector: 'app-borrar',
+  templateUrl: './borrar.component.html',
+  styleUrls: ['./borrar.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class BorrarComponent implements OnInit {
+
+  caca: number = 10;
   bookList$: Observable<Book[]>;
   inputValue = '';
   hideButton = false;
@@ -31,99 +33,17 @@ export class HomeComponent implements OnInit {
     public cartService: CartService,
     public myValidationsService: MyValidationsService,
     public alertService: AlertService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     // "boton listar todos" del filtrado esta oculto hasta que se haga click en boton buscar
-    document.getElementById('btn-listar-todos').style.display = 'none'; //?
+    //document.getElementById('btn-listar-todos').style.display = 'none'; // ?
 
     this.getBooksWithAuthorName();
 
     if (localStorage.getItem('username') != null) {
       this.username = localStorage.getItem('username');
     }
-  }
-
-  getBooksWithAuthorName() {
-    this.bookList$ = this.bookService.getBooksWithAuthorName().pipe(
-      // explicacion: todo lo que hay en "bookList$"" copialo a array "books: Book[]"
-      // y "mapealo (accede a sus elementos)" con la "variable book"
-      map((books: Book[]) =>
-        books.map((book) => {
-          return {
-            // devuelve el objeto book con la url_image limpia para verla en html y quantity seteado en 1 para order.html
-            ...book,
-            url_image: this.linkImg(book.url_image),
-            // quantity: 1,
-          };
-        })
-      )
-    );
-
-    // si estaba en false cambia a true o viceversa
-    this.hideButton = !this.hideButton;
-  }
-
-  linkImg(urlImage) {
-    // quito la palabra public
-    let str = urlImage.replace(/public/g, '');
-    // quito la barra '\'
-    str = str.replace('\\', '');
-    // invierto la barra en sentido a '/'
-    str = str.replace('\\', '/');
-    // console.log(str);
-    const URL = 'http://localhost:4000/';
-    const link = URL + str;
-    // console.log(link);
-    return link;
-  }
-
-  filterBookByName() {
-    if (this.inputValue === '') {
-      this.alertService.showWarning('El campo no puede estar vacio', 'ERROR');
-    } else {
-      // aparece el btn listar todos
-      document.getElementById('btn-listar-todos').style.display = 'inline';
-      // this.btnDisabled = false; // se hablita el btn listar todos
-      this.bookList$ = this.bookService.filterBooksByName(this.inputValue).pipe(
-        // explicacion: todo lo que hay en "bookList$"" copialo a array "books: Book[]"
-        // y "mapealo (accede a sus elementos)" con la "variable book"
-        map((books: Book[]) =>
-          books.map((book) => {
-            return {
-              // devuelve el objeto book con la url_image limpia para verla en html
-              ...book,
-              url_image: this.linkImg(book.url_image),
-            };
-          })
-        )
-      );
-      // .pipe(
-      //   catchError(error => {
-      //     // manejo de error
-      //     console.log('Hay un error en el servicio o en la base de datos ' + error);
-      //     return of([]);
-      //   })
-      // );
-
-      this.bookList$.subscribe((res) => {
-        if (res.length === 0) {
-          this.alertService.showError(
-            'No se encontraron resultados',
-            'NO HAY MATCH'
-          );
-          this.inputValue = '';
-          this.hideButton = !this.hideButton; // si estaba en false cambia a true o viceversa
-        }
-      });
-    }
-  }
-
-  listBooks() {
-    // se oculta el boton listar todos
-    document.getElementById('btn-listar-todos').style.display = 'none';
-    this.inputValue = '';
-    this.getBooksWithAuthorName();
   }
 
   addCarrito(book: Book) {
@@ -171,6 +91,40 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  getBooksWithAuthorName() {
+    this.bookList$ = this.bookService.getBooksWithAuthorName().pipe(
+      // explicacion: todo lo que hay en "bookList$"" copialo a array "books: Book[]"
+      // y "mapealo (accede a sus elementos)" con la "variable book"
+      map((books: Book[]) =>
+        books.map((book) => {
+          return {
+            // devuelve el objeto book con la url_image limpia para verla en html y quantity seteado en 1 para order.html
+            ...book,
+            url_image: this.linkImg(book.url_image),
+            // quantity: 1,
+          };
+        })
+      )
+    );
+
+    // si estaba en false cambia a true o viceversa
+    this.hideButton = !this.hideButton;
+  }
+
+  linkImg(urlImage) {
+    // quito la palabra public
+    let str = urlImage.replace(/public/g, '');
+    // quito la barra '\'
+    str = str.replace('\\', '');
+    // invierto la barra en sentido a '/'
+    str = str.replace('\\', '/');
+    // console.log(str);
+    const URL = 'http://localhost:4000/';
+    const link = URL + str;
+    // console.log(link);
+    return link;
+  }
+
   getBookDetail(idBook: number) {
     const id = idBook.toString();
     this.bookService.getRealDataBook(id).subscribe(
@@ -193,4 +147,5 @@ export class HomeComponent implements OnInit {
       (err) => console.error('Error al intentar obtener el libro por id ' + err)
     );
   }
+  
 }

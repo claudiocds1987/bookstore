@@ -10,18 +10,18 @@
       <form [formGroup]="form" (ngSubmit)="signUp($event)">
         <div class="form-group">
           <mat-icon class="icon">email</mat-icon>
-          <label for="email">Email</label>
+          <label for="input-email">Email</label>
           <input
             type="text"
-            id="email"
+            id="input-email"
             formControlName="email"
             class="form-control"
-            [ngClass]="{ 'is-invalid': f.email.errors && f.email.dirty }"
+            [ngClass]="{ 'is-invalid': emailExist || f.email.errors && f.email.dirty , 'is-valid': !emailExist && !f.email.errors  && f.email.dirty }"
           />
           <!-- important las 2 condiciones juntas ya que en la db busca por LIKE'%#%',apenas se escribe busca si contiene la letra/s del email en la db -->
           <div *ngIf="emailExist && f.email.valid">
             <small class="text-danger"
-              >Ya existe otro usuario con el mismo email</small
+              >Este email ya fue tomado</small
             >
           </div>
           <div *ngIf="f.email.errors" class="invalid-feedback">
@@ -37,10 +37,10 @@
           <label for="username">Nombre de usuario</label>
           <input
             type="text"
-            id="username"
+            id="input-username"
             formControlName="username"
             class="form-control"
-            [ngClass]="{ 'is-invalid': f.username.errors && f.username.dirty }"
+            [ngClass]="{ 'is-invalid': usernameExist || f.username.errors && f.username.dirty, 'is-valid': !f.username.errors }"
             (blur)="deleteWhiteSpace(f.username.value)"
           />
           <div *ngIf="usernameExist">

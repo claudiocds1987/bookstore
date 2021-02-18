@@ -5,7 +5,7 @@ import {
   ElementRef,
   AfterViewInit,
   NgZone,
-  Pipe
+  Pipe,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -37,10 +37,9 @@ import { MatConfirmDialogComponent } from '../../../../mat-confirm-dialog/mat-co
 @Component({
   selector: 'app-create-order',
   templateUrl: './create-order.component.html',
-  styleUrls: ['./create-order.component.scss']
+  styleUrls: ['./create-order.component.scss'],
 })
 export class CreateOrderComponent implements OnInit, AfterViewInit {
-
   form: FormGroup;
   // variables para el api de pagos Stripe
   @ViewChild('cardInfo') cardInfo: ElementRef;
@@ -48,8 +47,8 @@ export class CreateOrderComponent implements OnInit, AfterViewInit {
   card: any;
   // ------------------------------------------------
   idBooks: Book[] = [];
-  // bookList: any[]; de tipo any porque en localStorage('shopingCart') trae un elemento "autor" que no existe en type Book
-  // si la declaro como bookList: book[]; en html cuando muestre book.autor va a marcar error.
+  /* bookList: any[]; de tipo any porque en localStorage('shopingCart') trae un elemento "autor" que no existe en type Book
+     si la declaro como bookList: book[]; en html cuando muestre book.autor va a marcar error.*/
   bookList: any[];
   total: number;
   provincia = 'Buenos Aires';
@@ -65,7 +64,6 @@ export class CreateOrderComponent implements OnInit, AfterViewInit {
   orderSuccess = false;
   dialogRef: MatDialogRef<MatConfirmDialogComponent>;
   maxQuantity: number[] = [];
-  //btnDisabled: boolean = true; // para btn pagar
 
   constructor(
     private formBuilder: FormBuilder,
@@ -107,7 +105,7 @@ export class CreateOrderComponent implements OnInit, AfterViewInit {
     }
   }
 
-   //funcion que checkea si todos los inputs estan bien ?
+  // funcion que checkea si todos los inputs estan bien ?
   // public findInvalidControls() {
   //   const invalid = [];
   //   const controls = this.AddCustomerForm.controls;
@@ -144,10 +142,41 @@ export class CreateOrderComponent implements OnInit, AfterViewInit {
 
   private buildForm() {
     this.form = this.formBuilder.group({
-      provincia: ['', [Validators.required, Validators.pattern(/^[a-zA-Z ]+$/), Validators.maxLength(30), Validators.minLength(4)]],
-      localidad: ['', [Validators.required, Validators.pattern(/^[a-zA-Z ]+$/),  Validators.maxLength(30), Validators.minLength(4)]],
-      adress: ['', [Validators.required, Validators.maxLength(30), Validators.minLength(4)]],
-      phoneNumber: ['', [Validators.required, Validators.pattern(/^-?(0|[1-9]\d*)?$/), Validators.maxLength(12), Validators.minLength(8)]],
+      provincia: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(/^[a-zA-Z ]+$/),
+          Validators.maxLength(30),
+          Validators.minLength(4),
+        ],
+      ],
+      localidad: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(/^[a-zA-Z ]+$/),
+          Validators.maxLength(30),
+          Validators.minLength(4),
+        ],
+      ],
+      adress: [
+        '',
+        [
+          Validators.required,
+          Validators.maxLength(30),
+          Validators.minLength(4),
+        ],
+      ],
+      phoneNumber: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(/^-?(0|[1-9]\d*)?$/),
+          Validators.maxLength(12),
+          Validators.minLength(8),
+        ],
+      ],
     });
   }
 
@@ -240,7 +269,8 @@ export class CreateOrderComponent implements OnInit, AfterViewInit {
           this.orderDetail.id_order = idOrder.lastIdOrder;
           this.orderDetail.id_product = item.id_book;
           this.orderDetail.product_price = item.price;
-          // item.quantity viene seteada = 1 desde home.ts , toma otro valor si se cambia la cant. desde el input number gracias a la funcion updateItem()
+          // item.quantity viene seteada = 1 desde home.ts , toma otro valor si se cambia la cant. 
+          // desde el input number gracias a la funcion updateItem()
           this.orderDetail.product_quantity = item.quantity;
           // se crea el detalle de la orden de compra
           this.orderDetailService.createOrderDetail(this.orderDetail).subscribe(
@@ -289,7 +319,8 @@ export class CreateOrderComponent implements OnInit, AfterViewInit {
           this.saleDetail.id_book = item.id_book;
           this.saleDetail.id_sale = idSale.lastIdSale;
           this.saleDetail.price = item.price;
-          // item.quantity viene seteada = 1 desde home.ts , toma otro valor si se cambia la cant. desde el input number gracias a la funcion updateItem()
+          // item.quantity viene seteada = 1 desde home.ts , toma otro valor si se cambia la cant.
+          // desde el input number gracias a la funcion updateItem()
           this.saleDetail.quantity = item.quantity;
           // ¿ seria mejor un array de tipo saleDetail que guarde el obj en cada iteracion
           // despues afuera uso un for y hago el createSaleDetail ??
@@ -314,17 +345,19 @@ export class CreateOrderComponent implements OnInit, AfterViewInit {
   // "async" porque devuelve una promesa
   async pagar(event: Event) {
     if (localStorage.getItem('username') === null) {
-      this.alertService.showError('Para poder comprar debe tener una cuenta de usuario.','')
+      this.alertService.showError(
+        'Para poder comprar debe tener una cuenta de usuario.',
+        ''
+      );
     } else {
       event.preventDefault();
       if (this.form.valid) {
-        //this.btnDisabled = false; // se habilita el btn pagar
         //  EFECTUANDO EL PAGO
         const { token, error } = await stripe.createToken(this.card);
         if (token) {
           // console.log(token);
           // el total a pagar esta seteado en 1 pr prueba, si quiero el valor real a pagar por parametro le paso la variable this.total
-          // const response = await this.stripeService.charge(this.total, token.id);
+          // es decir const response = await this.stripeService.charge(this.total, token.id);
           await this.stripeService.charge(1, token.id).then(
             (res) => {
               console.log('el pago fue realizado');
@@ -360,8 +393,10 @@ export class CreateOrderComponent implements OnInit, AfterViewInit {
           );
         } else {
           this.ngZone.run(() => (this.cardError = error.message));
-          //alert('No se pudo efectuar el pago');
-          this.alertService.showError('Los datos de la tarjeta no son correctos','ERROR DE PAGO')
+          this.alertService.showError(
+            'Los datos de la tarjeta no son correctos',
+            'ERROR DE PAGO'
+          );
         }
       }
     }
@@ -401,14 +436,13 @@ export class CreateOrderComponent implements OnInit, AfterViewInit {
     //   .map((item) => Number(item.price))
     //   .reduce((count, item) => count + item, 0);
 
-    //const idBook = id.toString();
     // elimino el id del producto en el array que contiene la data de la localStorage 'idBooks'
     for (let z = 0; z < this.idBooks.length; z++) {
       if (id === this.idBooks[z].id_book) {
         this.idBooks.splice(z, 1);
       }
     }
-    // actualizo la localStorage 'idBooks' creada en home.ts
+    // actualizo la localStorage 'books' creada en home.ts
     localStorage.setItem('books', JSON.stringify(this.idBooks));
     // si se eliminaron todos los productos en order.html borro las localStorage
     if (this.bookList.length <= 0) {
@@ -425,5 +459,3 @@ export class CreateOrderComponent implements OnInit, AfterViewInit {
     }
   }
 }
-
-
