@@ -5,35 +5,43 @@ p {
   margin-top: 5px;
 }
 
+// .fila{
+//   background: url('./../../../../assets/images/banner-nature.jpg') $colorNav; //si falla img carga color de la nav
+//   // background-repeat: no-repeat;
+//   //background-size: cover;
+//   object-fit: contain;
+//   //background-size: 100% 100%;
+// }
+
 .box-principal {
   min-height: 100vh;
   .box-container1 {
     margin-top: 50px;
+      .box-intro, .box-icons-social-media, .box-search{
+        margin-top: 15px;
+      }
+      .box-search {
+        display: flex;
+        justify-content: space-around;
+        .btn-buscar {
+          border-radius: 0;
+        }
+        .btn-listar-todos {
+          margin-top: 15px !important;
+          height: 32px !important;
+        }
+      }
   }
-  .box-search {
-    display: flex;
-    justify-content: space-around;
-    .btn-buscar {
-      margin-top: 10px !important;
-    }
-    .btn-listar-todos {
-      margin-top: 15px !important;
-      height: 32px !important;
-    }
-  }
+  
 }
 
 
-header,
-.box-icons-social-media {
-  margin-top: 10px;
-}
-
-.box-icons-social-media {
+.box-icons-social-media { 
   display: flex;
   // cuando es flex la prop. margin deja de funcionar, utilizo flex-end para alinear a la derecha
   justify-content: flex-end;
   .logo {
+  
     max-width: 30px;
     max-height: 30px;
   }
@@ -114,6 +122,12 @@ header,
     .modal-header, .modal-footer{
       background: $colorTres; 
       color: white;
+    }
+    .modal-content{
+      background: $colorTres;
+      .modal-body{
+        background: #ffffff;
+      }
     }
     .modal-title{
       letter-spacing: 0.1em;

@@ -1,151 +1,63 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { Book } from 'src/app/models/book';
-import { BookService } from '../../../services/book.service';
 import { CartService } from '../../../services/cart.service';
-import { MyValidationsService } from '../../../services/my-validations.service';
-// servicio Toastr para alerts
+import { AuthService } from '../../../services/auth.service';
 import { AlertService } from '../../../services/alert.service';
+import { Book } from '../../../models/book';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-borrar',
   templateUrl: './borrar.component.html',
-  styleUrls: ['./borrar.component.scss']
+  styleUrls: ['./borrar.component.scss'],
 })
 export class BorrarComponent implements OnInit {
-
-  caca: number = 10;
-  bookList$: Observable<Book[]>;
-  inputValue = '';
-  hideButton = false;
+  total$: Observable<number>;
+  total = 0;
+  bookArray: Book[] = [];
   username: string;
-  ocultar = false;
-  actualPage: number = 1;
-  // VARIABLES PARA DETALLE DE LIBRO
-  book = {} as Book; // objeto book
-  authorName;
-  editorialName;
-  categoryName;
 
   constructor(
-    public bookService: BookService,
-    public cartService: CartService,
-    public myValidationsService: MyValidationsService,
-    public alertService: AlertService
-  ) { }
+    //private breakpointObserver: BreakpointObserver,
+    private authService: AuthService,
+    private cartService: CartService,
+    public alertService: AlertService,
+    public router: Router
+  ) {
+    // mientras no se refresque la pagina el total de items los muestro asi
+    this.cartService.cart$.subscribe((libros) => {
+      this.total = libros.length;
+    });
+
+    // mientras no se refresque la pagina el username lo muestro asi
+    this.authService.username$.subscribe((username) => {
+      this.username = username;
+    });
+  }
 
   ngOnInit(): void {
-    // "boton listar todos" del filtrado esta oculto hasta que se haga click en boton buscar
-    //document.getElementById('btn-listar-todos').style.display = 'none'; // ?
-
-    this.getBooksWithAuthorName();
-
+    // si se refresque la pagina, cargo los datos del localStorage para determinar el total de items del carrito
+    // esta localStorage fue creada en cart.service.ts
+    if (localStorage.getItem('shoppingCart') != null) {
+      this.bookArray = JSON.parse(localStorage.getItem('shoppingCart'));
+      this.total = this.bookArray.length;
+      // console.log('el total en el ngOnit es: ' + this.bookArray.length);
+    }
+    // si se refresque la pagina, cargo los datos del localStorage para mostrar el username
+    // esta localStorage fue creada en auth.service.ts
     if (localStorage.getItem('username') != null) {
       this.username = localStorage.getItem('username');
     }
   }
 
-  addCarrito(book: Book) {
-    if (book.quantity <= 0) {
-      this.alertService.showError('', 'NO HAY STOCK');
+  checkItems() {
+    if (localStorage.getItem('shoppingCart') === null) {
+      this.alertService.showError('El carrito esta vacio', '');
     } else {
-      let bookArray: Book[] = [];
-      let exist = false;
-      // existe la localStorageStorage ?
-      if (localStorage.getItem('books') != null) {
-        // Obtengo la data almacenada en localStorage
-        const items = JSON.parse(localStorage.getItem('books'));
-        // guardo el contenido de la localStorage en bookArray
-        for (const value of items) {
-          bookArray = [...bookArray, value];
-        }
-        // checkeo si el nuevo producto ya existe en el carrito
-        for (const item of bookArray) {
-          if (book.id_book === item.id_book) {
-            exist = true;
-          }
-        }
-        if (exist) {
-          this.alertService.showWarning(
-            'El producto ya fue agregado al carrito!',
-            ''
-          );
-        } else {
-          // guardo en bookArray el nuevo proucto
-          bookArray = [...bookArray, book];
-          // grabo array actualizado en localStorage books
-          localStorage.setItem('books', JSON.stringify(bookArray));
-          // guardo el libro en el carrito
-          this.cartService.addCart(book);
-          this.alertService.showSuccess('Producto agregado al carrito', '');
-        }
-      } else {
-        bookArray = [...bookArray, book];
-        // 1er carga del producto y creo la localStorage books
-        localStorage.setItem('books', JSON.stringify(bookArray));
-        // guardo el libro en el carrito
-        this.cartService.addCart(book);
-        this.alertService.showSuccess('Producto agregado al carrito', '');
-      }
+      // "href" para que haga "refresh" cada vez que entra en "view order.html" sino "stripe" muestra el pago
+      // tarjeta una vez sola(al entrar por 1ra vez a order), si salgo de order y vuelvo a entrar desaparece,
+      // "stripe" necesita hacer un refresh para no tener problema.
+      window.location.href = '/order/create-order';
     }
   }
-
-  getBooksWithAuthorName() {
-    this.bookList$ = this.bookService.getBooksWithAuthorName().pipe(
-      // explicacion: todo lo que hay en "bookList$"" copialo a array "books: Book[]"
-      // y "mapealo (accede a sus elementos)" con la "variable book"
-      map((books: Book[]) =>
-        books.map((book) => {
-          return {
-            // devuelve el objeto book con la url_image limpia para verla en html y quantity seteado en 1 para order.html
-            ...book,
-            url_image: this.linkImg(book.url_image),
-            // quantity: 1,
-          };
-        })
-      )
-    );
-
-    // si estaba en false cambia a true o viceversa
-    this.hideButton = !this.hideButton;
-  }
-
-  linkImg(urlImage) {
-    // quito la palabra public
-    let str = urlImage.replace(/public/g, '');
-    // quito la barra '\'
-    str = str.replace('\\', '');
-    // invierto la barra en sentido a '/'
-    str = str.replace('\\', '/');
-    // console.log(str);
-    const URL = 'http://localhost:4000/';
-    const link = URL + str;
-    // console.log(link);
-    return link;
-  }
-
-  getBookDetail(idBook: number) {
-    const id = idBook.toString();
-    this.bookService.getRealDataBook(id).subscribe(
-      (res) => {
-        this.book.description = res[0].description;
-        this.book.id_author = res[0].id_author;
-        this.book.id_book = res[0].id_book;
-        this.book.id_category = res[0].id_category;
-        this.book.id_editorial = res[0].id_editorial;
-        this.book.name = res[0].name;
-        this.book.price = res[0].price;
-        this.book.quantity = res[0].quantity;
-        this.book.state = res[0].state;
-        this.book.url_image = this.linkImg(res[0].url_image);
-        this.book.year = res[0].year;
-        this.authorName = res[0].autor;
-        this.editorialName = res[0].editorial;
-        this.categoryName = res[0].category;
-      },
-      (err) => console.error('Error al intentar obtener el libro por id ' + err)
-    );
-  }
-  
 }

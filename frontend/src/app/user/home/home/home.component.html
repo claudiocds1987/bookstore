@@ -1,37 +1,39 @@
 <div class="box-principal">
   <div class="container-fluid box-container1">
     <div class="row fila">
-      <div class="col-md-4 box-search">
-        <input
-          type="text"
-          id="input-search"
-          class="form-control input-buscar"
-          [(ngModel)]="inputValue"
-          placeholder="Buscar libro"
-        />
-        <button
-          class="btn-buscar"
-          mat-mini-fab
-          color="basic"
-          (click)="filterBookByName()"
-        >
-          <mat-icon>search</mat-icon>
-        </button>
+      <div class="col-md-4">
+        <div class="box-search">
+          <input
+            type="text"
+            id="input-search"
+            class="form-control input-buscar"
+            [(ngModel)]="inputValue"
+            (keydown.enter)="filterBookByName()"
+            placeholder="Buscar libro"
+          />
+          <button
+            class="btn btn-info btn-buscar"
+            
+            (click)="filterBookByName()"
+          >
+            Buscar
+          </button>
 
-        <button
-          id="btn-listar-todos"
-          style="margin-left: 10px"
-          class="btn btn-dark btn-sm btn-listar-todos"
-          (click)="listBooks()"
-        >
-          todos
-        </button>
+          <button
+            id="btn-listar-todos"
+            style="margin-left: 10px"
+            class="btn btn-dark btn-sm btn-listar-todos"
+            (click)="listBooks()"
+          >
+            todos
+          </button>
+        </div>
       </div>
 
       <div class="col-md-4">
-        <header class="text-center mb-1 header">
-          <h1 class="display-4 font-weight-bold">Bookstore</h1>
-          <p class="font-italic text-muted mb-0">
+        <div class="text-center box-intro">
+          <h1 class="font-weight-bold">Bookstore</h1>
+          <p class="font-italic text-muted">
             An awesome Bootstrap 4 cards collection with variant content.
           </p>
           <p class="font-italic text-muted">
@@ -40,7 +42,7 @@
               <u>Bootstrapious</u></a
             >
           </p>
-        </header>
+        </div>
         <!-- <h3 class="text-center font-italic text-muted">Somos lo que leemos <span *ngIf="username">{{username}}</span></h3> -->
       </div>
       <div class="col-md-4">
@@ -168,8 +170,3 @@
     </div>
   </div>
 </div>
-
-
-
-
-

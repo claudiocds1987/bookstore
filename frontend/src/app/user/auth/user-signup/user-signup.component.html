@@ -8,69 +8,86 @@
         </div>
       </div>
       <form [formGroup]="form" (ngSubmit)="signUp($event)">
-        <div class="form-group">
-          <mat-icon class="icon">email</mat-icon>
-          <label for="input-email">Email</label>
-          <input
-            type="text"
-            id="input-email"
-            formControlName="email"
-            class="form-control"
-            [ngClass]="{ 'is-invalid': emailExist || f.email.errors && f.email.dirty , 'is-valid': !emailExist && !f.email.errors  && f.email.dirty }"
-          />
-          <!-- important las 2 condiciones juntas ya que en la db busca por LIKE'%#%',apenas se escribe busca si contiene la letra/s del email en la db -->
-          <div *ngIf="emailExist && f.email.valid">
-            <small class="text-danger"
-              >Este email ya fue tomado</small
-            >
+        <div class="form-group mb-3">
+          <div class="cont-flex">
+            <mat-icon class="icon">email</mat-icon>
+            <!-- <label for="input-email">Email</label> -->
+            <input
+              type="email"
+              id="input-email"
+              formControlName="email"
+              class="form-control"
+              placeholder="example@gmail.com"
+              [ngClass]="{
+                'is-invalid': emailExist || (f.email.errors && f.email.dirty),
+                'is-valid': !emailExist && !f.email.errors && f.email.dirty
+              }"
+            />
           </div>
-          <div *ngIf="f.email.errors" class="invalid-feedback">
-            <div *ngIf="f.email.errors.required">el email es obligatorio</div>
-            <div *ngIf="f.email.errors.email">
-              El formato de email no es valido
-            </div>
+
+          <!-- important las 2 condiciones juntas ya que en la db busca por LIKE'%#%', apenas se escribe busca si contiene la letra/s del email en la db -->
+          <div *ngIf="emailExist && !f.email.errors" class="text-center mb-3">
+            <small class="text-danger">Este email ya fue tomado!</small>
           </div>
+          <div *ngIf="f.email.errors && f.email.dirty" class="text-center mb-3">
+            <small class="text-danger">El formato de email no es válido!</small>
+          </div>
+          <!-- <div *ngIf="!emailExist && f.email.valid && f.email.dirty" class="text-center mb-3">
+            <small class="text-success">Correo válido</small>
+          </div> -->
         </div>
-        <div class="form-group">
-          <!-- <i class="fa fa-user fa-lg text-muted icon" aria-hidden="true"></i> -->
-          <mat-icon class="icon">face</mat-icon>
-          <label for="username">Nombre de usuario</label>
-          <input
-            type="text"
-            id="input-username"
-            formControlName="username"
-            class="form-control"
-            [ngClass]="{ 'is-invalid': usernameExist || f.username.errors && f.username.dirty, 'is-valid': !f.username.errors }"
-            (blur)="deleteWhiteSpace(f.username.value)"
-          />
-          <div *ngIf="usernameExist">
+        <div class="form-group mb-3">
+          <div class="cont-flex">
+            <mat-icon class="icon">face</mat-icon>
+            <input
+              type="text"
+              id="input-username"
+              formControlName="username"
+              class="form-control"
+              [ngClass]="{
+                'is-invalid':
+                  usernameExist || (f.username.errors && f.username.dirty),
+                'is-valid': !f.username.errors
+              }"
+              (blur)="deleteWhiteSpace(f.username.value)"
+              placeholder="Nombre de usuario"
+            />
+          </div>
+
+          <div *ngIf="usernameExist" class="text-center">
             <small class="text-danger"
-              >Ya existe otro usuario con el mismo nombre</small
+              >El nombre de usuario ya fue tomado!</small
             >
+          </div>
+          <div *ngIf="f.username.hasError('minlength')" class="text-center">
+            <small class="text-danger">debe tener un mínimo de 5 caracteres</small>
           </div>
           <div *ngIf="f.username.errors" class="invalid-feedback">
             <div *ngIf="f.username.errors.required">
               <small>este campo es obligatorio!</small>
             </div>
-            <div *ngIf="f.username.errors.minlength">
-              <small>debe tener un mínimo de 5 caracteres</small>
-            </div>
+            
             <div *ngIf="f.username.errors.maxlength">
               <small>solo hasta 15 caracteres permitidos</small>
             </div>
           </div>
         </div>
 
-        <div class="form-group">
-          <mat-icon class="icon">vpn_key</mat-icon>
-          <label for="pass1">Password</label>
-          <input
-            type="password"
-            id="pass1"
-            formControlName="password"
-            class="form-control"
-            [ngClass]="{ 'is-invalid': f.password.errors && f.password.dirty }"
-          />
+        <div class="form-group mb-3">
+          <div class="cont-flex">
+            <mat-icon class="icon">vpn_key</mat-icon>
+            <input
+              type="password"
+              id="pass1"
+              formControlName="password"
+              class="form-control"
+              [ngClass]="{
+                'is-invalid': f.password.errors && f.password.dirty
+              }"
+              placeholder="password"
+            />
+          </div>
+
           <div *ngIf="f.password.errors" class="invalid-feedback">
             <div *ngIf="f.password.errors.required">
               <small>este campo es obligatorio!</small>
@@ -83,18 +100,21 @@
             </div>
           </div>
         </div>
-        <div class="form-group">
-          <mat-icon class="icon">vpn_key</mat-icon>
-          <label for="pass2">Confirm Password</label>
-          <input
-            type="password"
-            id="pass2"
-            formControlName="confirmPassword"
-            class="form-control"
-            [ngClass]="{
-              'is-invalid': f.confirmPassword.errors && f.confirmPassword.dirty
-            }"
-          />
+        <div class="form-group mb-3">
+          <div class="cont-flex">
+            <mat-icon class="icon">vpn_key</mat-icon>
+            <input
+              type="password"
+              id="pass2"
+              formControlName="confirmPassword"
+              class="form-control"
+              [ngClass]="{
+                'is-invalid':
+                  f.confirmPassword.errors && f.confirmPassword.dirty
+              }"
+              placeholder="Reingresar password"
+            />
+          </div>
           <div *ngIf="f.confirmPassword.errors" class="invalid-feedback">
             <div *ngIf="f.confirmPassword.errors.required">
               <small>este campo es obligatorio!</small>
@@ -104,7 +124,7 @@
             </div>
           </div>
         </div>
-        <div class="form-group">
+        <div class="form-group mb-3">
           <button
             type="submit"
             mat-raised-button

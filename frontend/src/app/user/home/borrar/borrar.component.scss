@@ -1,214 +1,127 @@
-// ----------------------------------------------
-@import "./../../../sass/variables";
-
-.book-grid {
-  display: grid;
-  grid-template-columns: repeat(
-    auto-fill,
-    minmax(200px, 1fr)
-  ); // nos hará breakpoints cada 200px
-}
-
-.crop-image {
-  margin-top: 2px;
-  padding: 8px;
-  display: block;
-  height: 250px;
+header{
   width: 100%;
-  img {
-    object-fit: contain;
-    height: 100%;
-    width: 100%;
-    object-position: center;
-  }
-}
-
-.box-principal {
-  //border: 2px solid red;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-}
-.fade-in {
-  animation: fadeIn 3s;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-}
-
-.fa-shopping-cart {
-  color: #c5fd43 !important;
-  margin-right: 5px;
-}
-
-.modal{
-    .modal-dialog{
-      // importante poner width 100% para que el modal en resoluciones de pantalla movil como 320x568 y 375x667
-      // quede bien centrado
-      width: 100%;
-      .modal-header, .modal-footer{
-        background: $colorTres; 
-        color: white;
-      }
-      .modal-title{
-        letter-spacing: 0.1em;
-      }
-      .modal-body{
-        #p-description{
-          line-height: 25px;
-        }
-      }
-      .img-thumbnail{
-        //border: solid;
-        background-color: #e5e5e5;
-      }
-      img{
-        max-width: 200px;
-        max-height: 220px;
-      }
-    }  
-  }
-  
-// ---------------------------------------------
-
-/*****************
-    - Header -
-*****************/
-header {
-  position: relative;
-  left: 0;
+  height: 50px;
+  background: #293240;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+  color: #fff;
+  position: fixed;
   top: 0;
-  width: 100%;
-  min-height: 120px;
-  padding: 50px 0;
-  color: #fff;
-  background: #383838
-    url(https://www.athenadesignstudio.com/plugins/switch/images/bg.jpg)
-    no-repeat center center;
-  margin-bottom: 30px;
+  left: 0;
+  z-index: 100;
 }
 
-/* Logo */
-header .logo {
-  clear: both;
-  display: block;
-  text-align: center;
-  padding-bottom: 10px;
+h1{
+  color: white;
+  margin-top: 8px;
+  float: left;
+  letter-spacing: 0.1em;
 }
 
-/* Title */
-header h1 {
-  font-weight: 300;
-  font-size: 24px;
-  color: #eee;
-  letter-spacing: 2px;
-  text-align: center;
-  text-transform: uppercase;
-  margin: 0 !important;
-  padding-bottom: 25px;
-}
-// @charset "utf-8";
-@import url("https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700,800,900|Open Sans:400,600,800");
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-div,
-input,
-p,
-a {
-  font-family: "Open Sans";
-  margin: 0px;
+.icon-bookstore{
+  float:left;
+  //color: rgb(10, 110, 189);
+  color: #c5fd43;
+  margin-top: 0;
 }
 
-a,
-a:hover,
-a:focus {
-  color: inherit;
+.sub-menu{
+  position: absolute;
+  margin-left: 200px;
+  margin-top: 5px;
+
 }
 
-// body {
-//     background-color: #F1F2F3;
-// }
+.icon-menu{
+  margin: 0 auto;
+}
 
-// .container-fluid,
-// .container {
-//     max-width: 1200px;
-// }
+.icon-shopping-cart{
+  color: #fff !important;
+}
 
-.profile-card-2 {
-  //max-width: 300px;
-  background-color: #fff;
-  //box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.1);
-  background-position: center;
-  overflow: hidden;
-  position: relative;
-  //margin: 10px auto;
+.icon-perm-identity{
+  vertical-align: middle !important;
+}
+
+.contenedor, .navbar{
+  width: 98%;
+  margin: auto;
+}
+
+#mmenu-bar{
+  display: none;
+}
+
+header label{
+  float: right;
+  font-size: 28px;
+  margin: 6px 0;
   cursor: pointer;
-  border-radius: 10px;
-  margin: 15px;
-  display: block; // para que el ancho y alto sean dinamico respecto al elemento
 }
 
-.profile-card-2 img {
-  transition: all linear 0.25s;
-}
-
-.profile-card-2 .profile-name {
-  position: absolute;
-  left: 30px;
-  bottom: 70px;
-  font-size: 20px;
-  color: #fff;
-  text-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
-  font-weight: bold;
-  transition: all linear 0.25s;
-}
-
-.profile-card-2 .profile-icons {
-  position: absolute;
-  bottom: 30px;
-  font-size: 15px;//
-  text-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);//
-  right: 30px;
-  color: #fff;
-  transition: all linear 0.25s;
-}
-
-// .profile-card-2 .profile-username {
-//   position: absolute;
-//   bottom: 50px;
-//   left: 30px;
-//   color: #fff;
-//   font-size: 13px;
-//   transition: all linear 0.25s;
+// h1 {
+//   float: left;
 // }
 
-.profile-card-2 .profile-icons .fa {
-  margin: 5px;
+header .contenedor .navbar{
+  display: table; // para limpia los floats
 }
 
-.profile-card-2:hover img {
-  filter: grayscale(100%);
+.menu{
+  position: absolute;
+  top: 50px;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgb(41, 50, 64, 0.8);
+  transition: all 0.5s;
+  transform: translateX(-100%);
 }
 
-.profile-card-2:hover .profile-name {
-  bottom: 80px;
+.menu a{
+  display: block;
+  color: #fff;
+  height: 50px;
+  text-decoration: none;
+  padding: 15px;
+  //border-bottom: 1px solid rgb(255, 255, 255,0.5);
+  border-bottom: 1px solid rgb(41, 50, 64);
 }
 
-// .profile-card-2:hover .profile-username {
-//   bottom: 60px;
+.menu a:hover{
+  border-bottom:rgb(255, 255, 255,0.3);
+  background: rgb(41, 50, 64);
+  color: #c5fd43;
+}
+
+#a-shopping-cart:hover{
+  cursor: pointer;
+}
+
+// ~ es alt+126
+#menu-bar:checked ~ .menu{
+  transform: translateX(0%);
+}
+
+@media (min-width:900px){
+  .menu{
+    position: static;
+    width: auto;
+    height: auto;
+    transform: translateX(0%);
+    float: right;
+    display: flex;
+  }
+
+  .menu a{
+    border: none;
+  }
+
+  header label{
+    display: none;
+  }
+}
+
+// @media (min-width:320px){
+
 // }
-
-.profile-card-2:hover .profile-icons {
-  right: 40px;
-}

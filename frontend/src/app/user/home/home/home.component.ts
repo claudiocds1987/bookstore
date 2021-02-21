@@ -78,6 +78,7 @@ export class HomeComponent implements OnInit {
     return link;
   }
 
+
   filterBookByName() {
     if (this.inputValue === '') {
       this.alertService.showWarning('El campo no puede estar vacio', 'ERROR');

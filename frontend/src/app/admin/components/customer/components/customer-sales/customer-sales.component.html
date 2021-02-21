@@ -130,7 +130,7 @@
                   />
                 </td>
                 <td>{{ this.bookArray[i].name }}</td>
-                <td>{{ detail.price }}</td>
+                <td>{{ detail.price  | currency: "ARS ":"symbol" }}</td>
                 <td>{{ detail.quantity }}</td>
               </tr>
             </tbody>
