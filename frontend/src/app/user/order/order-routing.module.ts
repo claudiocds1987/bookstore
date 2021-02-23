@@ -10,11 +10,11 @@ const routes: Routes = [
     component: CreateOrderComponent
   },
   {
-    path:'orders-list',
+    path: 'orders-list',
     component: OrdersListComponent
   },
   {
-    path:'order-detail/:idOrder',
+    path: 'order-detail/:idOrder',
     component: OrderDetailComponent
   }
 ];

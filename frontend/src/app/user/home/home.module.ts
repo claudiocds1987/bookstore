@@ -8,7 +8,10 @@ import { HomeRoutingModule } from './home-routing.module';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { BorrarComponent } from './borrar/borrar.component';
 import { Borrar2Component } from './borrar2/borrar2.component';
-
+// imports para el funcionamiento del spinner/loader para peticiones http
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { HttpClientModule } from '@angular/common/http';
+// -------------------------------------------------------------------------------
 @NgModule({
   declarations: [
     HomeComponent,
@@ -21,7 +24,9 @@ import { Borrar2Component } from './borrar2/borrar2.component';
     FormsModule,
     ReactiveFormsModule,
     MaterialModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    NgxSpinnerModule,
+    HttpClientModule,
   ]
 })
 export class HomeModule { }

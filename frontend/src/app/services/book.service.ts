@@ -35,9 +35,15 @@ export class BookService {
     return this.http.get<any>('http://localhost:4000/1f2d312a-a1ef-48c5-a79f-c2a27c48320c.jpg');
   }
 
+  // trate todos los sin importar su estado state
   getBooksWithAuthorName() {
     // http://localhost:4000/booksAuthorName
     return this.http.get<Book[]>(this.URL_API + 'AuthorName');
+  }
+
+  // trae solo los libros que tiene state = true (aptos parta la venta)
+  getAvailableBooksWithAuthorName() {
+    return this.http.get<Book[]>('http://localhost:4000/AvailableBooksWithAuthorName');
   }
 
   getOneBookWithAuthorName(id: string) {
@@ -69,9 +75,25 @@ export class BookService {
     return this.http.put(`${this.URL_API}/${book.id_book}`, book);
   }
 
+  filterAvailableBooksByName(name: string){
+    return this.http.get<Book[]>('http://localhost:4000/filterAvailableBooksByName/' + name);
+  }
+
   filterBooksByName(name: string){
     return this.http.get<Book[]>('http://localhost:4000/filterBooksByName/' + name);
   }
+
+  filterAvailableBooksByAuthor(name: string){
+    return this.http.get<Book[]>('http://localhost:4000/filterAvailableBooksByAuthor/' + name);
+  }
+
+  filterBooksByAuthor(name: string){
+    return this.http.get<Book[]>('http://localhost:4000/filterBooksByAuthor/' + name);
+  }
+
+  // filterBooksByAuthor(name: string){
+  //   return this.http.get<Book[]>('http://localhost:4000/filterBooksByName/' + name);
+  // }
 
 
 }

@@ -11,6 +11,8 @@ import { AuthorPanelComponent } from './components/author-panel/author-panel.com
 import { CategoryPanelComponent } from './components/category-panel/category-panel.component';
 import { EditorialPanelComponent } from './components/editorial-panel/editorial-panel.component';
 import { CurrencyPipe, DecimalPipe } from '@angular/common';
+// imports para el funcionamiento del spinner/loader para peticiones http
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   declarations: [
@@ -27,6 +29,7 @@ import { CurrencyPipe, DecimalPipe } from '@angular/common';
     FormsModule,
     ReactiveFormsModule,
     NgxPaginationModule,
+    NgxSpinnerModule,
     MaterialModule
   ],
   providers: [CurrencyPipe, DecimalPipe]

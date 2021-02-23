@@ -27,7 +27,7 @@ export class ContactComponent implements OnInit {
     });
   }
 
-  // convenienza getter para facil acceso a lo campos del formulario 
+  // convenienza getter para facil acceso a lo campos del formulario
   get f() {
     return this.form.controls;
   }

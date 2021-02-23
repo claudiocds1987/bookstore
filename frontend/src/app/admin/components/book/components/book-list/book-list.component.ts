@@ -33,7 +33,7 @@ export class BookListComponent implements OnInit {
   }
 
   getBooksWithAuthorName() {
-    this.btnDisabled = true; //deshabilita el btn listar todos
+    this.btnDisabled = true; // deshabilita el btn listar todos
     this.inputValue = '';
     this.bookService.getBooksWithAuthorName()
       .subscribe(
@@ -59,8 +59,8 @@ export class BookListComponent implements OnInit {
   }
 
   filter() {
-    if(!this.inputValue){
-      alert("Debe escribir algo para realizar el filtrado!")
+    if (!this.inputValue){
+      alert('Debe escribir algo para realizar el filtrado!');
     }
     else{
       if (this.radioValue === 'id' || this.radioValue === 'name' || this.radioValue === 'author') {
@@ -70,7 +70,6 @@ export class BookListComponent implements OnInit {
           // pongo vacio el array filterArray
           this.filterArray = [];
           const id = parseInt(this.inputValue);
-          //this.bookList = this.bookList.filter(item => item.id_book === id);
           this.filterArray.push(...this.bookList.filter(item => item.id_book === id));
         }
         // si el input radio name is checked
@@ -107,7 +106,7 @@ export class BookListComponent implements OnInit {
       else {
         alert('Elija una opcion para hacer el filtrado')
       }
-    }   
+    }
   }
 
 }

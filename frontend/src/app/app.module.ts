@@ -23,12 +23,15 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { BannerComponent } from './user/banner/banner.component';
-import {NgxPaginationModule} from 'ngx-pagination'; // para los pagination
+import { NgxPaginationModule } from 'ngx-pagination'; // para los pagination
 
 // -------------INTERCEPTOR PARA EL TOKEN------------------------------------------------------
-import { HTTP_INTERCEPTORS} from '@angular/common/http';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptorService } from './services/auth-interceptor.service';
 // abajo de todo en providers tambien se agregaron lineas de código
+// ---------------------------------------------------------------------------------
+// INTERCEPTOR PARA SPINNER/LOADER EN CADA PETICION HTTP
+import { InterceptorService } from './services/interceptor.service';
 // ---------------------------------------------------------------------------------
 // TOASTR PARA ALERTS
 import { ToastrModule } from 'ngx-toastr';
@@ -70,10 +73,16 @@ import { MatConfirmDialogComponent } from './mat-confirm-dialog/mat-confirm-dial
   ],
   providers: [
     {
-      // para el token
+      // interceptor para el token
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptorService,
-      multi: true
+      multi: true,
+    },
+    {
+      // interceptor para el spinner/loader de cada peticion HTTP
+      provide: HTTP_INTERCEPTORS,
+      useClass: InterceptorService,
+      multi: true,
     }
   ],
   bootstrap: [AppComponent],

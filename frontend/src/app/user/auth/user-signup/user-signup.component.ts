@@ -13,7 +13,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { User } from 'src/app/models/user';
-import { Observable } from 'rxjs';
+
 
 @Component({
   selector: 'app-user-signup',

@@ -7,8 +7,8 @@ import { OrderDetailComponent } from './components/order-detail/order-detail.com
 import { CreateOrderComponent } from './components/create-order/create-order.component';
 import { OrderRoutingModule } from './order-routing.module';
 import { NgxPaginationModule } from 'ngx-pagination'; // para los pagination
-
-
+// imports para el funcionamiento del spinner/loader para peticiones http
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   declarations: [
@@ -19,9 +19,10 @@ import { NgxPaginationModule } from 'ngx-pagination'; // para los pagination
   imports: [
     CommonModule,
     OrderRoutingModule,
-    FormsModule, 
+    FormsModule,
     ReactiveFormsModule,
     NgxPaginationModule,
+    NgxSpinnerModule,
     MaterialModule
   ]
 })
