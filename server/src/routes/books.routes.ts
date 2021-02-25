@@ -13,7 +13,8 @@ const path = require("path");
 
 // router.get('/test', (req, res) => res.send('hello world'))
 import {
-  setStateFalse,
+  bajaBook,
+  altaBook,
   getAvailableBooksWithAuthorName,
   filterAvailableBooksByName,
   filterAvailableBooksByAuthor,
@@ -91,7 +92,8 @@ router.get("/filterBooksByAuthor/:name", filterBooksByAuthor);
 router.get("/filterAvailableBooksByAuthor/:name", filterAvailableBooksByAuthor); // get libros con state = true
 router.post("/books", upload, createBook); // crear libro
 router.put("/books/:id", upload, updateBook); // actualizar libro
-router.put("/books/baja/:id", setStateFalse); // baja de libro
+router.put("/books/baja/:id", bajaBook); // baja de libro
+router.put("/books/alta/:id", altaBook); // alta de libro
 router.get("/getRealDataBook/:id", getRealDataBook);
 // router.delete('/books/delete/:id', deleteBook); // delete book
 

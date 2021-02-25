@@ -103,6 +103,7 @@
 </div>
 
 <div *ngIf="orderDetailArray.length > 0">
+  <!-- pasando los array por [inputs] declarados en order-detail.component.ts -->
   <app-order-detail
     [orderDetail]="orderDetailArray"
     [books]="bookArray"

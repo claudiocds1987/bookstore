@@ -386,7 +386,7 @@ export const updateBook = async (
   });
 };
 
-export const setStateFalse = async (req: Request, res: Response): Promise<Response> => {
+export const bajaBook = async (req: Request, res: Response): Promise<Response> => {
   if (!req.params.id) {
     return res.status(400).send({
       message:
@@ -394,14 +394,35 @@ export const setStateFalse = async (req: Request, res: Response): Promise<Respon
     });
   }
    try {
-    const idBook = parseInt(req.params.id);
+   const idBook = parseInt(req.params.id);
     await pool.query('UPDATE public.books SET state = false WHERE id_book = $1', [idBook]);
-    return res.json(`El libro con id ${req.params.id} fue dado de baja exitosamente!`);  
+    return res.status(200).json(`El libro con id ${req.params.id} fue dado de baja exitosamente!`);  
+    //return res.json(`El libro con id ${req.params.id} fue dado de baja exitosamente!`);  
   } catch (e) {
     console.log(e);
     return res
       .status(500)
       .json("error al intentar dar de baja el libro");
+  }
+}
+
+export const altaBook = async (req: Request, res: Response): Promise<Response> => {
+  if (!req.params.id) {
+    return res.status(400).send({
+      message:
+        "FALTA CONTENIDO EN EL CUERPO, falta el id de book",
+    });
+  }
+   try {
+   const idBook = parseInt(req.params.id);
+    await pool.query('UPDATE public.books SET state = true WHERE id_book = $1', [idBook]);
+    return res.status(200).json(`El libro con id ${req.params.id} fue dado de alta exitosamente!`);  
+    //return res.json(`El libro con id ${req.params.id} fue dado de baja exitosamente!`);  
+  } catch (e) {
+    console.log(e);
+    return res
+      .status(500)
+      .json("error al intentar dar de alta el libro");
   }
 
 }

@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.setStateFalse = exports.updateBook = exports.createBook = exports.existBook = exports.getRealDataBook = exports.getOneBookWithAuthorName = exports.getBookByID = exports.filterBooksByAuthor = exports.filterAvailableBooksByAuthor = exports.filterBooksByName = exports.filterAvailableBooksByName = exports.getBooksWithAuthorName = exports.getAvailableBooksWithAuthorName = exports.getBooks = void 0;
+exports.altaBook = exports.bajaBook = exports.updateBook = exports.createBook = exports.existBook = exports.getRealDataBook = exports.getOneBookWithAuthorName = exports.getBookByID = exports.filterBooksByAuthor = exports.filterAvailableBooksByAuthor = exports.filterBooksByName = exports.filterAvailableBooksByName = exports.getBooksWithAuthorName = exports.getAvailableBooksWithAuthorName = exports.getBooks = void 0;
 // pool es la conexion a db tmb se puede llamar db en vez de pool
 // en consola poner npm run dev (para iniciar el servidor?)
 const database_1 = require("../database");
@@ -264,7 +264,7 @@ exports.updateBook = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         },
     });
 });
-exports.setStateFalse = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+exports.bajaBook = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     if (!req.params.id) {
         return res.status(400).send({
             message: "FALTA CONTENIDO EN EL CUERPO, falta el id de book",
@@ -273,13 +273,33 @@ exports.setStateFalse = (req, res) => __awaiter(void 0, void 0, void 0, function
     try {
         const idBook = parseInt(req.params.id);
         yield database_1.pool.query('UPDATE public.books SET state = false WHERE id_book = $1', [idBook]);
-        return res.json(`El libro con id ${req.params.id} fue dado de baja exitosamente!`);
+        return res.status(200).json(`El libro con id ${req.params.id} fue dado de baja exitosamente!`);
+        //return res.json(`El libro con id ${req.params.id} fue dado de baja exitosamente!`);  
     }
     catch (e) {
         console.log(e);
         return res
             .status(500)
             .json("error al intentar dar de baja el libro");
+    }
+});
+exports.altaBook = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    if (!req.params.id) {
+        return res.status(400).send({
+            message: "FALTA CONTENIDO EN EL CUERPO, falta el id de book",
+        });
+    }
+    try {
+        const idBook = parseInt(req.params.id);
+        yield database_1.pool.query('UPDATE public.books SET state = true WHERE id_book = $1', [idBook]);
+        return res.status(200).json(`El libro con id ${req.params.id} fue dado de alta exitosamente!`);
+        //return res.json(`El libro con id ${req.params.id} fue dado de baja exitosamente!`);  
+    }
+    catch (e) {
+        console.log(e);
+        return res
+            .status(500)
+            .json("error al intentar dar de alta el libro");
     }
 });
 // export const deleteBook = async (req: Request, res: Response): Promise<Response> => {

@@ -72,7 +72,8 @@ router.get("/filterBooksByAuthor/:name", books_controller_1.filterBooksByAuthor)
 router.get("/filterAvailableBooksByAuthor/:name", books_controller_1.filterAvailableBooksByAuthor); // get libros con state = true
 router.post("/books", upload, books_controller_1.createBook); // crear libro
 router.put("/books/:id", upload, books_controller_1.updateBook); // actualizar libro
-router.put("/books/baja/:id", books_controller_1.setStateFalse); // baja de libro
+router.put("/books/baja/:id", books_controller_1.bajaBook); // baja de libro
+router.put("/books/alta/:id", books_controller_1.altaBook); // alta de libro
 router.get("/getRealDataBook/:id", books_controller_1.getRealDataBook);
 // router.delete('/books/delete/:id', deleteBook); // delete book
 exports.default = router;

@@ -91,9 +91,15 @@ export class BookService {
     return this.http.get<Book[]>('http://localhost:4000/filterBooksByAuthor/' + name);
   }
 
-  // filterBooksByAuthor(name: string){
-  //   return this.http.get<Book[]>('http://localhost:4000/filterBooksByName/' + name);
-  // }
+  bajaBook(idBook: number, changes: Partial<Book>){
+   const url = 'http://localhost:4000/books/baja/';
+   return this.http.put(`${url}${idBook}`, changes);
+  }
+
+  altaBook(idBook: number, changes: Partial<Book>){
+    const url = 'http://localhost:4000/books/alta/';
+    return this.http.put(`${url}${idBook}`, changes);
+   }
 
 
 }
