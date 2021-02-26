@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
-import { AdminPrincipalComponent } from './admin/components/admin-principal/admin-principal.component';
+import { AdminPrincipalComponent } from './admin/admin-principal/admin-principal.component';
 import { AdminLayoutComponent } from './admin-layout/admin-layout.component';
 import { UserLayoutComponent } from './user/user-layout/user-layout.component';
-import { AdminLoginComponent } from './admin/components/admin-login/admin-login.component';
+import { AdminLoginComponent } from './admin/admin-login/admin-login.component';
 // Guardianes
 import { AdminGuard } from './admin.guard';
 
@@ -57,17 +57,16 @@ const routes: Routes = [
       {
         path: 'customer',
         canActivate: [AdminGuard],
-        loadChildren: () => import('./admin/components/customer/customer.module').then(m => m.CustomerModule)
+        loadChildren: () => import('./admin/customer/customer.module').then(m => m.CustomerModule)
       },
       {
         path: 'book',
-        loadChildren: () => import('./admin/components/book/book.module').then(m => m.BookModule)
+        loadChildren: () => import('./admin/book/book.module').then(m => m.BookModule)
       },
-      // {
-      //   path: 'editorial-panel',
-      //   canActivate: [AdminGuard],
-      //   component: EditorialPanelComponent
-      // },
+      {
+        path: 'sales',
+        loadChildren: () => import('./admin/sales/sales.module').then(m => m.SalesModule)
+      }
     ]
   },
   {

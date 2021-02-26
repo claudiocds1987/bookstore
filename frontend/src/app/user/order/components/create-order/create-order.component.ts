@@ -4,8 +4,7 @@ import {
   ViewChild,
   ElementRef,
   AfterViewInit,
-  NgZone,
-  Pipe,
+  NgZone
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -28,8 +27,7 @@ import { User } from 'src/app/models/user';
 import { Book } from 'src/app/models/book';
 import {
   MatDialog,
-  MatDialogConfig,
-  MatDialogRef,
+  MatDialogRef
 } from '@angular/material/dialog';
 // componente a mostrar cuando se utilice Material Dialog para eliminar un producto
 import { MatConfirmDialogComponent } from '../../../../mat-confirm-dialog/mat-confirm-dialog.component';

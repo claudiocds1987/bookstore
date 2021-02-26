@@ -62,3 +62,99 @@ export const getSalesByCustomerId = async (req: Request, res: Response): Promise
   }
 }
 
+// devuelve la "cantidad de ventas" de un año prticular.
+export const countSalesFromYear = async (req: Request, res: Response): Promise<Response> => {
+  if (!req.params.year) {
+    return res.status(400).send({
+      message:
+        "FALTA CONTENIDO EN EL CUERPO, falta el año",
+    });
+  }
+
+  let year = req.params.year.toString();
+
+  try {
+    const a = 'select count(id_sale) as "total" from sales';
+    const b = ' where extract(year from date) = $1';
+    const response: QueryResult = await pool.query(a + b, [year]);
+    return res.status(200).json(response.rows);
+  }
+  catch (e) {
+    console.log(e);
+    return res.status(500).json('Internal server error');
+  }
+}
+
+// devuelve la "cantidad de ventas" mes y año elegidos.
+export const countSalesFromMonth = async (req: Request, res: Response): Promise<Response> => {
+  if (!req.params.year || !req.params.month) {
+    return res.status(400).send({
+      message:
+        "FALTA CONTENIDO EN EL CUERPO, falta el año o mes",
+    });
+  }
+
+  let year = req.params.year.toString();
+  let month = req.params.month.toString();
+
+  try {
+    const a = 'select count(id_sale) as "total" from sales';
+    const b = ' where extract(year from date) = $1';
+    const c = ' and extract(month from date) = $2';
+    const response: QueryResult = await pool.query(a + b + c, [year, month]);
+    return res.status(200).json(response.rows);
+  }
+  catch (e) {
+    console.log(e);
+    return res.status(500).json('Internal server error');
+  }
+}
+
+// devuelve la "recaudación/ingreso" de un año particular.
+export const salesRevenueFromYear = async (req: Request, res: Response): Promise<Response> => {
+  if (!req.params.year) {
+    return res.status(400).send({
+      message:
+        "FALTA CONTENIDO EN EL CUERPO, falta el año",
+    });
+  }
+
+  let year = req.params.year.toString();
+
+  try {
+    const a = 'select sum(total_price) as "total" from sales';
+    const b = ' where extract(year from date) = $1';
+    const response: QueryResult = await pool.query(a + b, [year]);
+    return res.status(200).json(response.rows);
+  }
+  catch (e) {
+    console.log(e);
+    return res.status(500).json('Internal server error');
+  }
+}
+
+// devuelve la "recaudación/ingreso" de mes y año elegidos.
+export const salesRevenueByYearAndMonth = async (req: Request, res: Response): Promise<Response> => {
+  if (!req.params.year || !req.params.month) {
+    return res.status(400).send({
+      message:
+        "FALTA CONTENIDO EN EL CUERPO, falta el año o mes",
+    });
+  }
+
+  let year = req.params.year.toString();
+  let month = req.params.month.toString();
+
+  try {
+    const a = 'select sum(total_price) as "total" from sales';
+    const b = ' where extract(year from date) = $1';
+    const c = ' and extract(month from date) = $2';
+    const response: QueryResult = await pool.query(a + b + c, [year, month]);
+    return res.status(200).json(response.rows);
+  }
+  catch (e) {
+    console.log(e);
+    return res.status(500).json('Internal server error');
+  }
+}
+

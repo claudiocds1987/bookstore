@@ -1,0 +1,33 @@
+<header>
+  <div class="contenedor">
+    <mat-icon md-48 class="icon-bookstore">eco</mat-icon>
+    <h1>Admin Bookstore</h1>
+    <input type="checkbox" id="menu-bar">
+    <label class="icon-menu" for="menu-bar">
+      <mat-icon>menu</mat-icon>
+    </label>
+    <nav class="menu">
+      <div class="dropdown">
+        <a routerLinkActive="activo" class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Libros
+        </a>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" [routerLink]="'book/book-list'">Panel libro</a>
+          <a class="dropdown-item" [routerLink]="'book/author-panel'">Panel autor</a>
+          <a class="dropdown-item" [routerLink]="'/book/editorial-panel'">Panel editorial</a>
+          <a class="dropdown-item" [routerLink]="'book/category-panel'">Panel categoria</a>
+        </div>
+      </div>     
+      <a routerLinkActive="activo" [routerLink]="'admin-principal'">Home</a>
+      <a [routerLink]="'customer/customer-list'">Clientes</a>
+      <a [routerLink]="'sales/dashboard-sales'">Ventas</a>
+    </nav>
+  </div>
+</header>
+
+
+
+
+
+
+

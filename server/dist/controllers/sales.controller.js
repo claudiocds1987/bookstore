@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getSalesByCustomerId = exports.getLastIdSale = exports.createSale = void 0;
+exports.salesRevenueByYearAndMonth = exports.salesRevenueFromYear = exports.countSalesFromMonth = exports.countSalesFromYear = exports.getSalesByCustomerId = exports.getLastIdSale = exports.createSale = void 0;
 // pool es la conexion a db tmb se puede llamar db en vez de pool
 // en consola poner npm run dev (para iniciar el servidor?)
 const database_1 = require("../database");
@@ -57,6 +57,86 @@ exports.getLastIdSale = (req, res) => __awaiter(void 0, void 0, void 0, function
 exports.getSalesByCustomerId = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const response = yield database_1.pool.query('select * from sales where id_user = $1', [req.params.id_user]);
+        return res.status(200).json(response.rows);
+    }
+    catch (e) {
+        console.log(e);
+        return res.status(500).json('Internal server error');
+    }
+});
+// devuelve la "cantidad de ventas" de un año prticular.
+exports.countSalesFromYear = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    if (!req.params.year) {
+        return res.status(400).send({
+            message: "FALTA CONTENIDO EN EL CUERPO, falta el año",
+        });
+    }
+    let year = req.params.year.toString();
+    try {
+        const a = 'select count(id_sale) as "total" from sales';
+        const b = ' where extract(year from date) = $1';
+        const response = yield database_1.pool.query(a + b, [year]);
+        return res.status(200).json(response.rows);
+    }
+    catch (e) {
+        console.log(e);
+        return res.status(500).json('Internal server error');
+    }
+});
+// devuelve la "cantidad de ventas" mes y año elegidos.
+exports.countSalesFromMonth = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    if (!req.params.year || !req.params.month) {
+        return res.status(400).send({
+            message: "FALTA CONTENIDO EN EL CUERPO, falta el año o mes",
+        });
+    }
+    let year = req.params.year.toString();
+    let month = req.params.month.toString();
+    try {
+        const a = 'select count(id_sale) as "total" from sales';
+        const b = ' where extract(year from date) = $1';
+        const c = ' and extract(month from date) = $2';
+        const response = yield database_1.pool.query(a + b + c, [year, month]);
+        return res.status(200).json(response.rows);
+    }
+    catch (e) {
+        console.log(e);
+        return res.status(500).json('Internal server error');
+    }
+});
+// devuelve la "recaudación/ingreso" de un año particular.
+exports.salesRevenueFromYear = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    if (!req.params.year) {
+        return res.status(400).send({
+            message: "FALTA CONTENIDO EN EL CUERPO, falta el año",
+        });
+    }
+    let year = req.params.year.toString();
+    try {
+        const a = 'select sum(total_price) as "total" from sales';
+        const b = ' where extract(year from date) = $1';
+        const response = yield database_1.pool.query(a + b, [year]);
+        return res.status(200).json(response.rows);
+    }
+    catch (e) {
+        console.log(e);
+        return res.status(500).json('Internal server error');
+    }
+});
+// devuelve la "recaudación/ingreso" de mes y año elegidos.
+exports.salesRevenueByYearAndMonth = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    if (!req.params.year || !req.params.month) {
+        return res.status(400).send({
+            message: "FALTA CONTENIDO EN EL CUERPO, falta el año o mes",
+        });
+    }
+    let year = req.params.year.toString();
+    let month = req.params.month.toString();
+    try {
+        const a = 'select sum(total_price) as "total" from sales';
+        const b = ' where extract(year from date) = $1';
+        const c = ' and extract(month from date) = $2';
+        const response = yield database_1.pool.query(a + b + c, [year, month]);
         return res.status(200).json(response.rows);
     }
     catch (e) {
