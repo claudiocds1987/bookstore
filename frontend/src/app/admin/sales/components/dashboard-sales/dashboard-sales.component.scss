@@ -13,6 +13,13 @@
     .card {
       margin-top: 20px;
       padding: 10px;
+      .box{
+        display: flex;
+        justify-content: space-between;
+        a{
+          cursor: pointer;
+        }
+      }
       .box-container {
         display: flex;
         align-items: center;

@@ -38,10 +38,6 @@ export const createSaleDetail = async (req: Request, res: Response): Promise<Res
     }
 }
 
-
-
-
-
 export const getSaleDetail = async (req: Request, res: Response): Promise<Response> => {
     
     //evalúo si hay datos null o undefined en el cuerpo

@@ -41,4 +41,9 @@ export class SaleService {
     return this.http.get<any[]>(`http://localhost:4000/sales/revenueFromYear/${year}`);
   }
 
+  // devuelve 10 o menos (dependiendo del resultado) libros mas vendidos cuya cantidad de ventas es igual o superior a 5.
+  getBookTopSales(){
+    return this.http.get<any[]>('http://localhost:4000/sales/bookTopSales');
+  }
+
 }

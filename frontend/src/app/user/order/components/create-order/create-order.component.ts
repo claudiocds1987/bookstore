@@ -350,6 +350,9 @@ export class CreateOrderComponent implements OnInit, AfterViewInit {
     } else {
       event.preventDefault();
       if (this.form.valid) {
+        // se desactiva boton pagar
+        const btnPagar = document.getElementById('btn-pagar');
+        btnPagar.setAttribute('disabled', 'true');
         //  EFECTUANDO EL PAGO
         const { token, error } = await stripe.createToken(this.card);
         if (token) {

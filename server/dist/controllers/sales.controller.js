@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.salesRevenueByYearAndMonth = exports.salesRevenueFromYear = exports.countSalesFromMonth = exports.countSalesFromYear = exports.getSalesByCustomerId = exports.getLastIdSale = exports.createSale = void 0;
+exports.getBookTopSales = exports.salesRevenueByYearAndMonth = exports.salesRevenueFromYear = exports.countSalesFromMonth = exports.countSalesFromYear = exports.getSalesByCustomerId = exports.getLastIdSale = exports.createSale = void 0;
 // pool es la conexion a db tmb se puede llamar db en vez de pool
 // en consola poner npm run dev (para iniciar el servidor?)
 const database_1 = require("../database");
@@ -47,7 +47,7 @@ exports.createSale = (req, res) => __awaiter(void 0, void 0, void 0, function* (
 exports.getLastIdSale = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const response = yield database_1.pool.query('select max(id_sale) as "lastIdSale" from sales');
-        return res.status(200).json(response.rows[0]);
+        return res.status(200).json(response.rows[0]); // rows[0] porque va a devolver un solo valor
     }
     catch (e) {
         console.log(e);
@@ -137,6 +137,24 @@ exports.salesRevenueByYearAndMonth = (req, res) => __awaiter(void 0, void 0, voi
         const b = ' where extract(year from date) = $1';
         const c = ' and extract(month from date) = $2';
         const response = yield database_1.pool.query(a + b + c, [year, month]);
+        return res.status(200).json(response.rows);
+    }
+    catch (e) {
+        console.log(e);
+        return res.status(500).json('Internal server error');
+    }
+});
+// devuelve 10 o menos (dependiendo del resultado) libros mas vendidos cuya cantidad de ventas es igual o superior a 5.
+exports.getBookTopSales = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const a = 'select books.name, sum(sales_detail.quantity) as "vendidos" from sales_detail';
+    const b = ' inner join books';
+    const c = ' on books.id_book = sales_detail.id_book';
+    const d = ' group by (sales_detail.id_book, books.id_book)';
+    const e = ' having sum(sales_detail.quantity) >= 5';
+    const f = ' order by 2 desc';
+    const g = ' limit 10';
+    try {
+        const response = yield database_1.pool.query(a + b + c + d + e + f + g);
         return res.status(200).json(response.rows);
     }
     catch (e) {

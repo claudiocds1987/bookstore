@@ -1,12 +1,20 @@
 <div class="container-fluid fondo">
   <div class="container box-principal">
     <div class="row fila1">
+      
       <div class="col-md-3">
         <div class="card">
-          <h5>
-            <i class="fa fa-search fa-fw text-muted" aria-hidden="true"></i>
-            Este mes
-          </h5>
+          
+          <div class="box">
+            <h5>
+              <i class="fa fa-search fa-fw text-muted" aria-hidden="true"></i>
+              Este mes
+            </h5>
+            <a (click)="refreshData()">
+              <i class="fas fa-sync-alt"></i>
+            </a>
+          </div>
+
           <div class="box-container">
             <div class="square-primary">
               <i class="fa fa-tag icon" aria-hidden="true"></i>
@@ -25,10 +33,16 @@
 
       <div class="col-md-3">
         <div class="card">
-          <h5>
-            <i class="fa fa-search fa-fw text-muted" aria-hidden="true"></i>
-            Este mes
-          </h5>
+          <div class="box">
+            <h5>
+              <i class="fa fa-search fa-fw text-muted" aria-hidden="true"></i>
+              Este mes
+            </h5>
+            <a (click)="refreshData()">
+              <i class="fas fa-sync-alt"></i>
+            </a>
+          </div>
+
           <div class="box-container">
             <div class="square-green2">
               <i class="fas fa-money-bill-alt icon" aria-hidden="true"></i>
@@ -47,10 +61,16 @@
 
       <div class="col-md-3">
         <div class="card">
-          <h5>
-            <i class="fa fa-search fa-fw text-muted" aria-hidden="true"></i>
-            Este año
-          </h5>
+          <div class="box">
+            <h5>
+              <i class="fa fa-search fa-fw text-muted" aria-hidden="true"></i>
+              Este año
+            </h5>
+            <a (click)="refreshData()">
+              <i class="fas fa-sync-alt"></i>
+            </a>
+          </div>
+
           <div class="box-container">
             <div class="square-blue-light">
               <i class="fa fa-tag icon" aria-hidden="true"></i>
@@ -71,10 +91,16 @@
 
       <div class="col-md-3">
         <div class="card">
-          <h5>
-            <i class="fa fa-search fa-fw text-muted" aria-hidden="true"></i>
-            Este año
-          </h5>
+          <div class="box">
+            <h5>
+              <i class="fa fa-search fa-fw text-muted" aria-hidden="true"></i>
+              Este año
+            </h5>
+            <a (click)="refreshData()">
+              <i class="fas fa-sync-alt"></i>
+            </a>
+          </div>
+          
           <div class="box-container">
             <div class="square-brown">
               <i class="fas fa-shopping-basket icon" aria-hidden="true"></i>
@@ -97,14 +123,16 @@
     <div class="row fila2">
       <div class="col-md-4">
         <div class="card">
-          <h4 class="font-weight-bold">Libros mas vendidos top 5</h4>
+          <h4 class="font-weight-bold">Libros mas vendidos top 10</h4>
           <div class="box-flex">
             <div class="img-container">
               <img src="./../../../../../assets/images/grafico-barras-1.png" />
             </div>
           </div>
-          <hr>
-          <a class="text-right" href="#">Ver detalle ></a>
+          <hr />
+          <a class="text-right" [routerLink]="'/sales/top-sales'"
+            >Ver detalle ></a
+          >
         </div>
       </div>
 
@@ -118,13 +146,13 @@
               />
             </div>
           </div>
-          <hr>
+          <hr />
           <a class="text-right" href="#">Ver detalle ></a>
         </div>
       </div>
       <div class="col-md-4">
         <div class="card">
-          <h4 class="font-weight-bold">Total de ventas por localidad</h4>
+          <h4 class="font-weight-bold">Top 5 localidades de consumo</h4>
           <div class="box-flex">
             <div class="img-container">
               <img
@@ -132,10 +160,12 @@
               />
             </div>
           </div>
-          <hr>
+          <hr />
           <a class="text-right" href="#">Ver detalle ></a>
         </div>
       </div>
     </div>
+    <!-- LLamada al spinner/cargador para la peticion HTTP ver servicio spinner.service e interceptor.service-->
+  <ngx-spinner></ngx-spinner>
   </div>
 </div>
