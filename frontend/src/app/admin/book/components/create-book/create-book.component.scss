@@ -6,6 +6,14 @@
   background: $colorUno; // este color esta en carpeta sass/_variables.scss
 }
 
+.box-buttons{
+
+  button{
+    margin-top: 20px;
+    width: 100px;
+  }
+}
+
 .box-principal {
   min-height: 100vh;
 }

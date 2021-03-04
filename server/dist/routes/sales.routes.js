@@ -11,4 +11,5 @@ router.get("/sales/revenueByYearAndMonth/:year/:month", sales_controller_1.sales
 router.get("/sales/countFromYear/:year", sales_controller_1.countSalesFromYear);
 router.get("/sales/revenueFromYear/:year", sales_controller_1.salesRevenueFromYear);
 router.get("/sales/bookTopSales", sales_controller_1.getBookTopSales);
+router.get("/sales/annualSales/:year", sales_controller_1.getAnnualSales);
 exports.default = router;

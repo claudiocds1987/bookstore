@@ -10,9 +10,14 @@ import { TopSalesComponent } from './components/top-sales/top-sales.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 // para reportes con graficos de barra etc..
 import { ChartsModule } from 'ng2-charts';
+import { AnnualSalesComponent } from './components/annual-sales/annual-sales.component';
 
 @NgModule({
-  declarations: [DashboardSalesComponent, TopSalesComponent],
+  declarations: [
+    DashboardSalesComponent,
+    TopSalesComponent,
+    AnnualSalesComponent,
+  ],
   imports: [
     CommonModule,
     SalesRoutingModule,
@@ -20,7 +25,7 @@ import { ChartsModule } from 'ng2-charts';
     ReactiveFormsModule,
     MaterialModule,
     ChartsModule,
-    NgxSpinnerModule
-  ]
+    NgxSpinnerModule,
+  ],
 })
-export class SalesModule { }
+export class SalesModule {}

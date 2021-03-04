@@ -1,0 +1,12 @@
+.box-principal {
+  min-height: 100vh;
+  .row {
+    margin-top: 80px;
+  }
+}
+
+@media (max-width: 375px) {
+  .caca{
+    margin-top: 20px !important;
+  } 
+}

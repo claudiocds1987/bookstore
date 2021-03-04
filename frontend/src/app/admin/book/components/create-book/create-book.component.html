@@ -6,7 +6,6 @@
         <form [formGroup]="form" (ngSubmit)="createBook($event)">
           <div class="form-row">
             <div class="form-group col-md-9 mb-3">
-              <label>Nombre</label>
               <input
                 type="text"
                 class="form-control capitalize"
@@ -32,7 +31,6 @@
             </div>
 
             <div class="form-group col-md-3 mb-3">
-              <label>Año</label>
               <input
                 type="number"
                 class="form-control"
@@ -67,7 +65,7 @@
 
           <div class="box">
             <div class="form-group">
-              <label>Autor</label>
+              <label class="text-muted">Autor</label>
               <select
                 [ngModelOptions]="{ standalone: true }"
                 [(ngModel)]="book.id_author"
@@ -101,7 +99,7 @@
             </div>
 
             <div class="form-group">
-              <label>Categoria</label>
+              <label class="text-muted">Categoria</label>
               <select
                 [ngModelOptions]="{ standalone: true }"
                 [(ngModel)]="book.id_category"
@@ -134,7 +132,7 @@
               >
             </div>
             <div class="form-group">
-              <label>Editorial</label>
+              <label class="text-muted">Editorial</label>
               <select
                 [ngModelOptions]="{ standalone: true }"
                 [(ngModel)]="book.id_editorial"
@@ -169,7 +167,6 @@
           </div>
 
           <div class="form-group">
-            <label>Descripción</label>
             <textarea
               class="form-control"
               formControlName="description"
@@ -201,7 +198,6 @@
 
           <div class="form-row">
             <div class="form-group col-md-6 mb-3">
-              <label>Cantidad</label>
               <input
                 type="number"
                 class="form-control"
@@ -230,8 +226,6 @@
             </div>
 
             <div class="form-group col-md-6 mb-3">
-              <label>Precio</label>
-              <!-- <input type="text" formControlName="price" placeholder="$"> -->
               <input
                 type="number"
                 class="form-control"
@@ -252,7 +246,7 @@
           </div>
 
           <div class="form-group">
-            <label>Imagen</label>
+            <label class="text-muted">Imagen</label>
             <input
               type="file"
               class="form-control"
@@ -262,26 +256,35 @@
               (change)="selectImage($event)"
             />
             <div *ngIf="imgPreview != null" class="text-center my-2">
-              <img [src]="imgPreview" class="img-fluid" />
-              <a class="button" (click)="cleanImgPreview()">Cancelar imagen</a>
+              <div style="display: block;">
+                <img [src]="imgPreview" class="img-fluid"/>
+              </div>
+             <div style="display: block;">
+              <a class="btn btn-danger mt-1" (click)="cleanImgPreview()"
+                >Cancelar imagen</a
+              >
+             </div>
+              
             </div>
           </div>
 
-          <div class="text-center">
-            <button
-              [disabled]="form.invalid"
-              type="submit"
-              class="btn btn-dark btn-block"
-            >
-              Guardar
-            </button>
-            <button
-              type="button"
-              class="btn btn-warning btn-block text-white"
-              (click)="resetForm()"
-            >
-              Reset
-            </button>
+          <div class="text-center box-buttons">
+            <div class="cac">
+              <button
+                [disabled]="form.invalid"
+                type="submit"
+                class="btn btn-primary mr-2"
+              >
+                Guardar
+              </button>
+              <button
+                type="button"
+                class="btn btn-warning text-white"
+                (click)="resetForm()"
+              >
+                Reset
+              </button>
+            </div>
           </div>
         </form>
       </div>
