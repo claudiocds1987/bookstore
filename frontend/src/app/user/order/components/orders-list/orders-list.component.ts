@@ -54,7 +54,7 @@ export class OrdersListComponent implements OnInit {
       .subscribe(res => {
         console.log('res: ' + JSON.stringify(res));
         this.userArray = res; // obtengo la data del usuario
-        //paso el id_user porque en orders el user se identifica con su id
+        // paso el id_user porque en orders el user se identifica con su id
         this.getOrdersByUserId(this.userArray[0].id_user);
       },
         err => console.error('Error al obtener el username en ngOnInit ' + err)
@@ -74,7 +74,7 @@ export class OrdersListComponent implements OnInit {
   }
 
   filterOrdersByDate() {
-    if (this.date1 === undefined || this.date2 === undefined) {    
+    if (this.date1 === undefined || this.date2 === undefined) {
       this.alertService.showWarning('Debe elegir un rango de fecha', '');
     }
     else if(this.date1 > this.date2){
@@ -103,16 +103,15 @@ export class OrdersListComponent implements OnInit {
 
   getDetalle(id_order: number){
     this.orderDetailArray = [];
-
     this.orderDetailService.getOrderDetail(id_order).subscribe(
       res => {
         this.orderDetailArray = res;
         // recorro el array
         this.orderDetailArray.forEach(element => {
           const idBook = element.id_product.toString();
-          //Obtengo el libro
+          // Obtengo el libro
           this.getBookById(idBook);
-        })
+        });
         $('#myModal').modal('show');
       },
       err => console.error('error al obtener el order_detail ' + err)
@@ -121,7 +120,6 @@ export class OrdersListComponent implements OnInit {
 
   getBookById(idBook: string) {
     this.bookArray = [];
-    
     this.bookService.getBookById(idBook).subscribe(
       (res) => {
         res[0].url_image = this.linkImg(res[0].url_image);
@@ -129,7 +127,6 @@ export class OrdersListComponent implements OnInit {
       },
       (err) => console.error('error al intentar obtener el libro por id ' + err)
     );
-     
   }
 
   linkImg(urlImage) {
@@ -145,6 +142,5 @@ export class OrdersListComponent implements OnInit {
     // console.log(link);
     return link;
   }
- 
 }
 

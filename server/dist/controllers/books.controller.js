@@ -239,7 +239,8 @@ exports.updateBook = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     let id_cat = parseInt(id_category);
     let id_edit = parseInt(id_editorial);
     let cantidad = parseInt(quantity);
-    let precio = parseInt(price);
+    // let precio = parseInt(price);
+    let precio = price;
     console.log(name, book_year, id_aut, id_cat, id_edit, description, cantidad, precio, url_image, state);
     // consulta a PostgreSQL
     yield database_1.pool.query("UPDATE books set name = $1, year = $2, id_author = $3, id_category = $4, id_editorial = $5, description = $6, quantity = $7, price = $8, url_image = $9, state = $10 WHERE id_book = $11", [

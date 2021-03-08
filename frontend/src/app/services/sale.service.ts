@@ -51,4 +51,9 @@ export class SaleService {
     return this.http.get<any[]>(`http://localhost:4000/sales/annualSales/${year}`);
   }
 
+  // devuelve el promedio de ventas de un año particular
+  getAverageAnnualSales(year: number){
+    return this.http.get<any[]>(`http://localhost:4000/sales/averageAnnualSales/${year}`);
+  }
+
 }

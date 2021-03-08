@@ -13,6 +13,8 @@ import { EditorialPanelComponent } from './components/editorial-panel/editorial-
 import { CurrencyPipe, DecimalPipe } from '@angular/common';
 // imports para el funcionamiento del spinner/loader para peticiones http
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { NgxMaskModule, IConfig } from 'ngx-mask';
+
 
 @NgModule({
   declarations: [
@@ -30,7 +32,8 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     ReactiveFormsModule,
     NgxPaginationModule,
     NgxSpinnerModule,
-    MaterialModule
+    MaterialModule,
+    NgxMaskModule.forRoot()
   ],
   providers: [CurrencyPipe, DecimalPipe]
   // providers: [{

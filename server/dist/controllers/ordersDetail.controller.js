@@ -28,7 +28,7 @@ exports.createOrderDetail = (req, res) => __awaiter(void 0, void 0, void 0, func
     console.log(id_order, id_product, product_price, product_quantity);
     let idOrder = parseInt(id_order);
     let idProduct = parseInt(id_product);
-    let price = parseInt(product_price);
+    let price = product_price;
     let cantidad = parseInt(product_quantity);
     const response = yield database_1.pool.query("INSERT INTO orders_detail (id_order, id_product, product_price, product_quantity) VALUES ($1, $2, $3, $4)", [idOrder, idProduct, price, cantidad]);
     return res.json({

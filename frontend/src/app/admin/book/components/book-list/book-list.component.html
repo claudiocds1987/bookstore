@@ -88,7 +88,8 @@
     <div *ngIf="filterArray.length > 0" class="card mt-3 mb-4">
       <div *ngIf="filterArray as libros" class="card-body">
         <div class="d-flex justify-content-between my-2">
-          <h5>Lista de libros</h5>
+          <h5>Lista de libros total: {{ libros.length }}</h5>
+
           <a mat-raised-button color="warn" [routerLink]="'/book/create-book'">
             <mat-icon>add_circle</mat-icon>
             Nuevo libro
@@ -98,7 +99,11 @@
         <table class="table table-striped">
           <thead>
             <tr>
-              <th class="text-center">N°</th>
+              <th class="text-center">
+                <a (click)="getBooksWithAuthorName()"
+                  ><i class="fas fa-sync-alt"></i
+                ></a>
+              </th>
               <th class="text-center">Image</th>
               <th class="text-center">Nombre de libro</th>
               <th class="text-center">Autor</th>

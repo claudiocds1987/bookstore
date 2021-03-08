@@ -20,7 +20,7 @@ export const createSale = async (
   console.log(id_user, total_price, date);
   // el id_sale en la db es autonumerico no hace falta
   let idUser = parseInt(id_user);
-  let totalPrice = parseInt(total_price);
+  let totalPrice = total_price;
 
   try {
     const response: QueryResult = await pool.query(
@@ -228,6 +228,70 @@ export const getAnnualSales = async (
   const n = ` Else 'Diciembre'`;
   const o = " End as Mes,";
   const p = " sum(total_price) as total";
+  const q = " from Sales";
+  const r = ` where date_part('year', date) = ${year}`;
+  const s = ` group by date_part('month', date)`;
+  const t = " order by 1";
+
+  try {
+    const response: QueryResult = await pool.query(
+      a +
+        b +
+        c +
+        d +
+        e +
+        f +
+        g +
+        h +
+        i +
+        j +
+        k +
+        l +
+        m +
+        n +
+        o +
+        p +
+        q +
+        r +
+        s +
+        t
+    );
+    return res.status(200).json(response.rows);
+  } catch (e) {
+    console.log(e);
+    return res.status(500).json("Internal server error");
+  }
+};
+
+// devuelve el promedio de ventas de un año particular
+export const getAverageAnnualSales = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
+  if (!req.params.year) {
+    return res.status(400).send({
+      message: "FALTA CONTENIDO EN EL CUERPO, falta el año para calcular elpromedio",
+    });
+  }
+
+  const year = parseInt(req.params.year);
+
+  const a = "select";
+  const b = " case";
+  const c = ` when date_part('month', date) = 1 then 'Enero'`;
+  const d = ` when date_part('month', date) = 2 then 'Febrero'`;
+  const e = ` when date_part('month', date) = 3 then 'Marzo'`;
+  const f = ` when date_part('month', date) = 4 then 'Abril'`;
+  const g = ` when date_part('month', date) = 5 then 'Mayo'`;
+  const h = ` when date_part('month', date) = 6 then 'Junio'`;
+  const i = ` when date_part('month', date) = 7 then 'Julio'`;
+  const j = ` when date_part('month', date) = 8 then 'Agosto'`;
+  const k = ` when date_part('month', date) = 9 then 'Septiembre'`;
+  const l = ` when date_part('month', date) = 10 then 'Octubre'`;
+  const m = ` when date_part('month', date) = 11 then 'Noviembre'`;
+  const n = ` Else 'Diciembre'`;
+  const o = " End as Mes,";
+  const p = " ROUND(avg(total_price)::numeric, 2) as promedio";
   const q = " from Sales";
   const r = ` where date_part('year', date) = ${year}`;
   const s = ` group by date_part('month', date)`;

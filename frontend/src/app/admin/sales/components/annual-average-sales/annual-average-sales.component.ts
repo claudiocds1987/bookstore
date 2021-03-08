@@ -5,25 +5,26 @@ import { Color, BaseChartDirective, Label } from 'ng2-charts';
 import { SaleService } from './../../../../services/sale.service';
 
 @Component({
-  selector: 'app-annual-sales',
-  templateUrl: './annual-sales.component.html',
-  styleUrls: ['./annual-sales.component.scss'],
+  selector: 'app-annual-average-sales',
+  templateUrl: './annual-average-sales.component.html',
+  styleUrls: ['./annual-average-sales.component.scss'],
 })
-export class AnnualSalesComponent implements OnInit {
-    // Para unir el input number del html a la logica (fijarse en funcion filter)
-    @ViewChild('searchValue', {static: true}) searchValue: ElementRef;
+export class AnnualAverageSalesComponent implements OnInit {
+  // Para unir el input number del html a la logica (fijarse en funcion filter)
+  @ViewChild('searchValue', {static: true}) searchValue: ElementRef;
   // fecha local actual
   currentDate = new Date();
   currentYear: number = this.currentDate.getFullYear(); // año actual
-  dataAnnualSales: any[] = [];
+  dataAverageAnnualSales: any[] = [];
 
   public lineChartData: ChartDataSets[] = [
-    { data: [], label: 'Recaudación' },
+    { data: [], label: 'Promedio anual de ventas' },
     // si quisiera agregar mas data
     // { data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B' },
     // { data: [180, 480, 770, 90, 1000, 270, 400], label: 'Series C', yAxisID: 'y-axis-1' }
   ];
 
+  // public lineChartLabels: Label[] = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
   public lineChartLabels: Label[] = [];
 
   public lineChartOptions: ChartOptions & { annotation: any } = {
@@ -35,10 +36,10 @@ export class AnnualSalesComponent implements OnInit {
         {
           ticks: {
             // Incluye signo dolar en la data del eje y
-            callback: function (value) {
-              return '$ ' + value;
-            },
-          },
+            callback: function(value) {
+                return  '$ ' + value;
+            }
+          }
         },
         // {
         //   id: 'y-axis-0',
@@ -115,17 +116,18 @@ export class AnnualSalesComponent implements OnInit {
 
   @ViewChild(BaseChartDirective, { static: true }) chart: BaseChartDirective;
 
-  constructor(public saleServices: SaleService) {}
+
+  constructor(public saleService: SaleService) {}
 
   ngOnInit(): void {
-    this.getAnnualSales();
+    this.getAverageAnnualSales();
   }
 
-  public getAnnualSales() {
-    this.saleServices.getAnnualSales(this.currentYear).subscribe(
+  public getAverageAnnualSales(){
+    this.saleService.getAverageAnnualSales(this.currentYear).subscribe(
       (res) => {
-        this.dataAnnualSales = res;
-        console.log('DATA ' + this.dataAnnualSales);
+        this.dataAverageAnnualSales = res;
+        console.log('DATA ' + this.dataAverageAnnualSales);
         this.getMonths();
         this.getTotal();
       },
@@ -133,27 +135,27 @@ export class AnnualSalesComponent implements OnInit {
     );
   }
 
-  refreshData() {
+  refreshData(){
     // vaciando los arrays
-    this.dataAnnualSales = [];
+    this.dataAverageAnnualSales = [];
     this.lineChartLabels = [];
     this.lineChartData[0].data = [];
     // vuelvo a cargar la data
-    this.getAnnualSales();
-  }
+    this.getAverageAnnualSales();
+ }
 
-  public getMonths() {
-    for (const item of this.dataAnnualSales) {
-      // item.mes porque en la query de la db es as Mes
-      this.lineChartLabels = [...this.lineChartLabels, item.mes]; // eje x
-    }
+ public getMonths() {
+  for (const item of this.dataAverageAnnualSales) {
+    // item.mes porque en la query de la db es as Mes
+    this.lineChartLabels = [...this.lineChartLabels, item.mes]; // eje x
   }
+}
 
   public getTotal() {
-    for (const item of this.dataAnnualSales) {
+    for (const item of this.dataAverageAnnualSales) {
       // lineChartData[0].data porque puedo tener varios data en el array this.lineChartData en mi caso
       // solo tengo un data sobre el eje "y" que es el total.
-      this.lineChartData[0].data = [...this.lineChartData[0].data, item.total]; // eje y
+      this.lineChartData[0].data = [...this.lineChartData[0].data, item.promedio]; // eje y
     }
   }
 
@@ -165,13 +167,13 @@ export class AnnualSalesComponent implements OnInit {
       alert('No hay datos con respecto al año 2020 o años anteriores');
       this.searchValue.nativeElement.value = this.currentYear;
     } else {
-      this.dataAnnualSales = [];
+      this.dataAverageAnnualSales = [];
       this.lineChartLabels = [];
       this.lineChartData[0].data = [];
-      this.saleServices.getAnnualSales(this.searchValue.nativeElement.value).subscribe(
+      this.saleService.getAverageAnnualSales(this.searchValue.nativeElement.value).subscribe(
         (res) => {
-          this.dataAnnualSales = res;
-          console.log('DATA ' + this.dataAnnualSales);
+          this.dataAverageAnnualSales = res;
+          console.log('DATA ' + this.dataAverageAnnualSales);
           this.getMonths();
           this.getTotal();
         },
@@ -199,28 +201,5 @@ export class AnnualSalesComponent implements OnInit {
     active: {}[];
   }): void {
     console.log(event, active);
-  }
-
-  public hideOne(): void {
-    const isHidden = this.chart.isDatasetHidden(1);
-    this.chart.hideDataset(1, !isHidden);
-  }
-
-  // public pushOne(): void {
-  //   this.lineChartData.forEach((x, i) => {
-  //     const num = this.generateNumber(i);
-  //     const data: number[] = x.data as number[];
-  //     data.push(num);
-  //   });
-  //   this.lineChartLabels.push(`Label ${this.lineChartLabels.length}`);
-  // }
-
-  public changeColor(): void {
-    this.lineChartColors[2].borderColor = 'green';
-    this.lineChartColors[2].backgroundColor = `rgba(0, 255, 0, 0.3)`;
-  }
-
-  public changeLabel(): void {
-    this.lineChartLabels[2] = ['1st Line', '2nd Line'];
   }
 }

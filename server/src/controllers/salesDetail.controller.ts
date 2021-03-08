@@ -16,7 +16,7 @@ export const createSaleDetail = async (req: Request, res: Response): Promise<Res
     let idSale = parseInt(id_sale);
     let idBook = parseInt(id_book);
     let cantidad = parseInt(quantity);
-    let precio = parseInt(price);
+    let precio = price;
 
     try {
         const response: QueryResult = await pool.query('INSERT INTO sales_detail (id_sale, id_book, quantity, price) VALUES ($1, $2, $3, $4)', [idSale, idBook, cantidad, precio]);

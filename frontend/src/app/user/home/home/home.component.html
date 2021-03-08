@@ -20,13 +20,6 @@
           <button class="btn btn-info btn-buscar" (click)="filterBook()">
             Buscar
           </button>
-          <!-- <button
-            id="btn-listar-todos"
-            class="btn btn-primary btn-listar-todos"
-            (click)="listBooks()"
-          >
-            Todos
-          </button> -->
         </div>
       </div>
 
@@ -43,7 +36,6 @@
             >
           </p>
         </div>
-        <!-- <h3 class="text-center font-italic text-muted">Somos lo que leemos <span *ngIf="username">{{username}}</span></h3> -->
       </div>
       <div class="col-md-4">
         <div class="box-icons-social-media">
@@ -102,8 +94,8 @@
                 class="fa fa-shopping-cart mr-2 icon-shopping-cart"
                 aria-hidden="true"
               ></i>
-              <span style="font-size: smaller; color: white">{{
-                book.price | currency: "ARS ":"symbol"
+              <span style="font-size: smaller; color: white">$ {{
+                book.price
               }}</span>
             </button>
           </div>

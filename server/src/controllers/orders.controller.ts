@@ -18,7 +18,7 @@ export const createOrder = async (req: Request, res: Response): Promise<Response
   console.log(id_user, adress, phone_number, total_price, provincia, localidad, order_date)
   // el id_order en la db es autonumerico no hace falta
   let idUser = parseInt(id_user);
-  let totalPrice = parseInt(total_price);
+  let totalPrice = total_price;
 
   const response: QueryResult = await pool.query('INSERT INTO orders (id_user, adress, phone_number, total_price, provincia, localidad, order_date) VALUES ($1, $2, $3, $4, $5, $6, $7)', [idUser, adress, phone_number, totalPrice, provincia, localidad, order_date]);
   return res.json({

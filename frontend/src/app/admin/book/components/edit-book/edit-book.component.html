@@ -217,12 +217,13 @@
               <div class="form-group col-md-6 mb-3">
                 <label>Precio</label>
                 <input
-                  type="number"
+                  type="text"
                   class="form-control"
                   formControlName="price"
-                  step="0.01"
-                  [(ngModel)]="book.price"
-                  placeholder="Precio $"
+                  mask="separator.2"
+                  prefix="$ "
+                  thousandSeparator="."
+                  [value]="book.price"
                 />
                 <div
                   *ngIf="form.get('price').errors && form.get('price').dirty"

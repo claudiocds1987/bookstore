@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { DashboardSalesComponent } from './components/dashboard-sales/dashboard-sales.component';
 import { TopSalesComponent } from './components/top-sales/top-sales.component';
 import { AnnualSalesComponent } from './components/annual-sales/annual-sales.component';
+import { AnnualAverageSalesComponent } from './components/annual-average-sales/annual-average-sales.component';
 // Guardianes
 import { AdminGuard } from 'src/app/admin.guard';
 
@@ -21,6 +22,11 @@ const routes: Routes = [
     path: 'annual-sales',
     canActivate: [AdminGuard],
     component: AnnualSalesComponent
+  },
+  {
+    path: 'annual-average-sales',
+    canActivate: [AdminGuard],
+    component: AnnualAverageSalesComponent
   }
 ];
 

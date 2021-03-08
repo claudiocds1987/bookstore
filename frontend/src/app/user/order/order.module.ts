@@ -10,6 +10,8 @@ import { NgxPaginationModule } from 'ngx-pagination'; // para los pagination
 // imports para el funcionamiento del spinner/loader para peticiones http
 import { NgxSpinnerModule } from 'ngx-spinner';
 
+import { NgxMaskModule, IConfig } from 'ngx-mask';
+
 @NgModule({
   declarations: [
     OrdersListComponent,
@@ -23,7 +25,8 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     ReactiveFormsModule,
     NgxPaginationModule,
     NgxSpinnerModule,
-    MaterialModule
+    MaterialModule,
+    NgxMaskModule.forRoot()
   ]
 })
 export class OrderModule { }

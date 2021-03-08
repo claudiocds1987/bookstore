@@ -28,7 +28,7 @@
             <button
               [disabled]="authorName.invalid"
               (click)="createAuthor()"
-              class="btn btn-success btn-block"
+              class="btn btn-success btn-block mt-2"
             >
               Guardar
             </button>
@@ -71,7 +71,7 @@
             <small class="text-danger">Mínimo 4 caracteres.</small>
           </p>
           <button
-            class="btn btn-outline-success mr-1"
+            class="btn btn-outline-success mr-1 mt-2"
             type="button"
             (click)="getAuthorByName()"
             [disabled]="inputValueSearch.invalid"
@@ -79,7 +79,7 @@
             Search
           </button>
           <button
-            class="btn btn-outline-success"
+            class="btn btn-outline-success mt-2"
             type="button"
             (click)="getAuthors()"
             [disabled]="activated"
@@ -147,7 +147,7 @@
                         <small class="text-danger">Mínimo 4 caracteres.</small>
                       </p>
                       <button
-                        class="btn btn-outline-success mr-1"
+                        class="btn btn-outline-success mr-1 mt-2"
                         type="button"
                         (click)="updateAuthor()"
                         [disabled]="authorNameEdit.invalid"
@@ -155,7 +155,7 @@
                         Update
                       </button>
                       <button
-                        class="btn btn-outline-warning mr-1"
+                        class="btn btn-outline-warning mr-1 mt-2"
                         type="button"
                         (click)="editing = false"
                       >

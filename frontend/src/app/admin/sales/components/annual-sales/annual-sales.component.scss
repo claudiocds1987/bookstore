@@ -2,6 +2,14 @@
   min-height: 100vh;
   .row {
     margin-top: 80px;
+    #box{
+      input{
+        width: 100px;
+      }
+      button{
+        border-radius: 0;
+      }
+    }
   }
 }
 

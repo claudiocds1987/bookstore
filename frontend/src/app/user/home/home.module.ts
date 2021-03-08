@@ -12,6 +12,8 @@ import { Borrar2Component } from './borrar2/borrar2.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { HttpClientModule } from '@angular/common/http';
 // -------------------------------------------------------------------------------
+import { NgxMaskModule, IConfig } from 'ngx-mask';
+
 @NgModule({
   declarations: [
     HomeComponent,
@@ -27,6 +29,7 @@ import { HttpClientModule } from '@angular/common/http';
     NgxPaginationModule,
     NgxSpinnerModule,
     HttpClientModule,
+    NgxMaskModule.forRoot()
   ]
 })
 export class HomeModule { }

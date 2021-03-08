@@ -11,12 +11,14 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 // para reportes con graficos de barra etc..
 import { ChartsModule } from 'ng2-charts';
 import { AnnualSalesComponent } from './components/annual-sales/annual-sales.component';
+import { AnnualAverageSalesComponent } from './components/annual-average-sales/annual-average-sales.component';
 
 @NgModule({
   declarations: [
     DashboardSalesComponent,
     TopSalesComponent,
     AnnualSalesComponent,
+    AnnualAverageSalesComponent,
   ],
   imports: [
     CommonModule,

@@ -227,12 +227,12 @@
 
             <div class="form-group col-md-6 mb-3">
               <input
-                type="number"
+                type="text"
                 class="form-control"
                 formControlName="price"
-                step="0.01"
-                [(ngModel)]="book.price"
-                placeholder="Precio $"
+                mask="separator.2"
+                prefix="$ "
+                thousandSeparator="."
               />
               <div *ngIf="form.get('price').errors && form.get('price').dirty">
                 <p
@@ -256,15 +256,14 @@
               (change)="selectImage($event)"
             />
             <div *ngIf="imgPreview != null" class="text-center my-2">
-              <div style="display: block;">
-                <img [src]="imgPreview" class="img-fluid"/>
+              <div style="display: block">
+                <img [src]="imgPreview" class="img-fluid" />
               </div>
-             <div style="display: block;">
-              <a class="btn btn-danger mt-1" (click)="cleanImgPreview()"
-                >Cancelar imagen</a
-              >
-             </div>
-              
+              <div style="display: block">
+                <a class="btn btn-danger mt-1" (click)="cleanImgPreview()"
+                  >Cancelar imagen</a
+                >
+              </div>
             </div>
           </div>
 

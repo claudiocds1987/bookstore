@@ -56,7 +56,7 @@ export class EditBookComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private activeRoute: ActivatedRoute
-  ) { 
+  ) {
     this.buildForm(); // function buildForm
   }
 

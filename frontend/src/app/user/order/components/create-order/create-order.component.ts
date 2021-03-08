@@ -62,6 +62,7 @@ export class CreateOrderComponent implements OnInit, AfterViewInit {
   orderSuccess = false;
   dialogRef: MatDialogRef<MatConfirmDialogComponent>;
   maxQuantity: number[] = [];
+  habilitarBtnPagar = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -233,11 +234,16 @@ export class CreateOrderComponent implements OnInit, AfterViewInit {
     this.total = newTotal;
   }
 
+  // Aca va leyendo los datos de la tarjeta mientras se tipean
   onChange({ error }) {
     if (error) {
       this.ngZone.run(() => (this.cardError = error.message));
+      // si hay errores "inhabilito" el boton Pahar
+      this.habilitarBtnPagar = false;
     } else {
       this.ngZone.run(() => (this.cardError = null));
+      // si no hay errores "habilito" el boton Pagar
+      this.habilitarBtnPagar = true;
     }
   }
 
@@ -350,7 +356,7 @@ export class CreateOrderComponent implements OnInit, AfterViewInit {
     } else {
       event.preventDefault();
       if (this.form.valid) {
-        // se desactiva boton pagar
+        // se habilita boton pagar
         const btnPagar = document.getElementById('btn-pagar');
         btnPagar.setAttribute('disabled', 'true');
         //  EFECTUANDO EL PAGO

@@ -344,7 +344,8 @@ export const updateBook = async (
   let id_cat = parseInt(id_category);
   let id_edit = parseInt(id_editorial);
   let cantidad = parseInt(quantity);
-  let precio = parseInt(price);
+  // let precio = parseInt(price);
+  let precio = price;
 
   console.log(
     name,

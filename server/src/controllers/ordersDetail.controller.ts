@@ -25,7 +25,7 @@ export const createOrderDetail = async (
 
   let idOrder = parseInt(id_order);
   let idProduct = parseInt(id_product);
-  let price = parseInt(product_price);
+  let price = product_price;
   let cantidad = parseInt(product_quantity);
 
   const response: QueryResult = await pool.query(

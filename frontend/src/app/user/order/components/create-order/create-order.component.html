@@ -31,7 +31,7 @@
                   <td class="text-center align-middle">
                     <b>{{ b.name }}</b> <br />
                     {{ b.autor }} <br />
-                    {{ b.price | currency }}
+                    {{ b.price }}
                   </td>
 
                   <td class="text-center align-middle">
@@ -221,8 +221,8 @@
                   </div>
                   <button
                     id="btn-pagar"
-                    [disabled]="form.invalid"    
-                    mat-raised-button
+                    class="btn btn-dark"
+                    [disabled]="form.invalid || habilitarBtnPagar === false"        
                     type="submit"
                   >
                     Pagar {{ total | currency}}

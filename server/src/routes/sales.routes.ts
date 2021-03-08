@@ -7,6 +7,7 @@ import {
   countSalesFromYear,
   salesRevenueFromYear,
   getAnnualSales,
+  getAverageAnnualSales,
   getBookTopSales,
   createSale,
   getLastIdSale,
@@ -22,5 +23,6 @@ router.get("/sales/countFromYear/:year", countSalesFromYear);
 router.get("/sales/revenueFromYear/:year", salesRevenueFromYear);
 router.get("/sales/bookTopSales", getBookTopSales);
 router.get("/sales/annualSales/:year", getAnnualSales);
+router.get("/sales/averageAnnualSales/:year", getAverageAnnualSales);
 
 export default router;

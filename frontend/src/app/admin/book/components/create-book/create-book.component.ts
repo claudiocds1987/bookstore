@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { CurrencyPipe } from '@angular/common';
+import { formatCurrency } from '@angular/common'; // ??
 import { BookService } from '../../../../services/book.service';
 import { AuthorService } from '../../../../services/author.service';
 import { CategoryService } from '../../../../services/category.service';
@@ -43,11 +45,11 @@ export class CreateBookComponent implements OnInit {
   imgPreview: string | ArrayBuffer;
 
   newId: number;
-  public numeroConFormato;
+  // public numeroConFormato;
+
   constructor(
     // private _decimalPipe: DecimalPipe, //???
-    // private currencyPipe: CurrencyPipe,
-
+    // private currencyPipe: CurrencyPipe, // ??
     public bookService: BookService,
     public alertService: AlertService,
     public authorService: AuthorService,
@@ -56,25 +58,25 @@ export class CreateBookComponent implements OnInit {
     private http: HttpClient,
     public myValidationsService: MyValidationsService,
     private formBuilder: FormBuilder
-  ) { 
+  ) {
     this.buildForm(); // function buildForm
 
     // ---------------------SE PEUDE BORRAR -------------------------------
     // this.form.get('price').valueChanges.subscribe(value => {
     //   let decimal_formatted = this._decimalPipe.transform(value, "1.2-2");
     //   //this.form.get('price').setValue(decimal_formatted);
-    //   console.log('Y Q ONDA: ' + decimal_formatted);       
+    //   console.log('Y Q ONDA: ' + decimal_formatted);
     //   })
     // -------------------------------------------------------------------
-    // cuando escribe el precio 
+
+    // cuando escribe el precio NO BORRAR POR LAS DUDAS
     // this.form.valueChanges.subscribe(formulario => {
-    //   if(formulario.price){
+    //   if (formulario.price){
     //     this.form.patchValue({
     //       price: this.currencyPipe.transform(formulario.price.replace(/\D/g, '').replace(/^0+/, ''), '', '', '1.0-0')
     //     }, {emitEvent: false});
     //   }
-    // })
-
+    // });
 
   }
 
@@ -99,6 +101,7 @@ export class CreateBookComponent implements OnInit {
       state: [true]
     });
   }
+
   // Función que valida el formulario, y el confirm
   // LLena el objeto book, y valida si tiene imagen para cargar.
   createBook(event: Event) {
