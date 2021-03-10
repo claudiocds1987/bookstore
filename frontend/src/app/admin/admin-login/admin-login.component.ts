@@ -61,7 +61,7 @@ export class AdminLoginComponent implements OnInit {
           // sessionStorage solo permite guardar un string, como yo quiero guardar un objeto de tipo Admin
           // tengo que usar JSON.stringify(admi)
           sessionStorage.setItem('adminData', JSON.stringify(admi));
-          this.router.navigateByUrl('admin-principal');
+          this.router.navigateByUrl('dashboard');
         }
     });
     }

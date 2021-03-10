@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.altaBook = exports.bajaBook = exports.updateBook = exports.createBook = exports.existBook = exports.getRealDataBook = exports.getOneBookWithAuthorName = exports.getBookByID = exports.filterBooksByAuthor = exports.filterAvailableBooksByAuthor = exports.filterBooksByName = exports.filterAvailableBooksByName = exports.getBooksWithAuthorName = exports.getAvailableBooksWithAuthorName = exports.getBooks = void 0;
+exports.getTotalBooks = exports.altaBook = exports.bajaBook = exports.updateBook = exports.createBook = exports.existBook = exports.getRealDataBook = exports.getOneBookWithAuthorName = exports.getBookByID = exports.filterBooksByAuthor = exports.filterAvailableBooksByAuthor = exports.filterBooksByName = exports.filterAvailableBooksByName = exports.getBooksWithAuthorName = exports.getAvailableBooksWithAuthorName = exports.getBooks = void 0;
 // pool es la conexion a db tmb se puede llamar db en vez de pool
 // en consola poner npm run dev (para iniciar el servidor?)
 const database_1 = require("../database");
@@ -301,6 +301,17 @@ exports.altaBook = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         return res
             .status(500)
             .json("error al intentar dar de alta el libro");
+    }
+});
+// NO FUNCIONA
+exports.getTotalBooks = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const response = yield database_1.pool.query("select count(id_book) as total from books");
+        return res.status(200).json(response.rows);
+    }
+    catch (e) {
+        console.log(e);
+        return res.status(500).json("Internal server error");
     }
 });
 // export const deleteBook = async (req: Request, res: Response): Promise<Response> => {

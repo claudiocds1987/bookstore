@@ -37,6 +37,9 @@ import { InterceptorService } from './services/interceptor.service';
 import { ToastrModule } from 'ngx-toastr';
 // Este componente es el que se va a mostrar para el MatDialog de Angular Material
 import { MatConfirmDialogComponent } from './mat-confirm-dialog/mat-confirm-dialog.component';
+import { DashboardComponent } from './admin/dashboard/dashboard.component';
+// imports para el funcionamiento del spinner/loader para peticiones http
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   declarations: [
@@ -51,7 +54,8 @@ import { MatConfirmDialogComponent } from './mat-confirm-dialog/mat-confirm-dial
     UserFooterComponent,
     MainNavComponent,
     BannerComponent,
-    MatConfirmDialogComponent
+    MatConfirmDialogComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
@@ -69,6 +73,7 @@ import { MatConfirmDialogComponent } from './mat-confirm-dialog/mat-confirm-dial
     MatSidenavModule,
     MatListModule,
     NgxPaginationModule,
+    NgxSpinnerModule,
     ToastrModule.forRoot() // ToastrModule added,
   ],
   providers: [

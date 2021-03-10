@@ -428,6 +428,22 @@ export const altaBook = async (req: Request, res: Response): Promise<Response> =
 
 }
 
+// NO FUNCIONA
+export const getTotalBooks = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
+  try {
+    const response: QueryResult = await pool.query(
+      "select count(id_book) as total from books"
+    );
+    return res.status(200).json(response.rows);
+  } catch (e) {
+    console.log(e);
+    return res.status(500).json("Internal server error");
+  }
+};
+
 // export const deleteBook = async (req: Request, res: Response): Promise<Response> => {
 //    // console.log(req.params.username);
 //    // consulta a PostgreSQL

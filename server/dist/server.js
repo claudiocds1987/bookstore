@@ -55,6 +55,6 @@ app.use(ordersDetail_routes_1.default);
 app.use(sales_routes_1.default);
 app.use(salesDetail_routes_1.default);
 // para mostrar la imagen en el navegador escribo ej: http://localhost:4000/1f2d312a-a1ef-48c5-a79f-c2a27c48320c.jpg
-app.use(express_1.default.static('public')); // Carpeta public la hago de acceso publica. para pod er ver las imagenes desde el navegador
+app.use(express_1.default.static('public')); // Carpeta public la hago de acceso publica. para poder ver las imagenes desde el navegador
 app.listen(4000);
 console.log('Server on Port', 4000);

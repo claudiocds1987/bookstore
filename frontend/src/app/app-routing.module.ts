@@ -6,6 +6,7 @@ import { UserLayoutComponent } from './user/user-layout/user-layout.component';
 import { AdminLoginComponent } from './admin/admin-login/admin-login.component';
 // Guardianes
 import { AdminGuard } from './admin.guard';
+import { DashboardComponent } from './admin/dashboard/dashboard.component';
 
 const routes: Routes = [
   {
@@ -41,6 +42,11 @@ const routes: Routes = [
     component: AdminLoginComponent
   },
   {
+    path: 'dashboard',
+    canActivate: [AdminGuard],
+    component: DashboardComponent
+  },
+  {
     path: '',
     component: AdminLayoutComponent,
     children: [
@@ -54,6 +60,11 @@ const routes: Routes = [
         canActivate: [AdminGuard],
         component: AdminPrincipalComponent
       },
+      // {
+      //   path: 'dashboard',
+      //   canActivate: [AdminGuard],
+      //   component: DashboardComponent
+      // },
       {
         path: 'customer',
         canActivate: [AdminGuard],
