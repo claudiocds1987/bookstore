@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 // services
 import { SaleService } from './../../../../services/sale.service';
 // importaciones para utilizar chart.js
-import { ChartDataSets, ChartOptions, ChartType, Chart } from 'chart.js';
+import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
 // import * as pluginDataLabels from 'chartjs-plugin-datalabels';
-import { Label } from 'ng2-charts';
+import { Color, Label } from 'ng2-charts';
 
 @Component({
   selector: 'app-top-sales',
@@ -52,6 +52,10 @@ export class TopSalesComponent implements OnInit {
     // { data: [28, 48, 40, 19, 86, 27, 90], label: 'Series C' } //
   ];
   // *************************************************************************************
+  public barChartColors: Color[] = [
+    { backgroundColor: '#0a6ebd' },
+    // { backgroundColor: 'red' },
+  ];
 
   constructor(public saleService: SaleService) {}
 
